@@ -13,9 +13,9 @@ Original code by TheSzerdi
 
 <b>server.pbo</b>
 
- * Copy the Mission folder to the root of the server PBO.
+Copy the Mission folder to the root of the server PBO.
 
- * Open <b>server_functions.sqf</b>
+Open <b>server_functions.sqf</b>
 
 <b>Find:</b>
 
@@ -43,7 +43,7 @@ Original code by TheSzerdi
 	};
 
 	
- * Open <b>server_updateObject.sqf</b>
+Open <b>server_updateObject.sqf</b>
 	
 <b>Find:</b>
 	
@@ -61,7 +61,7 @@ Original code by TheSzerdi
 	
 
 	
- * Open <b>server_cleanup.fsm</b>
+Open <b>server_cleanup.fsm</b>
  
 <b>Find:</b>  
  
@@ -73,7 +73,7 @@ Original code by TheSzerdi
 
 	
 	
- * IF YOU HAVE SARGE AI INSTALLED YOU NEED TO CHANGE THE VEHICLE VARIABLE IN EACH MISSION TO "SARGE" INSTEAD OF USING "MISSIONS" (Not tested with SARGE AI, may be incompatible.)
+IF YOU HAVE SARGE AI INSTALLED YOU NEED TO CHANGE THE VEHICLE VARIABLE IN EACH MISSION TO "SARGE" INSTEAD OF USING "MISSIONS" (Not tested with SARGE AI, may be incompatible.)
 
 
  
@@ -83,6 +83,7 @@ The AI require faction settings. If you have SARGE AI you're good to go. Otherwi
 
     [] execVM "faction.sqf";
 	
+
 	
 	
 <h3>The Crates</h3>
