@@ -17,15 +17,15 @@ Original code by TheSzerdi
 
  * Open <b>server_functions.sqf</b>
 
-<i>Find:</i>
+<b>Find:</b>
 
 	fn_bases = compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fn_bases.sqf";
 	
-<i>Insert after:</i>
+<b>Insert after:</b>
 	
 	fnc_hTime = compile preprocessFile "\z\addons\dayz_server\Missions\misc\fnc_hTime.sqf"; //Random integer selector for mission wait time
 	
-<i>Find:</i>
+<b>Find:</b>
 	
 	dayz_recordLogin = {
 	private["_key"];
@@ -33,7 +33,7 @@ Original code by TheSzerdi
 	_key call server_hiveWrite;
 	};
 	
-<i>Insert after:</i>
+<b>Insert after:</b>
 	
 	if (isServer) then { 
 	SMarray = ["SM1","SM2","SM3","SM4","SM5","SM6"];
@@ -45,7 +45,7 @@ Original code by TheSzerdi
 	
  * Open <b>server_updateObject.sqf</b>
 	
-<i>Find:</i>
+<b>Find:</b>
 	
     #ifdef OBJECT_DEBUG
     diag_log(format["Non-string Object: ID %1 UID %2", _objectID, _uid]);
@@ -55,7 +55,7 @@ Original code by TheSzerdi
     _uid = "0";
 	};
 	
-<i>Insert after:</i>  
+<b>Insert after:</b>  
 	
     if (_object getVariable "Mission" == 1) exitWith {};
 	
@@ -63,11 +63,11 @@ Original code by TheSzerdi
 	
  * Open <b>server_cleanup.fsm</b>
  
-<i>Find:</i>  
+<b>Find:</b>  
  
     if(vehicle _x != _x && !(vehicle _x in _safety) && (typeOf vehicle _x) != ""ParachuteWest"") then {" \n
 
-<i>Insert after:</i>
+<b>Insert after:</b>
 
     if(vehicle _x != _x && (vehicle _x getVariable [""Mission"",0] != 1) && !(vehicle _x in _safety) && (typeOf vehicle _x) != ""ParachuteWest"") then {" \n
 
