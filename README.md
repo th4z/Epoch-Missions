@@ -2,12 +2,14 @@ DayZChernarus-Missions by lazyink
 =============
 Original code by TheSzerdi
 
-<h3>This has only been tested on Chernarus (1.7.7.1).</h3>
-<h4>Before installing you must first customize the fillboxes SQF's inside the 'misc' folder and the NPC's load-outs in the addunitserver SQF's</h4>
-<h4>If you leave the script as is, you MUST update your BE filters with the attached files</h4>
+<h3>This has only been tested on Chernarus (1.7.7.1).</h3>  
+
+ * Before installing you must first customize the fillboxes SQF's inside the MISC folder and the NPC's load-outs in the addunitserver SQF's. 
+ 
+ * If you leave the script as is, you MUST update your BE filters with the attached files.
 
 
-<h3>Installation<h3>
+<h3>Installation</h3>
 
 <b>server.pbo</b>
 
@@ -44,9 +46,6 @@ Original code by TheSzerdi
 	
 	<i>Find:</i>
 	
-	#ifdef OBJECT_DEBUG
-    diag_log(format["Non-string Object: ID %1 UID %2", _objectID, _uid]);
-	#endif
     //force fail
     _objectID = "0";
     _uid = "0";
