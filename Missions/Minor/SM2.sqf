@@ -1,62 +1,51 @@
-//Landing party sidemission by TheSzerdi with credit to TAW_Tonic
-private ["_coord1","_coord2","_coord3","_coords","_wait","_dummymarker"];
+//Medical Outpost by lazyink (Full credit for code to TheSzerdi & TAW_Tonic)
+
+private ["_coords","_iArray","_nearby","_index","_num","_itemType","_itemChance","_weights","_wait","_dummymarker","_nul"];
 _wait = [600,300] call fnc_hTime;
 sleep _wait;
-[nil,nil,rTitleText,"A landing party is establishing a beachhead!", "PLAIN",6] call RE;
-[nil,nil,rGlobalRadio,"A landing party is establishing a beachhead!"] call RE;
-[nil,nil,rHINT,"A landing party is establishing a beachhead!"] call RE;
+[nil,nil,rTitleText,"A group of bandits have taken over a Medical Outpost!", "PLAIN",10] call RE;
 
-//YOU MUST SPECIFY A SPAWN COORD AND A BEACH COORD FOR EACH ARRAY FOR YOUR MAP
-_coord1 = [[5277.4878,4246.8672,0],[5270.9004,5645.5161,0]];
-_coord2 = [[2040.6782,9746.2754,0],[3415.792,8712.3867,0]];
-_coord3 = [[10440.379,8823.4355,0],[8126.8584,8815.1523,0]];
+_coords =  [getMarkerPos "center",0,5500,10,0,20,0] call BIS_fnc_findSafePos;
 
-_coords = [_coord1, _coord2, _coord3] call BIS_fnc_selectRandom;
-
-_dummymarker = createMarker["Landing Party", _coords select 1];
+_dummymarker = createMarker["Medical Stash", _coords];
 _dummymarker setMarkerColor "ColorRed";
 _dummymarker setMarkerShape "ELLIPSE";
 _dummymarker setMarkerBrush "Grid";
-_dummymarker setMarkerSize [75,75];
+_dummymarker setMarkerSize [175,175];
 
-pbxride = createVehicle ["PBX",_coords select 0,[], 0, "NONE"];
-pbxride setVariable ["Mission",1,true];
-pbxride setFuel 1;
+_baserunover = createVehicle ["US_WarfareBFieldhHospital_Base_EP1",[(_coords select 0) +2, (_coords select 1)+5,-0.3],[], 0, "CAN_COLLIDE"];
+_baserunover2 = createVehicle ["MASH_EP1",[(_coords select 0) - 24, (_coords select 1) - 5,0],[], 0, "CAN_COLLIDE"];
+_baserunover2 = createVehicle ["MASH_EP1",[(_coords select 0) - 17, (_coords select 1) - 5,0],[], 0, "CAN_COLLIDE"];
+_baserunover3 = createVehicle ["MASH_EP1",[(_coords select 0) - 10, (_coords select 1) - 5,0],[], 0, "CAN_COLLIDE"];
+_baserunover3 = createVehicle ["HMMWV_DZ",[(_coords select 0) + 10, (_coords select 1) - 5,0],[], 0, "CAN_COLLIDE"];
+_baserunover3 = createVehicle ["HMMWV_DZ",[(_coords select 0) + 15, (_coords select 1) - 5,0],[], 0, "CAN_COLLIDE"];
+_baserunover3 = createVehicle ["SUV_DZ",[(_coords select 0) + 25, (_coords select 1) - 15,0],[], 0, "CAN_COLLIDE"];
 
-[_coords select 0,4,1] execVM "\z\addons\dayz_server\missions\add_unit_server3.sqf";//AI Guards
-sleep 1;
-LandingParty addVehicle pbxride;
-LandingParty move (_coords select 1);
-waitUntil{(pbxride distance (_coords select 1)) < 50}; 
-tentloot = createVehicle ["TentStorage",_coords select 1,[], 0, "NONE"];
-tentloot setVariable ["Mission",1,true];
-sleep 1;
-tentloot addWeaponCargoGlobal ["Binocular_Vector", 1];
-tentloot addWeaponCargoGlobal ["ItemCompass", 1];
-tentloot addWeaponCargoGlobal ["ItemGPS", 1];
-tentloot addWeaponCargoGlobal ["ItemWatch", 1];
-tentloot addMagazineCargoGlobal ["FoodCanBakedBeans", 4];
-tentloot addMagazineCargoGlobal ["ItemBandage", 4];
-tentloot addMagazineCargoGlobal ["ItemMorphine", 2];
-tentloot addMagazineCargoGlobal ["ItemPainkiller", 2];
-tentloot addMagazineCargoGlobal ["ItemWaterbottle", 4];
-tentloot addWeaponCargoGlobal ["ItemKnife", 2];
-tentloot addWeaponCargoGlobal ["ItemToolbox", 2];
-tentloot addWeaponCargoGlobal ["ItemMatches", 2];
-tentloot addMagazineCargoGlobal ["ItemBloodbag", 1];
-tentloot addMagazineCargoGlobal ["Skin_CamoWinter_DZN", 1];
-tentloot addMagazineCargoGlobal ["Skin_Sniper1_DZ", 1];
-tentloot addBackpackCargoGlobal ["BAF_AssaultPack_DZN",2];
-tentloot addMagazineCargoGlobal ["ItemJerryCan",2];
+_crate = createVehicle ["USVehicleBox",[(_coords select 0) - 3, _coords select 1,0],[], 0, "CAN_COLLIDE"];
+[_crate] execVM "\z\addons\dayz_server\missions\misc\fillBoxesM.sqf";
+
+_crate2 = createVehicle ["USLaunchersBox",[(_coords select 0) - 8, _coords select 1,0],[], 0, "CAN_COLLIDE"];
+[_crate2] execVM "\z\addons\dayz_server\missions\misc\fillBoxesS.sqf";
+
+_crate3 = createVehicle ["RULaunchersBox",[(_coords select 0) - 14, _coords select 1,0],[], 0, "CAN_COLLIDE"];
+[_crate3] execVM "\z\addons\dayz_server\missions\misc\fillBoxesH.sqf";
 
 
-waitUntil{{isPlayer _x && _x distance tentloot < 10  } count playableunits > 0}; 
+[[(_coords select 0) - 20, (_coords select 1) - 15,0],40,4,2,0] execVM "\z\addons\dayz_server\missions\add_unit_server2.sqf";//AI Guards
+sleep 3;
+[[(_coords select 0) + 10, (_coords select 1) + 15,0],40,4,2,0] execVM "\z\addons\dayz_server\missions\add_unit_server2.sqf";//AI Guards
+sleep 3;
+[[(_coords select 0) - 10, (_coords select 1) - 15,0],40,4,2,0] execVM "\z\addons\dayz_server\missions\add_unit_server2.sqf";//AI Guards
+sleep 3;
+[[(_coords select 0) + 20, (_coords select 1) + 15,0],40,4,2,0] execVM "\z\addons\dayz_server\missions\add_unit_server2.sqf";//AI Guards
+sleep 3;
+
+
+waitUntil{{isPlayer _x && _x distance _baserunover < 10  } count playableunits > 0}; 
+
+[nil,nil,rTitleText,"The Medical Outpost is under survivor control!", "PLAIN",6] call RE;
 
 deleteMarker _dummymarker;
-
-[nil,nil,rTitleText,"You've secured the beachhead! Good work.", "PLAIN",6] call RE;
-[nil,nil,rGlobalRadio,"You've secured the beachhead! Good work."] call RE;
-[nil,nil,rHINT,"You've secured the beachhead! Good work."] call RE;
 
 SM1 = 1;
 [0] execVM "\z\addons\dayz_server\missions\minor\SMfinder.sqf";

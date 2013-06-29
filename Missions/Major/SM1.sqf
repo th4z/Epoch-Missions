@@ -1,36 +1,38 @@
-//Large Ammo Cache script by TheSzerdi with credit to TAW_Tonic
+//Weapons Cache by lazyink (Full credit for original code to TheSzerdi & TAW_Tonic)
 
 private ["_coords","_dummymarker","_wait"];
 _wait = [2000,650] call fnc_hTime;
 sleep _wait;
 
-[nil,nil,rTitleText,"A gear cache has been airdropped! Secure it for yourself!", "PLAIN",6] call RE;
-[nil,nil,rGlobalRadio,"A gear cache has been airdropped! Secure it for yourself!"] call RE;
-[nil,nil,rHINT,"A gear cache has been airdropped! Secure it for yourself!"] call RE;
+[nil,nil,rTitleText,"Bandits have discovered a weapons cache! Kill them and secure the weapons for yourself!", "PLAIN",10] call RE;
 
-_coords = [getMarkerPos "center",0,12000,30,0,2000,0] call BIS_fnc_findSafePos;
+_coords = [getMarkerPos "center",0,5500,30,0,2000,0] call BIS_fnc_findSafePos;
 
 _dummymarker = createMarker["STR_MISSION_MARKER_1", _coords];
-_dummymarker setMarkerColor "ColorGreen";
+_dummymarker setMarkerColor "ColorBlack";
 _dummymarker setMarkerShape "ELLIPSE";
 _dummymarker setMarkerBrush "Grid";
-_dummymarker setMarkerSize [150,150];
+_dummymarker setMarkerSize [250,250];
 
-box = createVehicle ["USVehicleBox",_coords,[], 0, "NONE"];
+_hummer = createVehicle ["HMMWV_DZ",[(_coords select 0) + 10, (_coords select 1) - 20,0],[], 0, "CAN_COLLIDE"];
+_hummer = createVehicle ["HMMWV_DZ",[(_coords select 0) + 20, (_coords select 1) - 10,0],[], 0, "CAN_COLLIDE"];
+_hummer = createVehicle ["SUV_DZ",[(_coords select 0) + 30, (_coords select 1) + 10,0],[], 0, "CAN_COLLIDE"];
 
-[BOX] execVM "\z\addons\dayz_server\missions\misc\fillBoxes.sqf";
+_crate = createVehicle ["USVehicleBox",_coords,[], 0, "CAN_COLLIDE"];
+[_crate] execVM "\z\addons\dayz_server\missions\misc\fillBoxes.sqf";
 
 _aispawn = [_coords,80,6,6,1] execVM "\z\addons\dayz_server\missions\add_unit_server.sqf";//AI Guards
 sleep 5;
 _aispawn = [_coords,80,6,6,1] execVM "\z\addons\dayz_server\missions\add_unit_server.sqf";//AI Guards
 sleep 5;
 _aispawn = [_coords,40,4,4,1] execVM "\z\addons\dayz_server\missions\add_unit_server.sqf";//AI Guards
+sleep 5;
+_aispawn = [_coords,40,4,4,1] execVM "\z\addons\dayz_server\missions\add_unit_server.sqf";//AI Guards
+sleep 5;
 
-waitUntil{{isPlayer _x && _x distance box < 20  } count playableunits > 0}; 
+waitUntil{{isPlayer _x && _x distance _crate < 5  } count playableunits > 0}; 
 
-[nil,nil,rTitleText,"The gear cache has been found, nice work, enjoy the spoils.", "PLAIN",6] call RE;
-[nil,nil,rGlobalRadio,"The gear cache has been found, nice work, enjoy the spoils."] call RE;
-[nil,nil,rHINT,"The gear cache has been found, nice work, enjoy the spoils."] call RE;
+[nil,nil,rTitleText,"The weapons cache is under survivor control!", "PLAIN",6] call RE;
 
 deleteMarker _dummymarker;
 SM1 = 1;
