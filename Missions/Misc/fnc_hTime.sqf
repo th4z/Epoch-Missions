@@ -20,4 +20,3 @@ while {_bool} do
 
 _return = _rand;
 _return;
-

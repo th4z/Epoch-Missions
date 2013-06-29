@@ -103,6 +103,7 @@ Inside the MISC folder, there are 4 differing fillboxes scripts. They are set up
 
 The missions are split into two types, major and minor, and run as follows.
 
+
 <b>Major<b>
 
 <b>Bandit Weapon Cache.</b>
@@ -122,6 +123,7 @@ Bandits have destroyed a Ural carrying medical supplies and secured it's cargo!
 
 M<b>edical Supply Crate.</b>
 A medical supply crate has been secured by bandits! Kill them all to get the supplies!
+
 
 <b>Minor<b>
 
