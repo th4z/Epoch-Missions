@@ -107,42 +107,54 @@ The missions are split into two types, major and minor, and run as follows.
 <b>Major<b>
 
 <b>Bandit Weapon Cache.</b>
+
 Bandits have discovered a weapons cache! Kill them and secure the weapons for yourself!
 
 <b>Medical C130 Crash.</b>
+
 A C-130 carrying medical supplies has crashed and bandits are securing the site! Take them on and secure it's cargo for yourself
 
 <b>Bandit Medical Camp.</b>
+
 Bandits have set up a medical re-supply camp! Secure it for yourself!
 
 <b>Bandit Heli Down!</b>
+
 A bandit supply helicopter has crash landed! Secure it and it's cargo for yourself!
 
 <b>Medical Ural Attack.</b>
+
 Bandits have destroyed a Ural carrying medical supplies and secured it's cargo!
 
-M<b>edical Supply Crate.</b>
+<b>Medical Supply Crate.</b>
+
 A medical supply crate has been secured by bandits! Kill them all to get the supplies!
 
 
 <b>Minor<b>
 
 <b>Bandit Hunting Party.</b>
+
 A bandit hunting party has been spotted! Kill them all and get their supplies!
 
 <b>Medical Outpost.</b>
+
 A group of bandits have taken over a Medical Outpost!
 
 <b>Bandit Stash House.</b>
+
 A group of bandits have set up a stash house!
 
 <b>Bandit Helicopter Crash.</b>
+
 A bandit helicopter has crashed! Kill any survivors and secure the loot!
 
 <b>Bandit Hummer Crash.</b>
+
 A bandit Humvee has crashed! Kill any survivors and secure the loot!
 
 <b>Bandit Weapons Truck.</b>
+
 A bandit weapons truck has crashed! Kill any survivors and secure the loot!
 
 
