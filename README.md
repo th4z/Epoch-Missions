@@ -1,74 +1,82 @@
-DayZ-Missions by TheSzerdi
+DayZChernarus-Missions by lazyink
 =============
+Original code by TheSzerdi
 
-<h3>This has only been tested on Namalsk (0.741). You <i>will</i> have errors. Good luck.</h3>
-<h4>Right off you need to customize the weapons loadouts for the NPC's and fillBoxes.sqf -- Also, you may need to change which vehicles spawn for major missions SM4, SM5, and SM6</h4>
-
-<b>In your server.pbo:</b>
-
-THE MISSIONS FOLDER GOES IN YOUR SERVER.PBO
-
-Add to server_functions.sqf place compile near beginning and if (isServer) near end:
-
-    fnc_hTime = compile preprocessFile "\z\addons\dayz_server\Missions\misc\fnc_hTime.sqf"; //Random integer selector for mission wait time
-    if (isServer) then { 
-      SMarray = ["SM1","SM2","SM3","SM4","SM5","SM6","SM7"];
-        [] execVM "\z\addons\dayz_server\missions\Major\SMfinder.sqf"; //Starts major mission system
-    	SMarray2 = ["SM1","SM2","SM3","SM4","SM5","SM6","SM7"];
-    	[] execVM "\z\addons\dayz_server\missions\Minor\SMfinder.sqf"; //Starts minor mission system
-    };
-
-Add to server_updateObject.sqf place right after terms defined:
-
-    if (_object getVariable "Mission" == 1) exitWith {};
+<h3>This has only been tested on Chernarus (1.7.7.1).</h3>
+<h4>Before installing you must first customize the fillboxes SQF's inside the 'misc' folder and the NPC's load-outs in the addunitserver SQF's</h4>
+<h4>If you leave the script as is, you MUST update your BE filters with the attached files</h4>
 
 
-Change line in server_cleanup.fsm around line 349 in the Check for Hacker section:
+<h3>Installation<h3>
 
+<b>server.pbo</b>
+
+ * Copy the Mission folder to the root of the server PBO
+
+ * Open <b>server_functions.sqf</b>
+
+	<i>Find:</i>
+
+	fn_bases = compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fn_bases.sqf";
+	
+	<i>Insert after:</i>
+	
+	fnc_hTime = compile preprocessFile "\z\addons\dayz_server\Missions\misc\fnc_hTime.sqf"; //Random integer selector for mission wait time
+	
+	<i>Find:</i>
+	
+	dayz_recordLogin = {
+	private["_key"];
+	_key = format["CHILD:103:%1:%2:%3:",_this select 0,_this select 1,_this select 2];
+	_key call server_hiveWrite;
+	};
+	
+	<i>Insert after:</i>
+	
+	if (isServer) then { 
+	SMarray = ["SM1","SM2","SM3","SM4","SM5","SM6"];
+    [] execVM "\z\addons\dayz_server\missions\Major\SMfinder.sqf"; //Starts major mission system
+    SMarray2 = ["SM1","SM2","SM3","SM4","SM5","SM6"];
+    [] execVM "\z\addons\dayz_server\missions\Minor\SMfinder.sqf"; //Starts minor mission system
+	};
+
+ * Open <b>server_updateObject.sqf</b>
+	
+	<i>Find:</i>
+	
+	#ifdef OBJECT_DEBUG
+    diag_log(format["Non-string Object: ID %1 UID %2", _objectID, _uid]);
+	#endif
+    //force fail
+    _objectID = "0";
+    _uid = "0";
+	};
+	
+	<i>Insert after:</i>
+	
+	if (_object getVariable "Mission" == 1) exitWith {};
+	
+
+ * Open <b>server_cleanup.fsm</b>
+ 
+	<i>Find:</i>
+ 
+	if(vehicle _x != _x && !(vehicle _x in _safety) && (typeOf vehicle _x) != ""ParachuteWest"") then {" \n
+
+	<i>Insert after:</i>
+	
     if(vehicle _x != _x && (vehicle _x getVariable [""Mission"",0] != 1) && !(vehicle _x in _safety) && (typeOf vehicle _x) != ""ParachuteWest"") then {" \n
 
+	
 IF YOU HAVE SARGE AI INSTALLED YOU NEED TO CHANGE THE VEHICLE VARIABLE IN EACH MISSION TO "SARGE" INSTEAD OF USING "MISSIONS" (Not tested with SARGE AI, may be incompatible.)
 
 
-<b>In your mission.pbo:</b>
+<b>mission.pbo:</b>
 
-Download http://all.quixoticfolly.com/hillbilly.ogg and place it in the root of your mission.pbo
-
-This isn't working yet. If you figure it out, let me know. admin@quixoticfolly.com
-
-In your description.ext paste this at end:
-
-    class CfgSounds
-    {
-      sounds[] = {};
-      
-        class hillbilly
-      {
-        name="hillbilly";
-        sound[]={hillbilly.ogg,0.9,1};
-        titles[] = {};
-      };
-    };
-
-The AI require faction settings. If you have SARGE AI you're good to go. Otherwise add faction.sqf to your mission.pbo and add this line to your init.sqf:
+The AI require faction settings. If you have SARGE AI you're good to go. Otherwise add faction.sqf to the root of the mission.pbo and add this line to the end of your init.sqf:
 
     [] execVM "faction.sqf";
+	
 
-If your map does not have a marker named "Center" in the middle of map you must add one to the mission.sqm in the mission.pbo
+	
 
-        class Markers
-    	{
-    		items=7;
-    		class Item0
-    		{
-    			position[]={5406.9092,30.012478,8796.7354};
-    			name="center";
-    			type="Empty";
-      	  };
-
-
-<b>Other stuff:</b>
-
-In the Missions\Minor\SM3.sqf you must specify your own coords for the NPC's/PBX to spawn and the landing point on beach. Coords used are for Namalsk only.
-
-In the createvehicle.txt comment out the SMAW lines and the Mine lines.
