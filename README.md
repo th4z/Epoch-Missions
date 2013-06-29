@@ -79,7 +79,8 @@ Original code by TheSzerdi
  
 <b>mission.pbo:</b>
 
-* The AI require faction settings. If you have SARGE AI you're good to go. Otherwise add faction.sqf to the root of the mission.pbo and add this line to the end of your init.sqf:  
+* The AI require faction settings. If you have SARGE AI you're good to go. Otherwise add faction.sqf to the root of the mission.pbo and add this line to the end of your init.sqf:
+
 
     [] execVM "faction.sqf";
 	
