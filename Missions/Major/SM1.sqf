@@ -6,7 +6,7 @@ sleep _wait;
 
 [nil,nil,rTitleText,"Bandits have discovered a weapons cache! Kill them and secure the weapons for yourself!", "PLAIN",10] call RE;
 
-_coords = [getMarkerPos "center",0,5500,30,0,2000,0] call BIS_fnc_findSafePos;
+_coords = [getMarkerPos "center",0,5500,200,0,20,0] call BIS_fnc_findSafePos;
 
 _dummymarker = createMarker["STR_MISSION_MARKER_1", _coords];
 _dummymarker setMarkerColor "ColorBlack";
@@ -15,8 +15,12 @@ _dummymarker setMarkerBrush "Grid";
 _dummymarker setMarkerSize [250,250];
 
 _hummer = createVehicle ["HMMWV_DZ",[(_coords select 0) + 10, (_coords select 1) - 20,0],[], 0, "CAN_COLLIDE"];
-_hummer = createVehicle ["HMMWV_DZ",[(_coords select 0) + 20, (_coords select 1) - 10,0],[], 0, "CAN_COLLIDE"];
-_hummer = createVehicle ["SUV_DZ",[(_coords select 0) + 30, (_coords select 1) + 10,0],[], 0, "CAN_COLLIDE"];
+_hummer1 = createVehicle ["HMMWV_DZ",[(_coords select 0) + 20, (_coords select 1) - 10,0],[], 0, "CAN_COLLIDE"];
+_hummer2 = createVehicle ["SUV_DZ",[(_coords select 0) + 30, (_coords select 1) + 10,0],[], 0, "CAN_COLLIDE"];
+
+_hummer setVariable ["Mission",1,true];
+_hummer1 setVariable ["Mission",1,true];
+_hummer2 setVariable ["Mission",1,true];
 
 _crate = createVehicle ["USVehicleBox",_coords,[], 0, "CAN_COLLIDE"];
 [_crate] execVM "\z\addons\dayz_server\missions\misc\fillBoxes.sqf";

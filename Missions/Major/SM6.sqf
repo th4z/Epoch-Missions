@@ -15,7 +15,10 @@ _dummymarker setMarkerBrush "Grid";
 _dummymarker setMarkerSize [250,250];
 
 _hummer = createVehicle ["HMMWV_DZ",[(_coords select 0) + 10, (_coords select 1) - 10,0],[], 0, "CAN_COLLIDE"];
-_hummer = createVehicle ["HMMWV_DZ",[(_coords select 0) + 20, (_coords select 1) - 5,0],[], 0, "CAN_COLLIDE"];
+_hummer1 = createVehicle ["HMMWV_DZ",[(_coords select 0) + 20, (_coords select 1) - 5,0],[], 0, "CAN_COLLIDE"];
+
+_hummer setVariable ["Mission",1,true];
+_hummer1 setVariable ["Mission",1,true];
 
 _crate = createVehicle ["USVehicleBox",[(_coords select 0) - 1, _coords select 1,0],[], 0, "CAN_COLLIDE"];
 [_crate] execVM "\z\addons\dayz_server\missions\misc\fillBoxesM.sqf";

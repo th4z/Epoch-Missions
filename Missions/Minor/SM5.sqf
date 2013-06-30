@@ -15,9 +15,6 @@ _dummymarker setMarkerSize [125,125];
 _humveecrash = createVehicle ["HMMWVwreck",_coords,[], 0, "CAN_COLLIDE"];
 _humveecrash setVariable ["Mission",1,true];
 
-_crate2 = createVehicle ["USLaunchersBox",[(_coords select 0) - 6, _coords select 1,0],[], 0, "CAN_COLLIDE"];
-[_crate2] execVM "\z\addons\dayz_server\missions\misc\fillBoxesS.sqf";
-
 _crate3 = createVehicle ["RULaunchersBox",[(_coords select 0) - 14, _coords select 1,0],[], 0, "CAN_COLLIDE"];
 [_crate3] execVM "\z\addons\dayz_server\missions\misc\fillBoxesH.sqf";
 

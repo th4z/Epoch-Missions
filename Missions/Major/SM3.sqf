@@ -17,6 +17,10 @@ _baserunover = createVehicle ["land_fortified_nest_big",[(_coords select 0) - 20
 _baserunover2 = createVehicle ["Land_Fort_Watchtower",[(_coords select 0) - 10, (_coords select 1) + 10,-0.2],[], 0, "CAN_COLLIDE"];
 _hummer = createVehicle ["HMMWV_DZ",[(_coords select 0) + 25, (_coords select 1) - 5,0],[], 0, "CAN_COLLIDE"];
 
+_baserunover2 setVariable ["Mission",1,true];
+_baserunover setVariable ["Mission",1,true];
+_hummer setVariable ["Mission",1,true];
+
 _crate = createVehicle ["USVehicleBox",[(_coords select 0) + 5, (_coords select 1),0],[], 0, "CAN_COLLIDE"];
 [_crate] execVM "\z\addons\dayz_server\missions\misc\fillBoxesM.sqf";
 

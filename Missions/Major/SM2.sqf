@@ -5,7 +5,7 @@ _wait = [2000,650] call fnc_hTime;
 sleep _wait;
 [nil,nil,rTitleText,"A C-130 carrying medical supplies has crashed and bandits are securing the site! Take them on and secure it's cargo for yourself!", "PLAIN",10] call RE;
 
-_coords = [getMarkerPos "center",0,5500,100,0,20,0] call BIS_fnc_findSafePos;
+_coords = [getMarkerPos "center",0,4000,200,0,20,0] call BIS_fnc_findSafePos;
 
 _dummymarker = createMarker["STR_MISSION_MARKER_2", _coords];
 _dummymarker setMarkerColor "ColorGreen";
@@ -15,8 +15,13 @@ _dummymarker setMarkerSize [250,250];
 
 _c130wreck = createVehicle ["C130J_wreck_EP1",[(_coords select 0) + 30, (_coords select 1) - 5,0],[], 0, "NONE"];
 _hummer = createVehicle ["HMMWV_DZ",[(_coords select 0) - 20, (_coords select 1) - 5,0],[], 0, "CAN_COLLIDE"];
-_hummer = createVehicle ["SUV_DZ",[(_coords select 0) - 30, (_coords select 1) - 10,0],[], 0, "CAN_COLLIDE"];
-_hummer = createVehicle ["SUV_DZ",[(_coords select 0) + 10, (_coords select 1) + 5,0],[], 0, "CAN_COLLIDE"];
+_hummer1 = createVehicle ["SUV_DZ",[(_coords select 0) - 30, (_coords select 1) - 10,0],[], 0, "CAN_COLLIDE"];
+_hummer2 = createVehicle ["SUV_DZ",[(_coords select 0) + 10, (_coords select 1) + 5,0],[], 0, "CAN_COLLIDE"];
+
+_c130wreck setVariable ["Mission",1,true];
+_hummer setVariable ["Mission",1,true];
+_hummer1 setVariable ["Mission",1,true];
+_hummer2 setVariable ["Mission",1,true];
 
 _crate = createVehicle ["USVehicleBox",[(_coords select 0) - 10, _coords select 1,0],[], 0, "CAN_COLLIDE"];
 [_crate] execVM "\z\addons\dayz_server\missions\misc\fillBoxesM.sqf";
