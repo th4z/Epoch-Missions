@@ -1,6 +1,6 @@
 DayZChernarus-Missions by lazyink
 =============
-Original code by TheSzerdi
+Original code by <a href="https://github.com/theszerdi">TheSzerdi</a>
 
 <h3>This has only been tested on Chernarus (1.7.7.1).</h3>  
 
@@ -13,7 +13,7 @@ Original code by TheSzerdi
 
 <b>server.pbo</b>
 
-Copy the Mission folder to the root of the server PBO.
+Copy the Missions folder to the root of the server PBO.
 
 Open <b>server_functions.sqf</b>
 
@@ -35,12 +35,16 @@ Open <b>server_functions.sqf</b>
 	
 <b>Insert after:</b>
 	
-	if (isServer) then { 
-	SMarray = ["SM1","SM2","SM3","SM4","SM5","SM6"];
-    [] execVM "\z\addons\dayz_server\missions\Major\SMfinder.sqf"; //Starts major mission system
+	//----------InitMissions--------//
+    MissionGo = 0;
+    MissionGoMinor = 0;
+    if (isServer) then { 
+    SMarray = ["SM1","SM2","SM3","SM4","SM5","SM6"];
+    [] execVM "\z\addons\dayz_server\missions\major\SMfinder.sqf"; //Starts major mission system
     SMarray2 = ["SM1","SM2","SM3","SM4","SM5","SM6"];
-    [] execVM "\z\addons\dayz_server\missions\Minor\SMfinder.sqf"; //Starts minor mission system
-	};
+    [] execVM "\z\addons\dayz_server\missions\minor\SMfinder.sqf"; //Starts minor mission system
+    };
+    //---------EndInitMissions------//
 
 	
 Open <b>server_updateObject.sqf</b>
@@ -79,6 +83,8 @@ IF YOU HAVE SARGE AI INSTALLED YOU NEED TO CHANGE THE VEHICLE VARIABLE IN EACH M
  
 <b>mission.pbo:</b>
 
+Copy the included debug folder into the root of the mission.pbo.
+	
 The AI require faction settings. If you have SARGE AI you're good to go. Otherwise add faction.sqf to the root of the mission.pbo and add this line to the end of your init.sqf:
 
     [] execVM "faction.sqf";

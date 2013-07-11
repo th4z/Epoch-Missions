@@ -10,7 +10,7 @@ _coords = [getMarkerPos "center",0,5500,50,0,20,0] call BIS_fnc_findSafePos;
 
 Ccoords = _coords;
 publicVariable "Ccoords";
-[] execVM "fixes\addmarkers.sqf";
+[] execVM "debug\addmarkers.sqf";
 
 
 _baserunover = createVehicle ["land_fortified_nest_big",[(_coords select 0) - 20, (_coords select 1) - 10,-0.2],[], 0, "CAN_COLLIDE"];
@@ -41,7 +41,7 @@ waitUntil{{isPlayer _x && _x distance _baserunover < 10  } count playableunits >
 
 [nil,nil,rTitleText,"Survivors have taken control of the camp and medical supplies.", "PLAIN",6] call RE;
 
-[] execVM "fixes\remmarkers.sqf";
+[] execVM "debug\remmarkers.sqf";
 MissionGo = 0;
 Ccoords = 0;
 publicVariable "Ccoords";

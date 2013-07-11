@@ -10,7 +10,7 @@ _coords = [getMarkerPos "center",0,5500,30,0,20,0] call BIS_fnc_findSafePos;
 
 Ccoords = _coords;
 publicVariable "Ccoords";
-[] execVM "fixes\addmarkers.sqf";
+[] execVM "debug\addmarkers.sqf";
 
 _chopper = ["UH1H_DZ","Mi17_DZ"] call BIS_fnc_selectRandom;
 
@@ -40,7 +40,7 @@ waitUntil{{isPlayer _x && _x distance _hueychop < 10  } count playableunits > 0}
 [nil,nil,rTitleText,"The helicopter has been taken by survivors!", "PLAIN",6] call RE;
 
 
-[] execVM "fixes\remmarkers.sqf";
+[] execVM "debug\remmarkers.sqf";
 MissionGo = 0;
 Ccoords = 0;
 publicVariable "Ccoords";

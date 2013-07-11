@@ -11,7 +11,7 @@ _coords = [getMarkerPos "center",0,5500,30,0,2000,0] call BIS_fnc_findSafePos;
 
 Ccoords = _coords;
 publicVariable "Ccoords";
-[] execVM "fixes\addmarkers.sqf";
+[] execVM "debug\addmarkers.sqf";
 
 _hummer = createVehicle ["HMMWV_DZ",[(_coords select 0) + 10, (_coords select 1) - 10,0],[], 0, "CAN_COLLIDE"];
 _hummer1 = createVehicle ["UAZ_Unarmed_UN_EP1",[(_coords select 0) + 20, (_coords select 1) - 5,0],[], 0, "CAN_COLLIDE"];
@@ -38,7 +38,7 @@ waitUntil{{isPlayer _x && _x distance _hummer < 10  } count playableunits > 0};
 [nil,nil,rTitleText,"The medical crate is under survivor control!", "PLAIN",6] call RE;
 
 
-[] execVM "fixes\remmarkers.sqf";
+[] execVM "debug\remmarkers.sqf";
 MissionGo = 0;
 Ccoords = 0;
 publicVariable "Ccoords";
