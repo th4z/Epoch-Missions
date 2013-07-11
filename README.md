@@ -71,7 +71,7 @@ Open <b>server_cleanup.fsm</b>
  
     if(vehicle _x != _x && !(vehicle _x in _safety) && (typeOf vehicle _x) != ""ParachuteWest"") then {" \n
 
-<b>Insert after:</b>
+<b>Replace with:</b>
 
     if(vehicle _x != _x && (vehicle _x getVariable [""Mission"",0] != 1) && !(vehicle _x in _safety) && (typeOf vehicle _x) != ""ParachuteWest"") then {" \n
 
