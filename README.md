@@ -1,4 +1,4 @@
-DayZChernarus-Missions by lazyink
+DayZChernarus Mission System by lazyink
 =============
 Original code by <a href="https://github.com/theszerdi">TheSzerdi</a>, Falcyn and TAW_Tonic.
 
