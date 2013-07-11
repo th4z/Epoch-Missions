@@ -1,12 +1,12 @@
 DayZChernarus-Missions by lazyink
 =============
-Original code by <a href="https://github.com/theszerdi">TheSzerdi</a>
+Original code by <a href="https://github.com/theszerdi">TheSzerdi</a>, Falcyn and TAW_Tonic.
 
 <h3>This has only been tested on Chernarus (1.7.7.1).</h3>  
 
- * Before installing you must first customize the fillboxes SQF's inside the MISC folder and the NPC's load-outs in the addunitserver SQF's. 
+ * Before installing you must first customize the fillboxes SQF's inside the Missions/Misc folder and the NPC's load-outs in the addunitserver SQF's. 
  
- * If you leave the script as is, you MUST update your BE filters with the attached files.
+ * If you leave the script as is, you MUST update your BE filters with the attached files as it contains weapons that BE will kick for.
 
 
 <h3>Installation</h3>
