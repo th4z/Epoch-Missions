@@ -7,6 +7,8 @@ Original code by <a href="https://github.com/theszerdi">TheSzerdi</a>, Falcyn an
  * Before installing you must first customize the fillboxes SQF's inside the Missions/Misc folder and the NPC's load-outs in the addunitserver SQF's. 
  
  * If you leave the script as is, you MUST update your BE filters with the attached files as it contains weapons that BE will kick for.
+ 
+ * If you use SARGE AI, in the mission sqfs, you must change all lines ending with <b>setVariable ["Mission",1,true];<b> to <b>setVariable ["Sarge",1,true];<b>
 
 
 <h3>Installation</h3>
