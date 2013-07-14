@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>DayZChernarus Mission System by lazyink</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>DayZChernarus Mission System</h1>
+          <h2>In game mission system for the DayZMod.</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/lazyink/DayZ-Missions/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/lazyink/DayZ-Missions/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/lazyink/DayZ-Missions" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a name="dayzchernarus-mission-system" class="anchor" href="#dayzchernarus-mission-system"><span class="octicon octicon-link"></span></a>DayZChernarus Mission System</h1>
+
+<p>Original code by <a href="https://github.com/theszerdi">TheSzerdi</a>, Falcyn and TAW_Tonic.</p>
+
+<pre><code>$ cd lazyink/DayZ-Missions.git
+$ git fetch origin
+$ git checkout gh-pages
+</code></pre>
+
+<h3>
+<a name="this-has-only-been-tested-on-chernarus-1771" class="anchor" href="#this-has-only-been-tested-on-chernarus-1771"><span class="octicon octicon-link"></span></a>This has only been tested on Chernarus (1.7.7.1).</h3>  
+
+<ul>
+<li><p>Before installing you must first customize the fillboxes SQF's inside the Missions/Misc folder and the NPC's load-outs in the addunitserver SQF's. </p></li>
+<li><p>If you leave the script as is, you MUST update your BE filters with the attached files as it contains weapons that BE will kick for.</p></li>
+<li><p>If you use SARGE AI, in the mission sqfs, you must change all lines ending with <b>setVariable ["Mission",1,true];<b> to <b>setVariable ["Sarge",1,true];<b></b></b></b></b></p></li>
+</ul><h3>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h3>
+
+<p><b>server.pbo</b></p>
+
+<p>Copy the Missions folder to the root of the server PBO.</p>
+
+<p>Open <b>server_functions.sqf</b></p>
+
+<p><b>Find:</b></p>
+
+<pre><code>fn_bases = compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fn_bases.sqf";
+</code></pre>
+
+<p><b>Insert after:</b></p>
+
+<pre><code>fnc_hTime = compile preprocessFile "\z\addons\dayz_server\Missions\misc\fnc_hTime.sqf"; //Random integer selector for mission wait time
+</code></pre>
+
+<p><b>Find:</b></p>
+
+<pre><code>dayz_recordLogin = {
+private["_key"];
+_key = format["CHILD:103:%1:%2:%3:",_this select 0,_this select 1,_this select 2];
+_key call server_hiveWrite;
+};
+</code></pre>
+
+<p><b>Insert after:</b></p>
+
+<pre><code>//----------InitMissions--------//
+MissionGo = 0;
+MissionGoMinor = 0;
+if (isServer) then { 
+SMarray = ["SM1","SM2","SM3","SM4","SM5","SM6"];
+[] execVM "\z\addons\dayz_server\missions\major\SMfinder.sqf"; //Starts major mission system
+SMarray2 = ["SM1","SM2","SM3","SM4","SM5","SM6"];
+[] execVM "\z\addons\dayz_server\missions\minor\SMfinder.sqf"; //Starts minor mission system
+};
+//---------EndInitMissions------//
+</code></pre>
+
+<p>Open <b>server_updateObject.sqf</b></p>
+
+<p><b>Find:</b></p>
+
+<pre><code>#ifdef OBJECT_DEBUG
+diag_log(format["Non-string Object: ID %1 UID %2", _objectID, _uid]);
+#endif
+//force fail
+_objectID = "0";
+_uid = "0";
+};
+</code></pre>
+
+<p><b>Insert after:</b>  </p>
+
+<pre><code>if (_object getVariable "Mission" == 1) exitWith {};
+</code></pre>
+
+<p>Open <b>server_cleanup.fsm</b></p>
+
+<p><b>Find:</b>  </p>
+
+<pre><code>if(vehicle _x != _x &amp;&amp; !(vehicle _x in _safety) &amp;&amp; (typeOf vehicle _x) != ""ParachuteWest"") then {" \n
+</code></pre>
+
+<p><b>Replace with:</b></p>
+
+<pre><code>if(vehicle _x != _x &amp;&amp; (vehicle _x getVariable [""Mission"",0] != 1) &amp;&amp; !(vehicle _x in _safety) &amp;&amp; (typeOf vehicle _x) != ""ParachuteWest"") then {" \n
+</code></pre>
+
+<p>IF YOU HAVE SARGE AI INSTALLED YOU NEED TO CHANGE THE VEHICLE VARIABLE IN EACH MISSION TO "SARGE" INSTEAD OF USING "MISSIONS" (Not tested with SARGE AI, may be incompatible.)</p>
+
+<p><b>mission.pbo:</b></p>
+
+<p>Copy the included debug folder into the root of the mission.pbo.</p>
+
+<p>The AI require faction settings. If you have SARGE AI you're good to go. Otherwise add faction.sqf to the root of the mission.pbo and add this line to the end of your init.sqf:</p>
+
+<pre><code>[] execVM "faction.sqf";
+</code></pre>
+
+<h3>
+<a name="the-crates" class="anchor" href="#the-crates"><span class="octicon octicon-link"></span></a>The Crates</h3>
+
+<p>Inside the MISC folder, there are 4 differing fillboxes scripts. They are set up like so:</p>
+
+<ul>
+<li><p>fillboxes.sqf - Large weapons crate.</p></li>
+<li><p>fillboxesS.sqf - Small weapons crate.</p></li>
+<li><p>fillboxesH.sqf - High value weapons crate.</p></li>
+<li><p>fillboxesM.sqf - Medical crate.</p></li>
+</ul><h3>
+<a name="the-missions" class="anchor" href="#the-missions"><span class="octicon octicon-link"></span></a>The Missions</h3>
+
+<p>The missions are split into two types, major and minor, and run as follows.</p>
+
+<h4>
+<a name="major" class="anchor" href="#major"><span class="octicon octicon-link"></span></a>Major</h4>
+
+<p><b>Bandit Weapon Cache.</b><br>
+Bandits have discovered a weapons cache! Kill them and secure the weapons for yourself!</p>
+
+<p><b>Medical C130 Crash.</b><br>
+A C-130 carrying medical supplies has crashed and bandits are securing the site! Take them on and secure it's cargo for yourself</p>
+
+<p><b>Bandit Medical Camp.</b><br>
+Bandits have set up a medical re-supply camp! Secure it for yourself!</p>
+
+<p><b>Bandit Heli Down!</b><br>
+A bandit supply helicopter has crash landed! Secure it and it's cargo for yourself!</p>
+
+<p><b>Medical Ural Attack.</b><br>
+Bandits have destroyed a Ural carrying medical supplies and secured it's cargo!</p>
+
+<p><b>Medical Supply Crate.</b><br>
+A medical supply crate has been secured by bandits! Kill them all to get the supplies!</p>
+
+<h4>
+<a name="minor" class="anchor" href="#minor"><span class="octicon octicon-link"></span></a>Minor</h4>
+
+<p><b>Bandit Hunting Party.</b><br>
+A bandit hunting party has been spotted! Kill them all and get their supplies!</p>
+
+<p><b>Medical Outpost.</b><br>
+A group of bandits have taken over a Medical Outpost!</p>
+
+<p><b>Bandit Stash House.</b><br>
+A group of bandits have set up a stash house!</p>
+
+<p><b>Bandit Helicopter Crash.</b><br>
+A bandit helicopter has crashed! Kill any survivors and secure the loot!</p>
+
+<p><b>Bandit Hummer Crash.</b><br>
+A bandit Humvee has crashed! Kill any survivors and secure the loot!</p>
+
+<p><b>Bandit Weapons Truck.</b><br>
+A bandit weapons truck has crashed! Kill any survivors and secure the loot!</p>
+        </section>
+
+        <footer>
+          DayZChernarus Mission System is maintained by <a href="https://github.com/lazyink">lazyink</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
