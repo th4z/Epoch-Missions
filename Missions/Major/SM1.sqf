@@ -10,7 +10,7 @@ _coords = [getMarkerPos "center",0,5500,100,0,20,0] call BIS_fnc_findSafePos;
 
 Ccoords = _coords;
 publicVariable "Ccoords";
-[] execVM "debug\addmarkers.sqf";
+[] execVM "fixes\addmarkers.sqf";
 
 _hummer = createVehicle ["UAZ_Unarmed_UN_EP1",[(_coords select 0) + 10, (_coords select 1) - 20,0],[], 0, "CAN_COLLIDE"];
 _hummer1 = createVehicle ["UAZ_Unarmed_UN_EP1",[(_coords select 0) + 20, (_coords select 1) - 10,0],[], 0, "CAN_COLLIDE"];
@@ -38,7 +38,7 @@ waitUntil{{isPlayer _x && _x distance _hummer < 10  } count playableunits > 0};
 
 [nil,nil,rTitleText,"The weapons cache is under survivor control!", "PLAIN",6] call RE;
 
-[] execVM "debug\remmarkers.sqf";
+[] execVM "fixes\remmarkers.sqf";
 MissionGo = 0;
 Ccoords = 0;
 publicVariable "Ccoords";

@@ -10,7 +10,7 @@ _coords =  [getMarkerPos "center",0,5000,10,0,20,0] call BIS_fnc_findSafePos;
 
 MCoords = _coords;
 publicVariable "MCoords";
-[] execVM "debug\addmarkers75.sqf";
+[] execVM "fixes\addmarkers75.sqf";
 
 _baserunover = createVehicle ["Land_HouseV_1I3",[(_coords select 0) +2, (_coords select 1) +5,-0.3],[], 0, "CAN_COLLIDE"];
 _baserunover2 = createVehicle ["Land_hut06",[(_coords select 0) - 10, (_coords select 1) - 5,0],[], 0, "CAN_COLLIDE"];
@@ -42,7 +42,7 @@ waitUntil{{isPlayer _x && _x distance _baserunover < 10  } count playableunits >
 
 [nil,nil,rTitleText,"The stash house is under survivor control!", "PLAIN",6] call RE;
 
-[] execVM "debug\remmarkers75.sqf";
+[] execVM "fixes\remmarkers75.sqf";
 MissionGoMinor = 0;
 publicVariable "MissionGoMinor";
 MCoords = 0;

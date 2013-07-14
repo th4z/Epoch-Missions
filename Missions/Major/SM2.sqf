@@ -10,7 +10,7 @@ _coords = [getMarkerPos "center",0,5600,100,0,20,0] call BIS_fnc_findSafePos;
 
 Ccoords = _coords;
 publicVariable "Ccoords";
-[] execVM "debug\addmarkers.sqf";
+[] execVM "fixes\addmarkers.sqf";
 
 _c130wreck = createVehicle ["C130J_wreck_EP1",[(_coords select 0) + 30, (_coords select 1) - 5,0],[], 0, "NONE"];
 _hummer = createVehicle ["HMMWV_DZ",[(_coords select 0) - 20, (_coords select 1) - 5,0],[], 0, "CAN_COLLIDE"];
@@ -41,7 +41,7 @@ _aispawn = [[(_coords select 0) + 30, _coords select 1,0],40,4,4,1] execVM "\z\a
 
 waitUntil{{isPlayer _x && _x distance _c130wreck < 5 } count playableunits > 0}; 
 
-[] execVM "debug\remmarkers.sqf";
+[] execVM "fixes\remmarkers.sqf";
 MissionGo = 0;
 Ccoords = 0;
 publicVariable "Ccoords";

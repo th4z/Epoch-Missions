@@ -10,7 +10,7 @@ _coords = [getMarkerPos "center",0,5500,30,0,20,0] call BIS_fnc_findSafePos;
 
 Ccoords = _coords;
 publicVariable "Ccoords";
-[] execVM "debug\addmarkers.sqf";
+[] execVM "fixes\addmarkers.sqf";
 
 _uralcrash = createVehicle ["UralWreck",_coords,[], 0, "CAN_COLLIDE"];
 _uralcrash setVariable ["Mission",1,true];
@@ -37,7 +37,7 @@ waitUntil{{isPlayer _x && _x distance _uralcrash < 5  } count playableunits > 0}
 [nil,nil,rTitleText,"The medical supplies have been secured by survivors!", "PLAIN",6] call RE;
 
 
-[] execVM "debug\remmarkers.sqf";
+[] execVM "fixes\remmarkers.sqf";
 MissionGo = 0;
 Ccoords = 0;
 publicVariable "Ccoords";
