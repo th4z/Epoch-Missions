@@ -10,7 +10,7 @@ _coords =  [getMarkerPos "center",0,4000,10,0,2000,0] call BIS_fnc_findSafePos;
 
 MCoords = _coords;
 publicVariable "MCoords";
-[] execVM "fixes\addmarkers75.sqf";
+[] execVM "debug\addmarkers75.sqf";
 
 _humveecrash = createVehicle ["HMMWVwreck",_coords,[], 0, "CAN_COLLIDE"];
 _humveecrash setVariable ["Mission",1,true];
@@ -29,7 +29,7 @@ waitUntil{{isPlayer _x && _x distance _humveecrash < 5  } count playableunits > 
 [nil,nil,rTitleText,"The crash site has been secured by survivors!", "PLAIN",6] call RE;
 
 
-[] execVM "fixes\remmarkers75.sqf";
+[] execVM "debug\remmarkers75.sqf";
 MissionGoMinor = 0;
 MCoords = 0;
 publicVariable "MCoords";
