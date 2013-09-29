@@ -76,7 +76,7 @@ while {true} do {
 		// http://forums.bistudio.com/showthread.php?126760-dynamic-object-names-with-part-of-name-provided-by-a-variable
 		missionNamespace setVariable ["SAR_mission_" + str(_id), _marker];  
 		
-		["SAR_mission_" + str(_id), 3, _mission_info select 2, _mission_info select 3, (_mission_info select 4) call BIS_fnc_selectRandom ,false] call SAR_AI;
+		[missionNameSpace getVariable ("SAR_mission_" + str(_id)), 3, _mission_info select 2, _mission_info select 3, (_mission_info select 4) call BIS_fnc_selectRandom ,false] call SAR_AI;
 		
 				
 		// Wait Unit  Player Approaches First Crate or  Mission Times Out
