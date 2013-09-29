@@ -4,17 +4,17 @@ private ["_wait","_mission","_mission_info","_mission_pos","_isNear", "_isNearLi
 
 _id = 0;
 _isNear = false;
-
+diag_log ("Mission Start.......");
 
 while {true} do {
+	/*
 	if (_isNear) then {
 		_wait = [1000,650] call fnc_hTime;
 	} else {
 		_wait = [2000,650] call fnc_hTime;
 	};
-	/*
-	_wait = 200;
 	*/
+	_wait = 200;
 	sleep _wait;
 	_mission = active_mission_list call BIS_fnc_selectRandom;
 	
@@ -57,7 +57,7 @@ while {true} do {
 			_y = _y + 1;
 			//TODO: Add check that loot position is clear of objects i.e vehicles ???
 			_crate = createVehicle [(_mission_info select 5) select _y, _x, [], 0, "CAN_COLLIDE"];
-			[_crate, (_mission_info select 5)] execVM "\z\addons\dayz_server\missions\misc\fillBoxes.sqf";
+			[_crate, (_mission_info select 6) select _y] execVM "\z\addons\dayz_server\missions\misc\fillBoxes.sqf";
 			_crate setVariable ["Sarge",1,true];  // Stop Server Cleanup Killing Box
 			_crates = _crates + [_crate];
 		} forEach (_mission_info select 1);
@@ -66,7 +66,7 @@ while {true} do {
 		// Spawn SARGE AI
 		// 		Create Dynamic SARGE MARKER
 		_id = _id + 1;
-		_marker = createMarker [("SAR_marker_" + str(id)), _mission_pos];
+		_marker = createMarker [("SAR_mission_" + str(id)), _mission_pos];
 		_marker setMarkerShape "RECTANGLE";
 		_marker setMarkeralpha 0;
 		_marker setMarkerType "Flag";

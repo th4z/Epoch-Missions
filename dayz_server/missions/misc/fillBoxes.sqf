@@ -65,9 +65,9 @@ switch(_loot_type) do
 				["ItemMap",				 "", 0.5, 5],
 				["ItemGPS",				 "", 0.3, 5],
 				["ItemRadio",			 "", 0.3, 5],
-				"ItemEtool", "weapon"
-				"UZI_SD_EP1","weapon"
-				"M249_DZ","weapon"
+				["ItemEtool", "weapon",	 "", 0.3, 5],
+				["UZI_SD_EP1","weapon",  "", 0.6, 5],
+				["M249_DZ","weapon",     "", 0.2, 5],
 				
 				["ItemBandage", 		 "", 0.8, 10],
 				["ItemPainkiller", 		 "", 0.8, 5],
