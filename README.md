@@ -1,4 +1,4 @@
-DayZChernarus Mission System
+SARGE-AI Mission System for DayZChernarus
 =============
 Original code by <a href="https://github.com/lazyink/DayZ-Missions">Lazyink</a>, <a href="https://github.com/theszerdi">TheSzerdi</a>, Falcyn and TAW_Tonic.
 
