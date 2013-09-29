@@ -17,7 +17,7 @@ switch(_loot_type) do
 	{
 		_loot = [
 				["ItemToolbox", 	 "weapon", 0.3, 5],
-				["ItemMatchbox", 		   "", 0.3, 5],
+				["ItemMatchbox", 	 "weapon", 0.3, 5],
 				["ItemJerrycan", 	   	   "", 0.5, 5],
 				["ItemFuelBarrel", 		   "", 0.5, 5],
 				["ItemSledge",		 "weapon", 0.8, 2],
@@ -60,7 +60,7 @@ switch(_loot_type) do
 	{
 		_loot = [
 				["ItemToolbox", 	"weapon", 0.5, 5],
-				["ItemMatchbox", 		 "", 0.5, 5],
+				["ItemMatchbox", 	"weapon", 0.5, 5],
 				["ItemCompass",			 "", 0.5, 5],
 				["ItemMap",				 "", 0.5, 5],
 				["ItemGPS",				 "", 0.3, 5],
@@ -79,74 +79,74 @@ switch(_loot_type) do
 				["DZ_Backpack_EP1", "backpack", 0.4, 1],
 
 				["FoodCanBakedBeans", 	"", 1.0, 10],
-				["HandRoadFlare", 	"", 1.0, 10],
-				["HandGrenade_west", 		"", 0.5, 10]];
+				["HandRoadFlare", 		"", 1.0, 10],
+				["HandGrenade_west", 	"", 0.5, 10]];
 	};
 		
 	case "Money":
 	{
 		_loot = [
 				["ItemToolbox", 	"weapon", 0.5, 5],
-				["ItemMatchbox", 		 "", 0.5, 5],
+				["ItemMatchbox", 	"weapon", 0.5, 5],
 				
 				["ItemBandage", 		 "", 0.8, 10],
 				["ItemPainkiller", 		 "", 0.8, 5],
 				["ItemBloodbag", 		 "", 0.5, 10],
 
 				["glock17_EP1", 	"weapon",  0.8, 1],
-				["MakarovSD", 		"weapon",  0.8, 1],
+				["MakarovSD",		"weapon",  0.8, 1],
 
 				["DZ_Backpack_EP1", "backpack", 0.4, 1],
 
-				["FoodCanBakedBeans", 	"", 1.0, 10],
-				["HandRoadFlare", 	"", 1.0, 10],
+				["FoodCanBakedBeans", 		"", 1.0, 10],
+				["HandRoadFlare", 			"", 1.0, 10],
 				["HandGrenade_west", 		"", 0.5, 10]];
 	};
 	
 	case "Rare":
 	{
 		_loot = [
-				["ItemToolbox", 	"weapon", 0.5, 5],
-				["ItemMatchbox", 		 "", 0.5, 5],
-				["ItemGenerator", 			"", 0.5, 5],
-				["ItemKeyKit", 		 "weapon", 0.5, 5],
-				["ItemBandage", 		 "", 0.8, 10],
-				["ItemPainkiller", 		 "", 0.8, 5],
-				["ItemBloodbag", 		 "", 0.5, 10],
+				["ItemToolbox", 	"weapon",	0.5, 5],
+				["ItemMatchbox", 	"weapon",	0.5, 5],
+				["ItemGenerator", 			"",	0.5, 5],
+				["ItemKeyKit", 		 "weapon", 	0.5, 5],
+				["ItemBandage", 		 "", 	0.8, 10],
+				["ItemPainkiller", 		 "", 	0.8, 5],
+				["ItemBloodbag", 		 "", 	0.5, 10],
 
-				["glock17_EP1", 	"weapon",  0.8, 1],
-				["MakarovSD", 		"weapon",  0.8, 1],
-				["NVGoggles","weapon",			0.8, 1],
+				["glock17_EP1", 	"weapon",	0.8, 1],
+				["MakarovSD", 		"weapon",	0.8, 1],
+				["NVGoggles",		"weapon",	0.8, 1],
 
 				["DZ_Backpack_EP1", "backpack", 0.4, 1],
 
-				["FoodCanBakedBeans", 	"", 1.0, 10],
-				["HandRoadFlare", 	"", 1.0, 10],
+				["FoodCanBakedBeans", 		"", 1.0, 10],
+				["HandRoadFlare", 			"", 1.0, 10],
 				["HandGrenade_west", 		"", 0.5, 10]];
 	};
 		
 	case "Residental":
 	{
 		_loot = [
-				["ItemMatchbox", 		 "", 0.5, 5],
-				["ItemKnife",			 "", 0.5, 5],
+				["ItemMatchbox", 	"weapon", 0.5, 5],
+				["ItemKnife",		"weapon", 0.5, 5],
 				
 				["ItemBandage", 		 "", 0.8, 10],
 				["ItemPainkiller", 		 "", 0.8, 5],
 
-				["ItemSodaMdew", 		 "", 0.5, 10],
-				["ItemSodaRbull", 		"", 0.5, 10],
-				["ItemSodaOrangeSherbet", "", 0.5, 10],
-				["PartPlankPack","magazine", 0.5, 5],
-				["ItemFishingPole","weapon" , 0.5, 5],
-				["ItemLightBulb","weapon" , 0.5, 5],
+				["ItemSodaMdew", 		 	"", 0.5, 10],
+				["ItemSodaRbull", 			"", 0.5, 10],
+				["ItemSodaOrangeSherbet", 	"", 0.5, 10],
+				["PartPlankPack", 	"magazine", 0.5, 5],
+				["ItemFishingPole",	  "weapon", 0.5, 5],
+				["ItemLightBulb",			"", 0.5, 5],
 
 				["Winchester1866", 		"weapon",  0.8, 3],
 
 				["DZ_Backpack_EP1", "backpack", 0.4, 1],
 
-				["FoodCanBakedBeans", 	"", 1.0, 10],
-				["HandRoadFlare", 	"", 1.0, 10],
+				["FoodCanBakedBeans", 		"", 1.0, 10],
+				["HandRoadFlare", 			"", 1.0, 10],
 				["HandGrenade_west", 		"", 0.5, 10]];
 	};
 		
@@ -154,26 +154,26 @@ switch(_loot_type) do
 	{
 		_loot = [
 				["ItemToolbox", 	"weapon", 0.5, 5],
-				["ItemMatchbox", 		 "", 0.5, 5],
+				["ItemMatchbox", 	"weapon", 0.5, 5],
 				
 				["ItemBandage", 		 "", 0.8, 10],
 				["ItemPainkiller", 		 "", 0.8, 5],
 				["ItemBloodbag", 		 "", 0.5, 10],
 
-				["glock17_EP1", 	"weapon",  0.8, 1],
-				["MakarovSD", 		"weapon",  0.8, 1],
+				["glock17_EP1", 		"weapon",  0.8, 1],
+				["MakarovSD", 			"weapon",  0.8, 1],
 
-				["DZ_Backpack_EP1", "backpack", 0.4, 1],
+				["DZ_Backpack_EP1", 	"backpack", 0.4, 1],
 
-				["FoodCanBakedBeans", 	"", 1.0, 10],
-				["HandRoadFlare", 	"", 1.0, 10],
+				["FoodCanBakedBeans", 		"", 1.0, 10],
+				["HandRoadFlare", 			"", 1.0, 10],
 				["HandGrenade_west", 		"", 0.5, 10]];
 	};
 };
 
 // Item | Type | Chance | Amount
 {
-	
+	diag_log format ["DEBUG MISSIONS: fillBoxes _x: %1", _x];
 	_chance = (_x select 2);
 	if ((random 1) < _chance) then {
 		_item = (_x select 0);

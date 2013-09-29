@@ -7,14 +7,12 @@ _isNear = false;
 diag_log ("Mission Start.......");
 
 while {true} do {
-	/*
 	if (_isNear) then {
 		_wait = [1000,650] call fnc_hTime;
 	} else {
 		_wait = [2000,650] call fnc_hTime;
 	};
-	*/
-	_wait = 200;
+	//_wait = 200;
 	sleep _wait;
 	_mission = active_mission_list call BIS_fnc_selectRandom;
 	
