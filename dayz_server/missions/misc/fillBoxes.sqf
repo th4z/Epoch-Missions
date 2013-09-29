@@ -116,7 +116,7 @@ switch(_loot_type) do
 
 				["glock17_EP1", 	"weapon",  0.8, 1],
 				["MakarovSD", 		"weapon",  0.8, 1],
-				"NVGoggles","weapon"
+				["NVGoggles","weapon",			0.8, 1],
 
 				["DZ_Backpack_EP1", "backpack", 0.4, 1],
 
