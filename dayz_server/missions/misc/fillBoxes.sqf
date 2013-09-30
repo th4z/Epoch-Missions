@@ -20,10 +20,10 @@ switch(_loot_type) do
 				["ItemMatchbox", 	 "weapon", 0.3, 5],
 				["ItemJerrycan", 	   	   "", 0.5, 5],
 				["ItemFuelBarrel", 		   "", 0.5, 5],
-				["ItemSledge",		 "weapon", 0.8, 2],
-				["PartPlywoodPack","magazine", 0.6, 8],
-				["CinderBlocks",	"magazine",0.6, 8],
-				["MortarBucket",	"magazine",0.6, 8],
+				["ItemSledge",		 "weapon", 0.5, 2],
+				["PartPlywoodPack","magazine", 0.8, 10],
+				["CinderBlocks",	"magazine",0.8, 10],
+				["MortarBucket",	"magazine",0.8, 10],
 				["ItemFuelPump",	"magazine",0.5, 5],
 				
 				["Remington870_lamp", 	  "weapon",  0.8, 1],
@@ -67,7 +67,7 @@ switch(_loot_type) do
 				["ItemRadio",			 "", 0.3, 5],
 				["ItemEtool", 	   "weapon", 0.3, 5],
 				["UZI_SD_EP1",	   "weapon", 0.6, 5],
-				["M249_DZ","weapon",     "", 0.2, 5],
+				["M249_DZ",		   "weapon", 0.2, 5],
 				
 				["ItemBandage", 		 "", 0.8, 10],
 				["ItemPainkiller", 		 "", 0.8, 5],
@@ -93,14 +93,14 @@ switch(_loot_type) do
 				["ItemPainkiller", 		 "", 0.8, 5],
 				["ItemBloodbag", 		 "", 0.5, 10],
 
-				["glock17_EP1", 	"weapon",  0.8, 1],
-				["MakarovSD",		"weapon",  0.8, 1],
+				["ItemSilverBar", 	"",  0.8, 8],
+				["ItemGoldBar",		"",  0.8, 4],
 
 				["DZ_Backpack_EP1", "backpack", 0.4, 1],
 
 				["FoodCanBakedBeans", 		"", 1.0, 10],
 				["HandRoadFlare", 			"", 1.0, 10],
-				["HandGrenade_west", 		"", 0.5, 10]];
+				["ItemGoldBar10oz", 		"", 0.2, 4]];
 	};
 	
 	case "Rare":
@@ -122,7 +122,7 @@ switch(_loot_type) do
 
 				["FoodCanBakedBeans", 		"", 1.0, 10],
 				["HandRoadFlare", 			"", 1.0, 10],
-				["HandGrenade_west", 		"", 0.5, 10]];
+				["ItemSilverBar", 		"", 0.5, 10]];
 	};
 		
 	case "Residental":
@@ -167,7 +167,7 @@ switch(_loot_type) do
 
 				["FoodCanBakedBeans", 		"", 1.0, 10],
 				["HandRoadFlare", 			"", 1.0, 10],
-				["HandGrenade_west", 		"", 0.5, 10]];
+				["ItemCopperBar", 		"", 0.5, 10]];
 	};
 };
 

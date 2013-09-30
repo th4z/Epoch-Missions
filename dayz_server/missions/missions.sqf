@@ -238,7 +238,7 @@ _loot_types = 		[
 					"Residental",
 					"Residental",
 					"Residental",
-					"Residental"];
+					"Random"];
 _text = 			"Bandits Have Been Spotted at Electro! Check your map for the location!";
 					
 mission_electro_shop = [_sar_pos, _loot_pos, 1, 8, ["ambush", "patrol"], _loot_boxes, _loot_types, _text];

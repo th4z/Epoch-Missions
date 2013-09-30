@@ -1,27 +1,50 @@
-private ["_wait","_mission","_mission_info","_mission_pos","_isNear", "_isNearList", "_y"];
+private ["_id", "_ai_veh_pool", "_vehicle", "_velimit", "_qty", "_wait", "_mission", "_mission_info", "_isNear", "_isNearList", "_y"];
 
 #include "mission_deamon_config.sqf"
 
+fnc_hTime = compile preprocessFileLineNumbers "\z\addons\dayz_server\missions\misc\fnc_hTime.sqf"; //Random integer selector for mission wait time
+create_mission_crates = compile preprocessFileLineNumbers "\z\addons\dayz_server\missions\modules\create_mission_crates.sqf"; //Random integer selector for mission wait time
+
+//mission_disabled_veh = compile preprocessFile "\z\addons\dayz_server\modules\mission_loot.sqf"; //Random integer selector for mission wait time
+//mission_patrol_ground_veh = compile preprocessFile "\z\addons\dayz_server\modules\mission_loot.sqf"; //Random integer selector for mission wait time
+
+
 _id = 0;
 _isNear = false;
-diag_log ("Mission Start.......");
+diag_log ("DEBUG: Mission Code: Start.......");
+
+// TODO ADD Code to Generate List of Vehicles Available to Spawn onto Server....
+_ai_veh_pool = [];
+{
+	_vehicle = _x select 0;
+	_velimit = _x select 1;
+	_qty = 0;
+	_qty = {_x == _vehicle} count serverVehicleCounter;
+	if (_qty <= _velimit) then {
+		_ai_veh_pool = _ai_veh_pool + [_vehicle, _velimit];
+	};
+} forEach dynamic_ai_vehicles;
+
+
+diag_log format ["DEBUG: Mission Code: AI Vehicle Pool: %1", _ai_veh_pool];
 
 while {true} do {
+	diag_log ("DEBUG: Mission Code: Waiting....");
 	if (_isNear) then {
+		// Shorter Wait Time, If last mission attempt aborted due to players nearby
 		_wait = [1000,650] call fnc_hTime;
 	} else {
 		_wait = [2000,650] call fnc_hTime;
 	};
-	//_wait = 200;
+	//_wait = 200; For Testing
 	sleep _wait;
 	_mission = active_mission_list call BIS_fnc_selectRandom;
 	
 	_mission_info = _mission select 0;
-	_mission_pos = _mission_info select 0;
 	
 	// Check if Player is within 200 Metres...
 	// Need to add check to parse & check entities are playable i.e not SARGE AI
-	_isNearList = _mission_pos nearEntities ["CAManBase",200];
+	_isNearList = (_mission_info select 0) nearEntities ["CAManBase",200];
 	_isNear = false;
 	
 	// Check for Players & Ignore SARGE AI
@@ -33,68 +56,15 @@ while {true} do {
 		} forEach _isNearList;
 	};
 	
-	
+	diag_log format ["DEBUG: Mission Code: Check Near: %1", _isNear];
 	if (!_isNear) then {
-		_crates = [];
-
+		_id = _id + 1;
 		// Remove Mission if its not recurring
 		if !(_mission select 1) then {
 			active_mission_list = active_mission_list - _mission;
 		};
-		
-		// Start Mission
-		
-		[nil,nil,rTitleText,(_mission_info select 7), "PLAIN",10] call RE;
-		MCoords = _mission_pos;
-		publicVariable "MCoords";
-		[] execVM "debug\addmarkers75.sqf";
-		
-		// Spawn Crates
-		_y = -1;
-		{
-			_y = _y + 1;
-			//TODO: Add check that loot position is clear of objects i.e vehicles ???
-			_crate = createVehicle [(_mission_info select 5) select _y, _x, [], 0, "CAN_COLLIDE"];
-			[_crate, (_mission_info select 6) select _y] execVM "\z\addons\dayz_server\missions\misc\fillBoxes.sqf";
-			_crate setVariable ["Sarge",1,true];  // Stop Server Cleanup Killing Box
-			_crates = _crates + [_crate];
-		} forEach (_mission_info select 1);
-		
-		
-		// Spawn SARGE AI
-		// 		Create Dynamic SARGE MARKER
-		_id = _id + 1;
-		_marker = createMarker [("SAR_mission_" + str(id)), _mission_pos];
-		_marker setMarkerShape "RECTANGLE";
-		_marker setMarkeralpha 0;
-		_marker setMarkerType "Flag";
-		_marker setMarkerBrush "Solid";
-		_marker setMarkerSize [300,300];
-		// Generated Global Varaible Name for SARGE UPSMON. To avoid errors when mission = done, but AI is still alive.
-		// http://forums.bistudio.com/showthread.php?126760-dynamic-object-names-with-part-of-name-provided-by-a-variable
-		missionNamespace setVariable ["SAR_mission_" + str(_id), _marker];  
-		
-		[missionNameSpace getVariable ("SAR_mission_" + str(_id)), 3, _mission_info select 2, _mission_info select 3, (_mission_info select 4) call BIS_fnc_selectRandom ,false] call SAR_AI;
-		
-				
-		// Wait Unit  Player Approaches First Crate or  Mission Times Out
-		_timeout = time + 1800;
-		if (count _crates > 0) then {
-			waitUntil{({isPlayer _x && _x distance (_crates select 0) < 10  } count playableunits > 0) || time > _timeout};
-		} else {
-			waitUntil{time > _timeout};
-		};
-		
-		// Wait 5 mins & remove Mission Marker from Players
-		sleep 300;
-		[] execVM "debug\remmarkers75.sqf";
-		MCoords = 0;
-		publicVariable "MCoords";
-		
-		// Wait another 5 mins & remove Sarge Variable so server can cleanup crates
-		sleep 300;
-		{
-			_x setVariable ["Sarge",nil];
-		} forEach _crates;		
+		diag_log format ["DEBUG: Mission Code: Start Mission: %1", _mission_info];
+		[_id, _mission_info] call create_mission_crates;
+		diag_log format ("DEBUG: Mission Code: Mission Ended");
 	};
 };
