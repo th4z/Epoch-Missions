@@ -65,8 +65,8 @@ switch(_loot_type) do
 				["ItemMap",				 "", 0.5, 5],
 				["ItemGPS",				 "", 0.3, 5],
 				["ItemRadio",			 "", 0.3, 5],
-				["ItemEtool", "weapon",	 "", 0.3, 5],
-				["UZI_SD_EP1","weapon",  "", 0.6, 5],
+				["ItemEtool", 	   "weapon", 0.3, 5],
+				["UZI_SD_EP1",	   "weapon", 0.6, 5],
 				["M249_DZ","weapon",     "", 0.2, 5],
 				
 				["ItemBandage", 		 "", 0.8, 10],
@@ -108,7 +108,7 @@ switch(_loot_type) do
 		_loot = [
 				["ItemToolbox", 	"weapon",	0.5, 5],
 				["ItemMatchbox", 	"weapon",	0.5, 5],
-				["ItemGenerator", 			"",	0.5, 5],
+				["ItemGenerator", 		  "",	0.5, 5],
 				["ItemKeyKit", 		 "weapon", 	0.5, 5],
 				["ItemBandage", 		 "", 	0.8, 10],
 				["ItemPainkiller", 		 "", 	0.8, 5],
