@@ -65,6 +65,6 @@ while {true} do {
 		};
 		diag_log format ["DEBUG: Mission Code: Start Mission: %1", _mission_info];
 		[_id, _mission_info] call create_mission_crates;
-		diag_log format ("DEBUG: Mission Code: Mission Ended");
+		diag_log ("DEBUG: Mission Code: Mission Ended");
 	};
 };
