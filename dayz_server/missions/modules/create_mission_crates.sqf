@@ -63,3 +63,5 @@ sleep 300;
 {
 	_x setVariable ["Sarge",nil];
 } forEach _crates;
+
+_group

@@ -1,4 +1,4 @@
-private ["_id", "_ai_veh_pool", "_vehicle", "_velimit", "_qty", "_wait", "_mission", "_mission_info", "_isNear", "_isNearList", "_y"];
+private ["_id", "_ai_veh_pool", "_vehicle", "_velimit", "_qty", "_wait", "_mission", "_mission_info", "_isNear", "_isNearList", "_y", "_group", "_ai_groups"];
 
 #include "mission_deamon_config.sqf"
 
@@ -11,6 +11,8 @@ create_mission_crates = compile preprocessFileLineNumbers "\z\addons\dayz_server
 
 _id = 0;
 _isNear = false;
+_ai_groups = [];
+
 diag_log ("DEBUG: Mission Code: Start.......");
 
 // TODO ADD Code to Generate List of Vehicles Available to Spawn onto Server....
@@ -18,11 +20,15 @@ _ai_veh_pool = [];
 {
 	_vehicle = _x select 0;
 	_velimit = _x select 1;
-	_qty = 0;
 	_qty = {_x == _vehicle} count serverVehicleCounter;
-	if (_qty <= _velimit) then {
-		_ai_veh_pool = _ai_veh_pool + [_vehicle, _velimit];
+	if (isNil {_qty}) then {
+		diag_log format ["DEBUG: Mission Code: Vehicle: %1 None DETECTED !!!", _vehicle];
+		_qty = 0;
 	};
+	if (_qty <= _velimit) then {
+		_ai_veh_pool = _ai_veh_pool + [[_vehicle, _velimit]];
+	};
+	diag_log format ["DEBUG: Mission Code: Vehicle: %1: Limit: %2: Qty: %3", _vehicle, _velimit, _qty];
 } forEach dynamic_ai_vehicles;
 
 
@@ -36,7 +42,7 @@ while {true} do {
 	} else {
 		_wait = [2000,650] call fnc_hTime;
 	};
-	//_wait = 200; For Testing
+	_wait = 200; //For Testing
 	sleep _wait;
 	_mission = active_mission_list call BIS_fnc_selectRandom;
 	
@@ -64,7 +70,9 @@ while {true} do {
 			active_mission_list = active_mission_list - _mission;
 		};
 		diag_log format ["DEBUG: Mission Code: Start Mission: %1", _mission_info];
-		[_id, _mission_info] call create_mission_crates;
+		_group = [_id, _mission_info] call create_mission_crates;
+		_ai_groups = _ai_groups + [_group];
+		diag_log format ["DEBUG: Mission Code: AI Groups: %1", _ai_groups];
 		diag_log ("DEBUG: Mission Code: Mission Ended");
 	};
 };

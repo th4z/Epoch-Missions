@@ -25,6 +25,10 @@ switch(_loot_type) do
 				["CinderBlocks",	"magazine",0.8, 10],
 				["MortarBucket",	"magazine",0.8, 10],
 				["ItemFuelPump",	"magazine",0.5, 5],
+				["ItemTankTrap",	"magazine",0.5, 5],
+				["PartGeneric",	"magazine",0.5, 5],
+				
+				
 				
 				["Remington870_lamp", 	  "weapon",  0.8, 1],
 				["PipeBomb", 					"",  0.2, 4],
@@ -41,13 +45,20 @@ switch(_loot_type) do
 		_loot = [
 				["ItemAntibiotic",	"", 0.5, 5],
 				["ItemMorphine", 	"", 0.5, 5],
+				["ItemSodaRbull", 	"", 0.5, 5],
+
+				
 				
 				["ItemBandage", 	"", 0.8, 10],
 				["ItemPainkiller", 	"", 0.8, 5],
 				["ItemBloodbag", 	"", 0.5, 10],
+				["ItemWire", 	"", 0.5, 4],
+				
 
 				["glock17_EP1", 	"weapon",  0.8, 1],
 				["MakarovSD", 		"weapon",  0.8, 1],
+				["MR43", 		"weapon",  0.8, 2],
+				
 
 				["DZ_Czech_Vest_Puch", "backpack", 0.4, 4],
 
@@ -61,10 +72,10 @@ switch(_loot_type) do
 		_loot = [
 				["ItemToolbox", 	"weapon", 0.5, 5],
 				["ItemMatchbox", 	"weapon", 0.5, 5],
-				["ItemCompass",			 "", 0.5, 5],
-				["ItemMap",				 "", 0.5, 5],
-				["ItemGPS",				 "", 0.3, 5],
-				["ItemRadio",			 "", 0.3, 5],
+				["ItemCompass",		"weapon", 0.5, 5],
+				["ItemMap",			"weapon", 0.5, 5],
+				["ItemGPS",			"weapon", 0.3, 5],
+				["ItemRadio",		"weapon", 0.3, 5],
 				["ItemEtool", 	   "weapon", 0.3, 5],
 				["UZI_SD_EP1",	   "weapon", 0.6, 5],
 				["M249_DZ",		   "weapon", 0.2, 5],
@@ -73,8 +84,12 @@ switch(_loot_type) do
 				["ItemPainkiller", 		 "", 0.8, 5],
 				["ItemBloodbag", 		 "", 0.5, 10],
 
-				["glock17_EP1", 	"weapon",  0.8, 1],
-				["MakarovSD", 		"weapon",  0.8, 1],
+				["glock17_EP1", 	"weapon",  0.8, 2],
+				["MakarovSD", 		"weapon",  0.8, 2],
+				["UZI_EP1", 		"weapon",  0.8, 2],
+				["Sa61_EP1", 		"weapon",  0.6, 3],
+				
+				
 
 				["DZ_Backpack_EP1", "backpack", 0.4, 1],
 
@@ -100,7 +115,7 @@ switch(_loot_type) do
 
 				["FoodCanBakedBeans", 		"", 1.0, 10],
 				["HandRoadFlare", 			"", 1.0, 10],
-				["ItemGoldBar10oz", 		"", 0.2, 4]];
+				["ItemGoldBar10oz", 		"", 0.5, 4]];
 	};
 	
 	case "Rare":
@@ -115,6 +130,8 @@ switch(_loot_type) do
 				["ItemBloodbag", 		 "", 	0.5, 10],
 
 				["glock17_EP1", 	"weapon",	0.8, 1],
+				["G36_C_SD_camo", 	"weapon",	0.6, 3],
+				
 				["MakarovSD", 		"weapon",	0.8, 1],
 				["NVGoggles",		"weapon",	0.8, 1],
 
@@ -137,6 +154,11 @@ switch(_loot_type) do
 				["ItemSodaMdew", 		 	"", 0.5, 10],
 				["ItemSodaRbull", 			"", 0.5, 10],
 				["ItemSodaOrangeSherbet", 	"", 0.5, 10],
+				["FoodNutmix", 	"", 0.5, 10],
+				["FoodCanBakedBeans", 		"", 1.0, 10],
+				["FoodMRE", 		"", 1.0, 10],
+				
+				
 				["PartPlankPack", 	"magazine", 0.5, 5],
 				["ItemFishingPole",	  "weapon", 0.5, 5],
 				["ItemLightBulb",			"", 0.5, 5],
@@ -145,7 +167,6 @@ switch(_loot_type) do
 
 				["DZ_Backpack_EP1", "backpack", 0.4, 1],
 
-				["FoodCanBakedBeans", 		"", 1.0, 10],
 				["HandRoadFlare", 			"", 1.0, 10],
 				["HandGrenade_west", 		"", 0.5, 10]];
 	};
