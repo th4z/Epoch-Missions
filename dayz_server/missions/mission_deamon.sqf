@@ -1,4 +1,4 @@
-private ["_id", "_ai_veh_pool", "_vehicle", "_velimit", "_qty", "_wait", "_mission", "_mission_info", "_isNear", "_isNearList", "_y", "_group", "_ai_groups"];
+private ["_id", "_ai_veh_pool", "_vehicle", "_velimit", "_qty", "_wait", "_mission", "_mission_info", "_isNear", "_isNearList", "_x", "_y", "_group", "_ai_groups"];
 
 #include "mission_deamon_config.sqf"
 
@@ -16,20 +16,23 @@ _ai_groups = [];
 diag_log ("DEBUG: Mission Code: Start.......");
 
 // TODO ADD Code to Generate List of Vehicles Available to Spawn onto Server....
-_ai_veh_pool = [];
-{
-	_vehicle = _x select 0;
-	_velimit = _x select 1;
-	_qty = {_x == _vehicle} count serverVehicleCounter;
-	if (isNil {_qty}) then {
-		diag_log format ["DEBUG: Mission Code: Vehicle: %1 None DETECTED !!!", _vehicle];
-		_qty = 0;
-	};
-	if (_qty <= _velimit) then {
-		_ai_veh_pool = _ai_veh_pool + [[_vehicle, _velimit]];
-	};
-	diag_log format ["DEBUG: Mission Code: Vehicle: %1: Limit: %2: Qty: %3", _vehicle, _velimit, _qty];
-} forEach dynamic_ai_vehicles;
+mission_veh_pool = {
+	_veh_pool = [];
+	{
+		_vehicle = _x select 0;
+		_velimit = _x select 1;
+		_qty = {_x == _vehicle} count serverVehicleCounter;
+		if (isNil {_qty}) then {
+			diag_log format ["DEBUG: Mission Code: Vehicle: %1 None DETECTED !!!", _vehicle];
+			_qty = 0;
+		};
+		if (_qty <= _velimit) then {
+			_veh_pool = _veh_pool + [[_vehicle, _velimit]];
+		};
+		diag_log format ["DEBUG: Mission Code: Vehicle: %1: Limit: %2: Qty: %3", _vehicle, _velimit, _qty];
+	} forEach dynamic_ai_vehicles;
+	_veh_pool
+};
 
 
 diag_log format ["DEBUG: Mission Code: AI Vehicle Pool: %1", _ai_veh_pool];
@@ -42,7 +45,7 @@ while {true} do {
 	} else {
 		_wait = [2000,650] call fnc_hTime;
 	};
-	_wait = 200; //For Testing
+	//_wait = 200; //For Testing
 	sleep _wait;
 	_mission = active_mission_list call BIS_fnc_selectRandom;
 	
@@ -63,8 +66,10 @@ while {true} do {
 	};
 	
 	diag_log format ["DEBUG: Mission Code: Check Near: %1", _isNear];
-	if (!_isNear) then {
+	diag_log format ["DEBUG: Mission Code: FPS: %1", (diag_fps)];
+	if ((!_isNear) && (diag_fps >= 20)) then {
 		_id = _id + 1;
+		_veh_pool = call mission_veh_pool;
 		// Remove Mission if its not recurring
 		if !(_mission select 1) then {
 			active_mission_list = active_mission_list - _mission;
@@ -75,4 +80,23 @@ while {true} do {
 		diag_log format ["DEBUG: Mission Code: AI Groups: %1", _ai_groups];
 		diag_log ("DEBUG: Mission Code: Mission Ended");
 	};
+	
+	/*
+	// Remove AI Group + Map Marker if all units are dead
+	_last_index = count ai_groups;
+	_index = 0;
+	while {(_index <= _last_index)} do
+	{
+		_group = ai_groups select _index;
+		if (count units (_group select 1) == 0) then {
+			diag_log format ["DEBUG: Mission Code: Removing AI Group: %1  Removing AI Marker: %2", (_group select 0), (_group select 1)];
+			deleteGroup (_group select 1);
+			missionNamespace setVariable [(_group select 0), nil];
+			ai_groups set [_index, "delete me"];
+			ai_groups = ai_groups - ["delete me"];			
+			_index = _index -1;
+		};
+		_index = _index + 1;
+	};
+	*/
 };

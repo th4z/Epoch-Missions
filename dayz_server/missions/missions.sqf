@@ -243,3 +243,46 @@ _text = 			"Bandits Have Been Spotted at Electro! Check your map for the locatio
 					
 mission_electro_shop = [_sar_pos, _loot_pos, 1, 8, ["ambush", "patrol"], _loot_boxes, _loot_types, _text];
 
+
+// DAM  -- AMBUSH - PATROL
+_sar_pos = 			[10201.5,3233.67,0.00182343];
+_loot_pos =		  	[
+					[10188.6,3240.34,0.00149727],
+					[10208,3242.45,0.00137901],
+					[10222.1,3234.13,0.00133705],
+					[10222,3216.36,0.00146675]];
+_loot_boxes = 		[
+					"USVehicleBox",
+					"USLaunchersBox",
+					"USLaunchersBox",
+					"USVehicleBox"];
+_loot_types = 		[
+					"Rare",
+					"Miltary",
+					"Miltary",
+					"Random"];
+_text = 			"Bandits Have Been Spotted! Check your map for the location!";
+					
+mission_dam = [_sar_pos, _loot_pos, 1, 8, ["ambush", "patrol"], _loot_boxes, _loot_types, _text];
+
+
+// GREEN MOUNTAIN
+_sar_pos = 			[3708.2,5996.16,0.00143433];
+_loot_pos =		  	[
+					[3701.12,6004.72,0.00143433],
+					[3698.64,6010.62,0.00143433],
+					[3688.81,5998.23,0.00143433],
+					[3689.88,5989.87,0.00143433]];
+_loot_boxes = 		[
+					"USVehicleBox",
+					"USLaunchersBox",
+					"USLaunchersBox",
+					"USVehicleBox"];
+_loot_types = 		[
+					"Rare",
+					"Miltary",
+					"Miltary",
+					"Random"];
+_text = 			"Bandits Have Been Spotted! Check your map for the location!";
+					
+mission_green_mountain = [_sar_pos, _loot_pos, 1, 8, ["ambush", "patrol"], _loot_boxes, _loot_types, _text];

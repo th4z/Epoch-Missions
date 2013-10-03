@@ -12,7 +12,9 @@ active_mission_list =  [
 						[mission_cherno_petrol,			true],
 						[mission_electro_petrol,		true],
 						[mission_electro_school,		true],
-						[mission_electro_shop,			true]					
+						[mission_electro_shop,			true],
+						[mission_dam,					true],
+						[mission_green_mountain,		true]
 						];
 
 // List of possible Vehicles & Count for AI to spawn with

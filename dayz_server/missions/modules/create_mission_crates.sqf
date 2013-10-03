@@ -64,4 +64,4 @@ sleep 300;
 	_x setVariable ["Sarge",nil];
 } forEach _crates;
 
-_group
+[("SAR_mission_" + str(_id)), _group]
