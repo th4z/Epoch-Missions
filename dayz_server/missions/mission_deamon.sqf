@@ -1,4 +1,4 @@
-private ["_id", "_ai_veh_pool", "_vehicle", "_velimit", "_qty", "_wait", "_mission", "_mission_info", "_isNear", "_isNearList", "_x", "_y", "_group", "_ai_groups"];
+private ["_id", "_ai_veh_pool", "_vehicle", "_velimit", "_qty", "_wait", "_mission", "_mission_info", "_isNear", "_isNearList", "_x", "_y", "_group", "mission_ai_groups"];
 
 #include "mission_deamon_config.sqf"
 
@@ -11,7 +11,7 @@ create_mission_crates = compile preprocessFileLineNumbers "\z\addons\dayz_server
 
 _id = 0;
 _isNear = false;
-_ai_groups = [];
+mission_ai_groups = [];
 
 diag_log ("DEBUG: Mission Code: Start.......");
 
@@ -34,8 +34,32 @@ mission_veh_pool = {
 	_veh_pool
 };
 
+mission_cleaner = {
+	while {true} do {
+		sleep 60;
+		// Remove AI Group + Map Marker if all units are dead
+		_last_index = count mission_ai_groups;
+		_index = 0;
+		diag_log format ["DEBUG: Mission Code: Checking for AI Groups: %1: %2: %3", mission_ai_groups, _last_index, _index];
+		while {(_index < _last_index)} do
+		{
+			_group = mission_ai_groups select _index;
+			if (count units (_group select 1) == 0) then {
+				diag_log format ["DEBUG: Mission Code: Removing AI Group: %2  Removing AI Marker: %1", (_group select 0), (_group select 1)];
+				deleteGroup (_group select 1);
+				missionNamespace setVariable [(_group select 0), nil];
+				mission_ai_groups set [_index, "delete me"];
+				mission_ai_groups = mission_ai_groups - ["delete me"];			
+				_index = _index -1;
+			};
+			_index = _index + 1;
+		};
+	};
+};
+
 
 diag_log format ["DEBUG: Mission Code: AI Vehicle Pool: %1", _ai_veh_pool];
+_null = [] spawn mission_cleaner;
 
 while {true} do {
 	diag_log ("DEBUG: Mission Code: Waiting....");
@@ -76,27 +100,8 @@ while {true} do {
 		};
 		diag_log format ["DEBUG: Mission Code: Start Mission: %1", _mission_info];
 		_group = [_id, _mission_info] call create_mission_crates;
-		_ai_groups = _ai_groups + [_group];
-		diag_log format ["DEBUG: Mission Code: AI Groups: %1", _ai_groups];
+		mission_ai_groups = mission_ai_groups + [_group];
+		diag_log format ["DEBUG: Mission Code: AI Groups: %1", mission_ai_groups];
 		diag_log ("DEBUG: Mission Code: Mission Ended");
 	};
-	
-	/*
-	// Remove AI Group + Map Marker if all units are dead
-	_last_index = count ai_groups;
-	_index = 0;
-	while {(_index <= _last_index)} do
-	{
-		_group = ai_groups select _index;
-		if (count units (_group select 1) == 0) then {
-			diag_log format ["DEBUG: Mission Code: Removing AI Group: %1  Removing AI Marker: %2", (_group select 0), (_group select 1)];
-			deleteGroup (_group select 1);
-			missionNamespace setVariable [(_group select 0), nil];
-			ai_groups set [_index, "delete me"];
-			ai_groups = ai_groups - ["delete me"];			
-			_index = _index -1;
-		};
-		_index = _index + 1;
-	};
-	*/
 };
