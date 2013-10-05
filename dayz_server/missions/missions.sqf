@@ -16,9 +16,11 @@ _loot_types = 		[
 					"Random",
 					"Money",
 					"Residental"];
-_text =				"Bandits Have Been Spotted at Kamenka! Check your map for the location!";
+_text_start =		"Bandits Have Been Spotted at Kamenka! Check your map for the location!";
+_text_done  =		"All Bandits Have Been Killed at Kamenka!";
+_text_failed =		"Bandits Have Left Kamenka";
 					
-mission_kamenka = [_sar_pos, _loot_pos, 2, 5, ["ambush"], _loot_boxes, _loot_types, _text];
+mission_kamenka = [_sar_pos, _loot_pos, 2, 5, ["ambush"], _loot_boxes, _loot_types, _text_start, _text_done, _text_failed];
 
 
 // BALOTA AIRFIELD  -- PATROL
@@ -41,9 +43,11 @@ _loot_types = 		[
 					"Miltary",
 					"Random",
 					"Random"];
-_text = 			"Bandits Have Been Spotted at an AirField! Check your map for the location!";
+_text_start = 		"Bandits Have Been Spotted at an AirField! Check your map for the location!";
+_text_done = 		"All Bandits Have Been Killed at the AirField!";
+_text_failed = 		"Bandits Have Left the AirField";
 					
-mission_balota_airfield = [_sar_pos, _loot_pos, 1, 6, ["patrol"], _loot_boxes, _loot_types, _text];
+mission_balota_airfield = [_sar_pos, _loot_pos, 1, 6, ["patrol"], _loot_boxes, _loot_types, _text_start, _text_done, _text_failed];
 
 
 // OUTSIDE CHERNO -- AMBUSH
@@ -63,9 +67,11 @@ _loot_types = 		[
 					"Building Supplies",
 					"Residental",
 					"Residental"];
-_text = 			"Bandits Have Been Spotted at Cherno! Check your map for the location!";
+_text_start = 		"Bandits Have Been Spotted at Cherno! Check your map for the location!";
+_text_done = 		"All Bandits Have Been Killed at Cherno!";
+_text_failed = 		"Bandits Have Left Cherno";
 					
-mission_cherno_outside = [_sar_pos, _loot_pos, 2, 5, ["ambush"], _loot_boxes, _loot_types, _text];
+mission_cherno_outside = [_sar_pos, _loot_pos, 2, 5, ["ambush"], _loot_boxes, _loot_types, _text_start, _text_done, _text_failed];
 
 
 // CHERNO HOSPTIAL -- AMBUSH / PATROL
@@ -85,9 +91,11 @@ _loot_types = 		[
 					"Medical",
 					"Random",
 					"Medical"];
-_text = 			"Bandits Have Been Spotted at Cherno! Check your map for the location!";
+_text_start =		"Bandits Have Been Spotted at Cherno! Check your map for the location!";
+_text_done = 		"All Bandits Have Been Killed at Cherno!";
+_text_failed = 		"Bandits Have Left Cherno";
 					
-mission_cherno_hospital = [_sar_pos, _loot_pos, 1, 4, ["ambush", "patrol"], _loot_boxes, _loot_types, _text];
+mission_cherno_hospital = [_sar_pos, _loot_pos, 1, 4, ["ambush", "patrol"], _loot_boxes, _loot_types, _text_start, _text_done, _text_failed];
 
 
 // CHERNO HOSTIAL 2 -- AMBUSH / PATROL
@@ -107,9 +115,11 @@ _loot_types = 		[
 					"Medical",
 					"Random",
 					"Medical"];
-_text = 			"Bandits Have Been Spotted at Cherno! Check your map for the location!";
+_text_start = 		"Bandits Have Been Spotted at Cherno! Check your map for the location!";
+_text_done = 		"All Bandits Have Been Killed at Cherno!";
+_text_failed = 		"Bandits Have Left Cherno";
 					
-mission_cherno_hostpital2 = [_sar_pos, _loot_pos, 1, 4, ["ambush"], _loot_boxes, _loot_types, _text];
+mission_cherno_hostpital2 = [_sar_pos, _loot_pos, 1, 4, ["ambush"], _loot_boxes, _loot_types, _text_start, _text_done, _text_failed];
 
 
 // CHERNO FIRESTATION -- PATROL
@@ -129,9 +139,11 @@ _loot_types = 		[
 					"Random",
 					"Random",
 					"Random"];
-_text = 			"Bandits Have Been Spotted at Cherno! Check your map for the location!";
+_text_start =		"Bandits Have Been Spotted at Cherno! Check your map for the location!";
+_text_done = 		"All Bandits Have Been Killed at Cherno!";
+_text_failed =		"Bandits Have Left Cherno";
 					
-mission_cherno_firestation = [_sar_pos, _loot_pos, 1, 6, ["patrol"], _loot_boxes, _loot_types, _text];
+mission_cherno_firestation = [_sar_pos, _loot_pos, 1, 6, ["patrol"], _loot_boxes, _loot_types, _text_start, _text_done, _text_failed];
 
 
 // CHERNO SHOP -- AMBUSH
@@ -151,9 +163,11 @@ _loot_types = 		[
 					"Residental",
 					"Residental",
 					"Residental"];
-_text = 			"Bandits Have Been Spotted at Cherno! Check your map for the location!";
+_text_start =		"Bandits Have Been Spotted at Cherno! Check your map for the location!";
+_text_done = 		"All Bandits Have Been Killed at Cherno!";
+_text_failed =		"Bandits Have Left Cherno";
 					
-mission_cherno_shop = [_sar_pos, _loot_pos, 1, 5, ["ambush"], _loot_boxes, _loot_types, _text];
+mission_cherno_shop = [_sar_pos, _loot_pos, 1, 5, ["ambush"], _loot_boxes, _loot_types, _text_start, _text_done, _text_failed];
 
 
 // CHERNO PETROL -- AMBUSH
@@ -173,9 +187,11 @@ _loot_types = 		[
 					"Residental",
 					"Random",
 					"Money"];
-_text = 			"Bandits Have Been Spotted at Cherno! Check your map for the location!";
+_text_start = 		"Bandits Have Been Spotted at Cherno! Check your map for the location!";
+_text_done = 		"All Bandits Have Been Killed at Cherno!";
+_text_failed = 		"Bandits Have Left Cherno";
 					
-mission_cherno_petrol = [_sar_pos, _loot_pos, 2, 4, ["ambush"], _loot_boxes, _loot_types, _text];
+mission_cherno_petrol = [_sar_pos, _loot_pos, 2, 4, ["ambush"], _loot_boxes, _loot_types, _text_start, _text_done, _text_failed];
 
 
 // ELECTRO -- PETROL -- AMBUSH / PATROL
@@ -195,9 +211,11 @@ _loot_types = 		[
 					"Residental",
 					"Random",
 					"Money"];
-_text = 			"Bandits Have Been Spotted at Electro! Check your map for the location!";
+_text_start = 		"Bandits Have Been Spotted at Electro! Check your map for the location!";
+_text_done = 		"All Bandits Have Been Killed at Electro!";
+_text_failed = 		"Bandits Have Left Electro";
 					
-mission_electro_petrol = [_sar_pos, _loot_pos, 2, 4, ["ambush", "patrol"], _loot_boxes, _loot_types, _text];
+mission_electro_petrol = [_sar_pos, _loot_pos, 2, 4, ["ambush", "patrol"], _loot_boxes, _loot_types, _text_start, _text_done, _text_failed];
 
 
 // ELECTRO -- SCHOOL -- PATROL / AMBUSH
@@ -217,9 +235,11 @@ _loot_types = 		[
 					"Residental",
 					"Random",
 					"Money"];
-_text = 			"Bandits Have Been Spotted at Electro! Check your map for the location!";
+_text_start = 		"Bandits Have Been Spotted at Electro! Check your map for the location!";
+_text_done = 		"All Bandits Have Been Killed at Electro!";
+_text_failed =		"Bandits Have Left Electro";
 					
-mission_electro_school = [_sar_pos, _loot_pos, 1, 8, ["ambush", "patrol"], _loot_boxes, _loot_types, _text];
+mission_electro_school = [_sar_pos, _loot_pos, 1, 8, ["ambush", "patrol"], _loot_boxes, _loot_types, _text_start, _text_done, _text_failed];
 
 
 // ELECTRO -- SHOP -- PATROL / AMBUSH
@@ -239,9 +259,11 @@ _loot_types = 		[
 					"Residental",
 					"Residental",
 					"Random"];
-_text = 			"Bandits Have Been Spotted at Electro! Check your map for the location!";
+_text_start = 		"Bandits Have Been Spotted at Electro! Check your map for the location!";
+_text_done = 		"All Bandits Have Been Killed at Electro!";
+_text_failed = 		"Bandits Have Left Electro";
 					
-mission_electro_shop = [_sar_pos, _loot_pos, 1, 8, ["ambush", "patrol"], _loot_boxes, _loot_types, _text];
+mission_electro_shop = [_sar_pos, _loot_pos, 1, 8, ["ambush", "patrol"], _loot_boxes, _loot_types, _text_start, _text_done, _text_failed];
 
 
 // DAM  -- AMBUSH - PATROL
@@ -261,9 +283,11 @@ _loot_types = 		[
 					"Miltary",
 					"Miltary",
 					"Random"];
-_text = 			"Bandits Have Been Spotted! Check your map for the location!";
+_text_start = 		"Bandits Have Been Spotted! Check your map for the location!";
+_text_done = 		"All Bandits Have Been Killed!";
+_text_failed = 		"Bandits Have Left";
 					
-mission_dam = [_sar_pos, _loot_pos, 1, 8, ["ambush", "patrol"], _loot_boxes, _loot_types, _text];
+mission_dam = [_sar_pos, _loot_pos, 1, 8, ["ambush", "patrol"], _loot_boxes, _loot_types, _text_start, _text_done, _text_failed];
 
 
 // GREEN MOUNTAIN
@@ -283,6 +307,8 @@ _loot_types = 		[
 					"Miltary",
 					"Miltary",
 					"Random"];
-_text = 			"Bandits Have Been Spotted! Check your map for the location!";
+_text_start =		"Bandits Have Been Spotted! Check your map for the location!";
+_text_done =		"All Bandits Have Been Killed!";
+_text_failed = 		"Bandits Have Left";
 					
-mission_green_mountain = [_sar_pos, _loot_pos, 1, 8, ["ambush", "patrol"], _loot_boxes, _loot_types, _text];
+mission_green_mountain = [_sar_pos, _loot_pos, 1, 8, ["ambush", "patrol"], _loot_boxes, _loot_types, _text_start, _text_done, _text_failed];

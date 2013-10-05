@@ -1,4 +1,4 @@
-private ["_id", "_ai_veh_pool", "_vehicle", "_velimit", "_qty", "_wait", "_mission", "_mission_info", "_isNear", "_isNearList", "_x", "_y", "_group", "mission_ai_groups"];
+private ["_id", "_ai_veh_pool", "_vehicle", "_velimit", "_qty", "_wait", "_mission", "_mission_info", "_isNear", "_isNearList", "_x", "_y", "_group"];
 
 #include "mission_deamon_config.sqf"
 
@@ -14,6 +14,27 @@ _isNear = false;
 mission_ai_groups = [];
 
 diag_log ("DEBUG: Mission Code: Start.......");
+
+
+mission_check = {
+	private ["_distance", "_isNearList", "_isNear", "_pos"];
+	_pos = _this select 0;
+	_distance = _this select 1;
+	// Check if Player is within 200 Metres...
+	// Need to add check to parse & check entities are playable i.e not SARGE AI
+	_isNearList = _pos nearEntities ["CAManBase",_distance];
+	_isNear = false;
+	
+	// Check for Players & Ignore SARGE AI
+	if ((count(_isNearList)) != 0) then {
+		{
+			if (vehicle _x getVariable ["Sarge",0] == 0) then {
+				_isNear = true;
+			};
+		} forEach _isNearList;
+	};
+	_isNear
+};
 
 // TODO ADD Code to Generate List of Vehicles Available to Spawn onto Server....
 mission_veh_pool = {
@@ -36,16 +57,14 @@ mission_veh_pool = {
 
 mission_cleaner = {
 	while {true} do {
-		sleep 60;
+		sleep 600;
 		// Remove AI Group + Map Marker if all units are dead
 		_last_index = count mission_ai_groups;
 		_index = 0;
-		diag_log format ["DEBUG: Mission Code: Checking for AI Groups: %1: %2: %3", mission_ai_groups, _last_index, _index];
 		while {(_index < _last_index)} do
 		{
 			_group = mission_ai_groups select _index;
 			if (count units (_group select 1) == 0) then {
-				diag_log format ["DEBUG: Mission Code: Removing AI Group: %2  Removing AI Marker: %1", (_group select 0), (_group select 1)];
 				deleteGroup (_group select 1);
 				missionNamespace setVariable [(_group select 0), nil];
 				mission_ai_groups set [_index, "delete me"];
@@ -89,8 +108,6 @@ while {true} do {
 		} forEach _isNearList;
 	};
 	
-	diag_log format ["DEBUG: Mission Code: Check Near: %1", _isNear];
-	diag_log format ["DEBUG: Mission Code: FPS: %1", (diag_fps)];
 	if ((!_isNear) && (diag_fps >= 20)) then {
 		_id = _id + 1;
 		_veh_pool = call mission_veh_pool;

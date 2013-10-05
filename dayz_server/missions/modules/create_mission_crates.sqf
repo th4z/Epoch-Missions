@@ -1,18 +1,16 @@
+
 private ["_crate", "_crates", "_y", "_id", "_marker", "_mission_info", "_group"];
-/*
-[[6587.55,2411.75,0.00143909],[[6572.9,2405.32,0.00143862],[6570.58,2406.92,0.00143862],[6567.86,2408.94,0.00143862],[6584.31,2406.71,0.00143862]],1,6,["patrol"],["USVehicleBox","USVehicleBox","USLaunchersBox","USVehicleBox"],["Random","Random","Random","Random"],"Bandits Have Been Spotted at Cherno! Check your map for the location!"]"
-*/
 
 diag_log format ["DEBUG: Create Mission Code: _this: %1", _this];
 _id = _this select 0;
 _mission_info = _this select 1;
-
+_text = (_mission_info select 7);
 _crates = [];
 
 
 // Start Mission
 
-[nil,nil,rTitleText,(_mission_info select 7), "PLAIN",10] call RE;
+[nil,nil,rTitleText, _text, "PLAIN",10] call RE;
 MCoords = (_mission_info select 0);
 publicVariable "MCoords";
 [] execVM "debug\addmarkers75.sqf";
@@ -37,31 +35,60 @@ _marker setMarkeralpha 0;
 _marker setMarkerType "Flag";
 _marker setMarkerBrush "Solid";
 _marker setMarkerSize [200,200];
-// Generated Global Varaible Name for SARGE UPSMON. To avoid errors when mission = done, but AI is still alive.
-// http://forums.bistudio.com/showthread.php?126760-dynamic-object-names-with-part-of-name-provided-by-a-variable
 missionNamespace setVariable ["SAR_mission_" + str(_id), _marker];  
 
 _group = [missionNameSpace getVariable ("SAR_mission_" + str(_id)), 3, _mission_info select 2, _mission_info select 3, (_mission_info select 4) call BIS_fnc_selectRandom ,false] call SAR_AI;
 
 		
-// Wait Unit  Player Approaches First Crate or  Mission Times Out
+// Wait till all AI Dead or Mission Times Out
 _timeout = time + 1800;
-if (count _crates > 0) then {
-	waitUntil{({isPlayer _x && _x distance (_crates select 0) < 10  } count playableunits > 0) || time > _timeout};
-} else {
-	waitUntil{time > _timeout};
+waitUntil{
+			sleep 30;
+			if (count units _group == 0) exitWith {true};
+			if (time > _timeout) exitWith {true};
+			false
 };
 
-// Wait 5 mins & remove Mission Marker from Players
-sleep 300;
+// Send Message to Players about mission completed / failed
+if (count units _group == 0) then {
+	_text = (_mission_info select 8);
+	diag_log ("DEBUG: Mission Code: AI DEAD");
+} else {
+	_text = (_mission_info select 9);
+	diag_log ("DEBUG: Mission Code: Mission Timed Out");
+};
+
+// Remove Map Marker
+[nil,nil,rTitleText, _text, "PLAIN",10] call RE;
 [] execVM "debug\remmarkers75.sqf";
 MCoords = 0;
 publicVariable "MCoords";
 
-// Wait another 5 mins & remove Sarge Variable so server can cleanup crates
-sleep 300;
+// Wait till no Players within 200 metres && Mission Timeout Check for Crates
+_isNear = true;
+_timeout = time + 600;
+_timeout2 = _timeout + 900;
+while {_isNear} do
 {
-	_x setVariable ["Sarge",nil];
+	sleep 30;
+	_isNear = [(_mission_info select 0), 200] call mission_check;
+	if ((!_isNear) && (time > _timeout)) then {
+		_isNear = false;
+	};
+	if (time > _timeout2) then {
+		_isNear = false;
+	};
+};
+
+// Remove Crates
+{
+	//_x setVariable ["Sarge",nil];
+	//_x setDammage 1;
+	deleteVehicle _x;
 } forEach _crates;
+// Temp Kill All AI
+{
+	_x setDamage 1;
+} forEach units _group;
 
 [("SAR_mission_" + str(_id)), _group]
