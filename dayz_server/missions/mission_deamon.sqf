@@ -109,15 +109,15 @@ while {true} do {
 	};
 	
 	if ((!_isNear) && (diag_fps >= 20)) then {
-		_id = _id + 1;
+		_id = _id + 2;
 		_veh_pool = call mission_veh_pool;
 		// Remove Mission if its not recurring
 		if !(_mission select 1) then {
 			active_mission_list = active_mission_list - _mission;
 		};
 		diag_log format ["DEBUG: Mission Code: Start Mission: %1", _mission_info];
-		_group = [_id, _mission_info] call create_mission_crates;
-		mission_ai_groups = mission_ai_groups + [_group];
+		_group_list = [_id, _mission_info] call create_mission_crates;
+		mission_ai_groups = mission_ai_groups + [(_group_list select 0)] + [(_group_list select 1)];
 		diag_log format ["DEBUG: Mission Code: AI Groups: %1", mission_ai_groups];
 		diag_log ("DEBUG: Mission Code: Mission Ended");
 	};

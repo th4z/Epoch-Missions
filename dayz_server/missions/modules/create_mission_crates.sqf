@@ -36,17 +36,37 @@ _marker setMarkerType "Flag";
 _marker setMarkerBrush "Solid";
 _marker setMarkerSize [200,200];
 missionNamespace setVariable ["SAR_mission_" + str(_id), _marker];  
-
 _group = [missionNameSpace getVariable ("SAR_mission_" + str(_id)), 3, _mission_info select 2, _mission_info select 3, (_mission_info select 4) call BIS_fnc_selectRandom ,false] call SAR_AI;
 
+_id2 = _id + 1;
+_rNumber = random 10;
+if (_rNumber > 3) then {
+	_marker2 = createMarker [("SAR_mission_" + str(_id2)), (_mission_info select 0)];
+	_marker2 setMarkerShape "RECTANGLE";
+	_marker2 setMarkeralpha 0;
+	_marker2 setMarkerType "Flag";
+	_marker2 setMarkerBrush "Solid";
+	_marker2 setMarkerSize [650,650];
+	missionNamespace setVariable ["SAR_mission_" + str(_id2), _marker];
+	_group2 = [missionNameSpace getVariable ("SAR_mission_" + str(_id2)), 3,false] call SAR_AI_heli;
+} else {
+	_marker2 = createMarker [("SAR_mission_" + str(_id2)), (_mission_info select 0)];
+	_marker2 setMarkerShape "RECTANGLE";
+	_marker2 setMarkeralpha 0;
+	_marker2 setMarkerType "Flag";
+	_marker2 setMarkerBrush "Solid";
+	_marker2 setMarkerSize [80,80];
+	missionNamespace setVariable ["SAR_mission_" + str(_id2), _marker];
+	_group2 = [missionNameSpace getVariable ("SAR_mission_" + str(_id2)), 3, 1, 3, (_mission_info select 4) call BIS_fnc_selectRandom ,false] call SAR_AI;
+};
 		
 // Wait till all AI Dead or Mission Times Out
 _timeout = time + 1800;
 waitUntil{
-			sleep 30;
-			if (count units _group == 0) exitWith {true};
-			if (time > _timeout) exitWith {true};
-			false
+	sleep 30;
+	if (count units _group == 0) exitWith {true};
+	if (time > _timeout) exitWith {true};
+	false
 };
 
 // Send Message to Players about mission completed / failed
@@ -91,4 +111,4 @@ while {_isNear} do
 	_x setDamage 1;
 } forEach units _group;
 
-[("SAR_mission_" + str(_id)), _group]
+[[("SAR_mission_" + str(_id)), _group],[("SAR_mission_" + str(_id2)), _group2]]

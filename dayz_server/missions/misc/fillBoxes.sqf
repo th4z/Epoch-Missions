@@ -32,6 +32,8 @@ switch(_loot_type) do
 				
 				["Remington870_lamp", 	  "weapon",  0.8, 1],
 				["PipeBomb", 					"",  0.2, 4],
+				["ItemComboLock",				"",  0.2, 4],
+				
 
 				["DZ_ALICE_Pack_EP1", "backpack", 0.4, 3],
 
@@ -52,6 +54,7 @@ switch(_loot_type) do
 				["ItemBandage", 	"", 0.8, 10],
 				["ItemPainkiller", 	"", 0.8, 5],
 				["ItemBloodbag", 	"", 0.5, 10],
+				["ItemHeatPack", 	"", 0.5, 10],				
 				["ItemWire", 	"", 0.5, 4],
 				
 
@@ -89,9 +92,16 @@ switch(_loot_type) do
 				["UZI_EP1", 		"weapon",  0.8, 2],
 				["Sa61_EP1", 		"weapon",  0.6, 3],
 				
+				["30Rnd_556x45_Stanag", 		"",  0.4, 10],
+				["30Rnd_556x45_StanagSD", 		"",  0.2, 10],
+				
+				["30Rnd_545x39_AK", 		"",  0.4, 10],
+				["30Rnd_545x39_AKSD", 		"",  0.4, 10],
+				
+				
 				
 
-				["DZ_Backpack_EP1", "backpack", 0.4, 1],
+				["DZ_LargeGunBag_EP1", "backpack", 0.4, 1],
 
 				["FoodCanBakedBeans", 	"", 1.0, 10],
 				["HandRoadFlare", 		"", 1.0, 10],
@@ -135,7 +145,7 @@ switch(_loot_type) do
 				["MakarovSD", 		"weapon",	0.8, 1],
 				["NVGoggles",		"weapon",	0.8, 1],
 
-				["DZ_Backpack_EP1", "backpack", 0.4, 1],
+				["DZ_British_ACU", "backpack", 0.4, 1],
 
 				["FoodCanBakedBeans", 		"", 1.0, 10],
 				["HandRoadFlare", 			"", 1.0, 10],
