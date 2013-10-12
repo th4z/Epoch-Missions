@@ -110,5 +110,8 @@ while {_isNear} do
 {
 	_x setDamage 1;
 } forEach units _group;
+{
+	_x setDamage 1;
+} forEach units _group2;
 
 [[("SAR_mission_" + str(_id)), _group],[("SAR_mission_" + str(_id2)), _group2]]
