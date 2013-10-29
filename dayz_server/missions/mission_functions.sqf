@@ -82,11 +82,9 @@ mission_spawn_ai = {
 	missionNamespace setVariable ["SAR_mission_" + str(_id), _marker];  
 	_group = [missionNameSpace getVariable ("SAR_mission_" + str(_id)), 3, _snipers, _soldiers, _ai_setting, false] call SAR_AI;
 
-	
-	_rNumber = floor(random 10);
-	if (_rNumber > 3) then {
-		_id2 = mission_id;
-		mission_id = mission_id + 1;
+	_id2 = mission_id;
+	mission_id = mission_id + 1;
+	if ((random 10) > 3) then {
 		_marker2 = createMarker [("SAR_mission_" + str(_id2)), _position];
 		_marker2 setMarkerShape "RECTANGLE";
 		_marker2 setMarkeralpha 0;
@@ -159,8 +157,23 @@ mission_spawn_vehicle = {
 	};
 
 	[_veh,[_dir,_objPosition],_vehicle,_spawnDMG,"0"] call server_publishVeh;
+	[_veh, 900] spawn mission_kill_vehicle;
 };
 
+mission_kill_vehicle = {
+	_veh = _this select 0;
+	_timer = time + _this select 1;
+	
+	waitUntil{
+		sleep 1; 
+		if {{isPlayer _x && _x distance _veh < 30} count playableunits > 0} exitWith {_blowup = false; true};
+		if (time > _timer) exitWith {_blowup = true; true};
+		false
+	};
+	if (_blowup) then {
+		_vehicle setDamage 1;
+	};
+};
 
 mission_spawn = {
 	diag_log ("DEBUG: Mission Code: Mission Spawn Start 1....");
@@ -171,54 +184,66 @@ mission_spawn = {
 	
 	diag_log format ["DEBUG: Mission Code 1: _chance: %1", _chance];
 	
-	switch (_chance) do
-	{
-		// TODO ADD CHECK FOR PLAYERS!!!!!
-		case 0:
-			{
-			diag_log ("DEBUG: Mission Code: Mission Spawn Start 1a....");
-			_mission_type = "Road";
+	
+	for "_x" from 1 to 10 do {
+		switch (_chance) do
+		{
+			// TODO ADD CHECK FOR PLAYERS!!!!!
+			case 0:
+				{
+				diag_log ("DEBUG: Mission Code: Mission Spawn Start 1a....");
+				_mission_type = "Road";
+				
+				waitUntil{!isNil "BIS_fnc_selectRandom"};
+				_position = RoadList call BIS_fnc_selectRandom;
+				diag_log format ["DEBUG: Mission Code 1a: _position: %1", _position];
+				_position = _position modelToWorld [0,0,0];
+				diag_log format ["DEBUG: Mission Code 1a: _position: %1", _position];
 			
-			waitUntil{!isNil "BIS_fnc_selectRandom"};
-			_position = RoadList call BIS_fnc_selectRandom;
-			diag_log format ["DEBUG: Mission Code 1a: _position: %1", _position];
-			_position = _position modelToWorld [0,0,0];
-			diag_log format ["DEBUG: Mission Code 1a: _position: %1", _position];
-		
-			waitUntil{!isNil "BIS_fnc_findSafePos"};
-			_position = [_position,0,100,5,0,2000,0] call BIS_fnc_findSafePos;
-			diag_log format ["DEBUG: Mission Code 1a: _position: %1", _position];
-			
-			diag_log format ["DEBUG: Mission Code 1a: RoadList: %1", RoadList];
-			};
-		case 1:
-			{
-			diag_log ("DEBUG: Mission Code: Mission Spawn Start 1b....");
-			_mission_type = "Building";		
-			
-			waitUntil{!isNil "BIS_fnc_selectRandom"};
-			_position = BuildingList call BIS_fnc_selectRandom;
-			diag_log format ["DEBUG: Mission Code 1b: _position: %1", _position];
-			_position = _position modelToWorld [0,0,0];
-			diag_log format ["DEBUG: Mission Code 1b: _position: %1", _position];
-			
-			waitUntil{!isNil "BIS_fnc_findSafePos"};
-			_position = [_position,0,100,5,0,2000,0] call BIS_fnc_findSafePos;
-			diag_log format ["DEBUG: Mission Code 1b: _position: %1", _position];
+				waitUntil{!isNil "BIS_fnc_findSafePos"};
+				_position = [_position,0,100,5,0,2000,0] call BIS_fnc_findSafePos;
+				diag_log format ["DEBUG: Mission Code 1a: _position: %1", _position];
+				
+				diag_log format ["DEBUG: Mission Code 1a: RoadList: %1", RoadList];
+				};
+			case 1:
+				{
+				diag_log ("DEBUG: Mission Code: Mission Spawn Start 1b....");
+				_mission_type = "Building";		
+				
+				waitUntil{!isNil "BIS_fnc_selectRandom"};
+				_position = BuildingList call BIS_fnc_selectRandom;
+				diag_log format ["DEBUG: Mission Code 1b: _position: %1", _position];
+				_position = _position modelToWorld [0,0,0];
+				diag_log format ["DEBUG: Mission Code 1b: _position: %1", _position];
+				
+				waitUntil{!isNil "BIS_fnc_findSafePos"};
+				_position = [_position,0,100,5,0,2000,0] call BIS_fnc_findSafePos;
+				diag_log format ["DEBUG: Mission Code 1b: _position: %1", _position];
 
-			diag_log format ["DEBUG: Mission Code 1b: BuildingList: %1", BuildingList];
-			};
-		case 2:
-			{
-			diag_log ("DEBUG: Mission Code: Mission Spawn Start 1c....");
-			_mission_type = "Open Area";	
-			
-			waitUntil{!isNil "BIS_fnc_findSafePos"};
-			_position = [getMarkerPos "center",0,5500,100,0,20,0] call BIS_fnc_findSafePos;
-			};
+				diag_log format ["DEBUG: Mission Code 1b: BuildingList: %1", BuildingList];
+				};
+			case 2:
+				{
+				diag_log ("DEBUG: Mission Code: Mission Spawn Start 1c....");
+				_mission_type = "Open Area";	
+				
+				waitUntil{!isNil "BIS_fnc_findSafePos"};
+				_position = [getMarkerPos "center",0,5500,100,0,20,0] call BIS_fnc_findSafePos;
+				};
+		};
+		diag_log format ["DEBUG: Mission Code 1: _position: %1", _position];
+		diag_log format ["DEBUG: Mission Code 1: _mission_type: %1", _mission_type];
+
+		diag_log ("DEBUG: Mission Code: mission_check");
+		_isNear = [_position, 800] call mission_check;
+		if (!_isNear) then {
+			_x = 20;
+		} else {
+			_position = [];
+		};
 	};
-	diag_log format ["DEBUG: Mission Code 1: _position: %1", _position];
-	diag_log format ["DEBUG: Mission Code 1: _mission_type: %1", _mission_type];
+	
 	// only proceed if two params otherwise BIS_fnc_findSafePos failed and may spawn in air
 	if ((count _position) == 2) then {
 		_chance = floor(random 1);
@@ -244,7 +269,7 @@ mission_spawn = {
 				for "_i" from 0 to 4 do
 				{
 					waitUntil{!isNil "BIS_fnc_selectRandom"};
-					_crate_position = [_position,0,50,3,0,2000,0] call BIS_fnc_findSafePos;
+					_crate_position = [_position,0,30,3,0,2000,0] call BIS_fnc_findSafePos;
 					if ((count _crate_position) == 2) then {
 						waitUntil{!isNil "BIS_fnc_selectRandom"};
 						_type = ["USVehicleBox","USVehicleBox","USLaunchersBox","USVehicleBox"] call BIS_fnc_selectRandom;
@@ -271,7 +296,7 @@ mission_spawn = {
 				for "_i" from 0 to 4 do
 				{
 					waitUntil{!isNil "BIS_fnc_selectRandom"};
-					_crate_position = [_position,0,50,3,0,2000,0] call BIS_fnc_findSafePos;
+					_crate_position = [_position,0,30,3,0,2000,0] call BIS_fnc_findSafePos;
 					if ((count _crate_position) == 2) then {
 						waitUntil{!isNil "BIS_fnc_selectRandom"};
 						_type = ["USVehicleBox","USVehicleBox","USLaunchersBox","USVehicleBox"] call BIS_fnc_selectRandom;
@@ -294,10 +319,8 @@ mission_spawn = {
 		// Start Mission
 		diag_log ("DEBUG: Mission Code: Mission Spawn Start 2....");
 		_text = "Bandits Have Been Spotted, Check your Map";
-		[nil,nil,rTitleText, _text, "PLAIN",10] call RE;
-		MCoords = _position;
-		publicVariable "MCoords";
-		[] execVM "debug\addmarkers75.sqf";
+		customMissionGo = [(((_ai_info select 0) select 0) + "_player_marker"), _text, _position];
+		publicVariable "customMissionGo";
 		
 		// Wait till all AI Dead or Mission Times Out
 		_timeout = time + 1800;
@@ -320,18 +343,29 @@ mission_spawn = {
 			diag_log ("DEBUG: Mission Code: Mission Timed Out");
 		};
 
-		diag_log ("DEBUG: Mission Code: Mission Spawn Start 4....");
-		// Remove Map Marker
-		[nil,nil,rTitleText, _text, "PLAIN",10] call RE;
-		[] execVM "debug\remmarkers75.sqf";
-		MCoords = 0;
-		publicVariable "MCoords";
+		
+		
+		_last_index = count Missions;
+		_index = 0;
+		while {(_index < _last_index)} do
+		{
+			_missions = Missions select _index;
+			if ((_missions select 1) == _position) then {
+				Missions set [_index, "delete me"];
+				Missions = Missions - ["delete me"];			
+				_index = _last_index + 1;
+			};
+			_index = _index + 1;
+		};
+		
+		customMissionEnd = [(((_ai_info select 0) select 0) + "_player_marker"), _text, _position];
+		publicVariable "customMissionEnd";
 
 		diag_log ("DEBUG: Mission Code: Mission Spawn Start 5....");
 		// Wait till no Players within 200 metres && Mission Timeout Check for Crates
 		_isNear = true;
-		_timeout = time + 600;
-		_timeout2 = _timeout + 900;
+		_timeout = time + 900;
+		_timeout2 = _timeout + 600;
 		while {_isNear} do
 		{
 			sleep 30;

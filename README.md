@@ -4,6 +4,10 @@ Original code by <a href="https://github.com/lazyink/DayZ-Missions">Lazyink</a>,
 
 <h3>This has only been barely tested on Epoch</h3>  
 
+Install 
+edit your init.sqf
+call compile preprocessFileLineNumbers "fixes\init\publicEH.sqf";
+
  * U need to have SARGE AI setup & working
  
  * Missions are very basic atm

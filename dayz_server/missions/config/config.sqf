@@ -47,6 +47,5 @@ dynamic_ai_vehicles = [
 ["UH60M_EP1_DZ",1],
 ["Ural_CDF",1],
 ["Ural_TK_CIV_EP1",1],
-["Ural_UN_EP1",1],
-["VIL_asistvan_DZE",2]
+["Ural_UN_EP1",1]
 ];
