@@ -21,8 +21,8 @@ while {true} do {
 		_wait = [2000,650] call fnc_hTime;
 	};
 
-	//sleep _wait;
-	sleep 180;
+	sleep _wait;
+	//sleep 180;
 
 	//_null = [] spawn mission_spawn;
 	_null = [] call mission_spawn;

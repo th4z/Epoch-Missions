@@ -213,12 +213,12 @@ switch(_loot_type) do
 
 // Item | Type | Chance | Amount
 {
-	diag_log format ["DEBUG MISSIONS: fillBoxes _x: %1", _x];
 	_chance = (_x select 2);
 	if ((random 1) < _chance) then {
 		_item = (_x select 0);
 		_type = (_x select 1);
 		_amount = (_x select 3);
+		diag_log format ["DEBUG MISSIONS: fillBoxes _item: %1", _item];
 		switch (_type) do
 		{
 			case "weapon":

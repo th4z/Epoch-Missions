@@ -42,7 +42,7 @@ mission_check = {
 	_isNear
 };
 
-// TODO ADD Code to Generate List of Vehicles Available to Spawn onto Server....
+
 mission_veh_pool = {
 	_veh_pool = [];
 	{
@@ -114,7 +114,6 @@ mission_spawn_crates = {
 	_type = _this select 1;
 	_loot_type = _this select 2;
 
-	//TODO: Add check that loot position is clear of objects i.e vehicles ???
 	_crate = createVehicle [_type, _position, [], 0, "CAN_COLLIDE"];
 	[_crate, _loot_type] execVM "\z\addons\dayz_server\missions\misc\fillBoxes.sqf";
 	_crate setVariable ["Sarge", 1, true];  // Stop Server Cleanup Killing Box
@@ -176,66 +175,46 @@ mission_kill_vehicle = {
 };
 
 mission_spawn = {
-	diag_log ("DEBUG: Mission Code: Mission Spawn Start 1....");
 	// Spawn around buildings and 50% near roads
 	_chance = floor(random 2);
 	_position = [];
 	_mission_type = "";
-	
-	diag_log format ["DEBUG: Mission Code 1: _chance: %1", _chance];
-	
+		
 	
 	for "_x" from 1 to 10 do {
 		switch (_chance) do
 		{
-			// TODO ADD CHECK FOR PLAYERS!!!!!
 			case 0:
 				{
-				diag_log ("DEBUG: Mission Code: Mission Spawn Start 1a....");
 				_mission_type = "Road";
 				
 				waitUntil{!isNil "BIS_fnc_selectRandom"};
 				_position = RoadList call BIS_fnc_selectRandom;
-				diag_log format ["DEBUG: Mission Code 1a: _position: %1", _position];
 				_position = _position modelToWorld [0,0,0];
-				diag_log format ["DEBUG: Mission Code 1a: _position: %1", _position];
 			
 				waitUntil{!isNil "BIS_fnc_findSafePos"};
 				_position = [_position,0,100,5,0,2000,0] call BIS_fnc_findSafePos;
-				diag_log format ["DEBUG: Mission Code 1a: _position: %1", _position];
-				
-				diag_log format ["DEBUG: Mission Code 1a: RoadList: %1", RoadList];
 				};
 			case 1:
 				{
-				diag_log ("DEBUG: Mission Code: Mission Spawn Start 1b....");
 				_mission_type = "Building";		
 				
 				waitUntil{!isNil "BIS_fnc_selectRandom"};
 				_position = BuildingList call BIS_fnc_selectRandom;
-				diag_log format ["DEBUG: Mission Code 1b: _position: %1", _position];
 				_position = _position modelToWorld [0,0,0];
-				diag_log format ["DEBUG: Mission Code 1b: _position: %1", _position];
 				
 				waitUntil{!isNil "BIS_fnc_findSafePos"};
 				_position = [_position,0,100,5,0,2000,0] call BIS_fnc_findSafePos;
-				diag_log format ["DEBUG: Mission Code 1b: _position: %1", _position];
-
-				diag_log format ["DEBUG: Mission Code 1b: BuildingList: %1", BuildingList];
 				};
 			case 2:
 				{
-				diag_log ("DEBUG: Mission Code: Mission Spawn Start 1c....");
 				_mission_type = "Open Area";	
 				
 				waitUntil{!isNil "BIS_fnc_findSafePos"};
 				_position = [getMarkerPos "center",0,5500,100,0,20,0] call BIS_fnc_findSafePos;
 				};
 		};
-		diag_log format ["DEBUG: Mission Code 1: _position: %1", _position];
-		diag_log format ["DEBUG: Mission Code 1: _mission_type: %1", _mission_type];
 
-		diag_log ("DEBUG: Mission Code: mission_check");
 		_isNear = [_position, 800] call mission_check;
 		if (!_isNear) then {
 			_x = 20;
@@ -253,7 +232,6 @@ mission_spawn = {
 		switch (_mission_type) do
 		{
 			case "Road":{
-				diag_log ("DEBUG: Mission Code: Mission Spawn Vehicle Road....");
 				if (_chance == 1) then {
 					_veh_pool = call mission_veh_pool;
 					if ((count _veh_pool) > 0) then {
@@ -265,7 +243,6 @@ mission_spawn = {
 				};
 
 				//  Spawn Supplies -- Crates
-				diag_log ("DEBUG: Mission Code: Mission Spawn Loot Road....");
 				for "_i" from 0 to 4 do
 				{
 					waitUntil{!isNil "BIS_fnc_selectRandom"};
@@ -279,8 +256,8 @@ mission_spawn = {
 				_ai_info = [_position, 2, 6, ["ambush","patrol"]] call mission_spawn_ai;
 				mission_ai_groups = mission_ai_groups + [(_ai_info select 0)] + [(_ai_info select 1)];
 				};
+
 			case "Building":{
-				diag_log ("DEBUG: Mission Code: Mission Spawn Vehicle Building....");
 				if (_chance == 1) then {
 					_veh_pool = call mission_veh_pool;
 					if ((count _veh_pool) > 0) then {
@@ -291,7 +268,6 @@ mission_spawn = {
 					};
 				};
 				
-				diag_log ("DEBUG: Mission Code: Mission Spawn Loot Building....");
 				//  Spawn Supplies -- Crates
 				for "_i" from 0 to 4 do
 				{
@@ -317,7 +293,6 @@ mission_spawn = {
 		};
 
 		// Start Mission
-		diag_log ("DEBUG: Mission Code: Mission Spawn Start 2....");
 		_text = "Bandits Have Been Spotted, Check your Map";
 		customMissionGo = [(((_ai_info select 0) select 0) + "_player_marker"), _text, _position];
 		publicVariable "customMissionGo";
@@ -333,17 +308,12 @@ mission_spawn = {
 			false
 		};
 		
-		diag_log ("DEBUG: Mission Code: Mission Spawn Start 3....");
 		// Send Message to Players about mission completed / failed
 		if ((count units _group_0 == 0) && (count units _group_1 == 1)) then {
 			_text = (_mission_info select 8);
-			diag_log ("DEBUG: Mission Code: AI DEAD");
 		} else {
 			_text = (_mission_info select 9);
-			diag_log ("DEBUG: Mission Code: Mission Timed Out");
 		};
-
-		
 		
 		_last_index = count Missions;
 		_index = 0;
@@ -361,7 +331,6 @@ mission_spawn = {
 		customMissionEnd = [(((_ai_info select 0) select 0) + "_player_marker"), _text, _position];
 		publicVariable "customMissionEnd";
 
-		diag_log ("DEBUG: Mission Code: Mission Spawn Start 5....");
 		// Wait till no Players within 200 metres && Mission Timeout Check for Crates
 		_isNear = true;
 		_timeout = time + 900;
@@ -378,16 +347,18 @@ mission_spawn = {
 			};
 		};
 
-		diag_log ("DEBUG: Mission Code: Mission Spawn Start 6....");
+		diag_log ("DEBUG: Mission Code: Removing AI + Crates");
 		// Remove Crates
 		{
 			deleteVehicle _x;
 		} forEach _crates;
 		// Temp Kill All AI
 		{
+			diag_log format ["DEBUG: Mission Code: Killing Group 0 AI %1", _x];
 			_x setDamage 1;
 		} forEach units _group_0;
 		{
+			diag_log format ["DEBUG: Mission Code: Killing Group 1 AI %1", _x];
 			_x setDamage 1;
 		} forEach units _group_1;
 	};
