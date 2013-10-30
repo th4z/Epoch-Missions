@@ -7,10 +7,10 @@ Original code by <a href="https://github.com/lazyink/DayZ-Missions">Lazyink</a>,
 <h5>Install </h5>
 
 Copy dayz_server/*  to your server files
+
 Copy mpmission/* to your mission files
 
-Look @ debug_monitor.sqf & alter it to suit how u like it.
-
+Edit extras/debug_monitor.sqf & alter it to suit how u like it.
 Edit your mission init.sqf
 
 call compile preprocessFileLineNumbers "fixes\init\publicEH.sqf";
