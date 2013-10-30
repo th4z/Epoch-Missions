@@ -4,7 +4,7 @@ Original code by <a href="https://github.com/lazyink/DayZ-Missions">Lazyink</a>,
 
 <h3>This has only been barely tested on Epoch</h3>  
 
-Install 
+<h5>Install </h5>
 
 Copy dayz_server/*  to your server files
 Copy mpmission/* to your mission files
@@ -16,7 +16,7 @@ Edit your mission init.sqf
 call compile preprocessFileLineNumbers "fixes\init\publicEH.sqf";
 
 
-Notes
+<h5>Notes</h5>
 
  * U need to have SARGE AI setup & working
  
