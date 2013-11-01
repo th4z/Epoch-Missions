@@ -84,6 +84,7 @@ mission_spawn_ai = {
 
 	_id2 = mission_id;
 	mission_id = mission_id + 1;
+	_group2 = 0;
 	if ((random 10) > 3) then {
 		_marker2 = createMarker [("SAR_mission_" + str(_id2)), _position];
 		_marker2 setMarkerShape "RECTANGLE";
@@ -91,7 +92,7 @@ mission_spawn_ai = {
 		_marker2 setMarkerType "Flag";
 		_marker2 setMarkerBrush "Solid";
 		_marker2 setMarkerSize [650,650];
-		missionNamespace setVariable ["SAR_mission_" + str(_id2), _marker];
+		missionNamespace setVariable ["SAR_mission_" + str(_id2), _marker2];
 		_group2 = [missionNameSpace getVariable ("SAR_mission_" + str(_id2)), 3, false] call SAR_AI_heli;
 	} else {
 		_marker2 = createMarker [("SAR_mission_" + str(_id2)), _position];
@@ -100,7 +101,7 @@ mission_spawn_ai = {
 		_marker2 setMarkerType "Flag";
 		_marker2 setMarkerBrush "Solid";
 		_marker2 setMarkerSize [80,80];
-		missionNamespace setVariable ["SAR_mission_" + str(_id2), _marker];
+		missionNamespace setVariable ["SAR_mission_" + str(_id2), _marker2];
 		_group2 = [missionNameSpace getVariable ("SAR_mission_" + str(_id2)), 3, _snipers, _soldiers, _ai_setting, false] call SAR_AI;
 	};
 	[[("SAR_mission_" + str(_id)), _group],[("SAR_mission_" + str(_id2)), _group2]]
@@ -296,6 +297,7 @@ mission_spawn = {
 		_text = "Bandits Have Been Spotted, Check your Map";
 		customMissionGo = [(((_ai_info select 0) select 0) + "_player_marker"), _text, _position];
 		publicVariable "customMissionGo";
+		diag_log format ["DEBUG: Mission Code: AI INFO: %1", _ai_info];
 		
 		// Wait till all AI Dead or Mission Times Out
 		_timeout = time + 1800;
