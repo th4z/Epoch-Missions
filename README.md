@@ -2,9 +2,9 @@ SARGE-AI Mission System for DayZ Epoch
 =============
 Original code by <a href="https://github.com/lazyink/DayZ-Missions">Lazyink</a>, <a href="https://github.com/theszerdi">TheSzerdi</a>, Falcyn and TAW_Tonic.
 
-<h3>This has only been barely tested on Epoch</h3>  
+<h5>This has only been barely tested on Epoch</h5>  
 
-<h5>Install </h5>
+<h5>Install Files </h5>
 
 Copy dayz_server/*  to your server files
 
@@ -12,7 +12,7 @@ Copy mpmission/* to your mission files
 
 
 
-STEP 1 -- ENABLE DEBUG MONITOR + CODE FOR MARKERS
+<h5>STEP 1 -- ENABLE DEBUG MONITOR + CODE FOR MARKERS</h5>
 
 Edit your mpmission/init.sqf
 Look for
@@ -40,7 +40,7 @@ Change it to
 
 
 
-STEP 2 -- ENABLE MISSIONS
+<h5>STEP 2 -- ENABLE MISSIONS</h5>
 
 Edit your mpmission/init.sqf
 Look for 
