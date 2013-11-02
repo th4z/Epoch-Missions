@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project name="dayz">
+        <Package name="dayz">
+                <Key ID="R3F_VERSION_WEIGHTED">
+					<Original>1.04</Original>
+					<English>1.04</English>
+					<German>1.04</German>
+					<Russian>1.04</Russian>
+                </Key>
+                <Key ID="STR_R3F_WEIGHT_InGearBox">
+					<Original>%1 | Weight carried : %2 lb</Original>
+					<English>%1 | Weight carried : %2 lb</English>
+					<French>%1 | Poids transporté : %2 Kg</French>
+					<German>%1 | Weight carried : %2 lb</German>
+					<Russian>%1 | Weight carried : %2 lb</Russian>
+                </Key>
+                <Key ID="STR_R3F_WEIGHT_English">
+					<Original>lb</Original>
+					<English>lb</English>
+					<French>Kg</French>
+					<German>lb</German>
+					<Russian>lb</Russian>
+                </Key>
+                <Key ID="R3F_VERSION_TIRED">
+					<Original>1.02</Original>
+					<English>1.02</English>
+					<French>1.02</French>
+					<German>1.02</German>
+					<Russian>1.02</Russian>
+                </Key>
+				<Key ID="STR_custom_blood">
+					<Original>Blood</Original>
+					<English>Blood</English>
+					<French>Sang</French>
+					<German>Blut</German>
+					<Russian>кровь</Russian>
+				</Key>
+				<Key ID="STR_custom_humanity">
+					<Original>Humanity</Original>
+					<English>Humanity</English>
+					<French>l'humanité</French>
+					<German>Humanity</German>
+					<Russian>человечество</Russian>
+				</Key>
+				<Key ID="STR_custom_serverrestart">
+					<Original>Server Restart</Original>
+					<English>Server Restart</English>
+					<German>Server Neustart</German>
+					<French>Redémarrage du serveur</French>
+					<Russian>перезапуск сервера</Russian>
+				</Key>
+				<Key ID="STR_custom_playersalive">
+					<Original>Players Alive</Original>
+					<English>Players Alive</English>
+					<German>Spieler Lebend</German>
+					<French>Joueurs Vivant</French>
+					<Russian>Игроки Живой</Russian>
+				</Key>
+				<Key ID="STR_custom_f5toggle">
+					<Original>Press F5 for suicide!</Original>
+					<English>Press F5 for suicide!</English>
+					<German>Drücken Sie F5 für Selbstmord!</German>
+					<French>Appuyez sur F5 pour le suicide!</French>
+					<Russian>Нажмите клавишу F5 для самоубийства!</Russian>
+				</Key>
+				<Key ID="STR_custom_f10toggle">
+					<Original>Press F10 to toggle!</Original>
+					<English>Press F10 to toggle!</English>
+					<German>Drücken Sie F10, um umzuschalten!</German>
+					<French>Appuyez sur F10 pour passer!</French>
+					<Russian>Нажмите F10 для переключения!</Russian>
+				</Key>
+				<Key ID="STR_custom_combatlogger">
+					<Original>Has combat logged!!!</Original>
+					<English>Has combat logged!!!</English>
+					<German>Hat Kampf eingeloggt</German>
+					<French>A combat connecté</French>
+					<Russian>была боевая вошли</Russian>
+				</Key>
+				<Key ID="STR_custom_5minRestart">
+					<Original>Server Restart in 5 minutes</Original>
+					<English>Server Restart in 5 minutes</English>
+					<German>Server in nur 5 Minuten Neustart</German>
+					<French>Redémarrage du serveur en 5 minutes</French>
+					<Russian>Перезапуска сервера за 5 минут</Russian>
+				</Key>
+        </Package>
+</Project>
