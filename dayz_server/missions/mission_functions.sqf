@@ -14,7 +14,8 @@ mission_cleaner = {
 				missionNamespace setVariable [(_group select 0), nil];
 				mission_ai_groups set [_index, "delete me"];
 				mission_ai_groups = mission_ai_groups - ["delete me"];			
-				_index = _index -1;
+				_index = _index - 1;
+				_last_index = _last_index - 1;
 			};
 			_index = _index + 1;
 		};
