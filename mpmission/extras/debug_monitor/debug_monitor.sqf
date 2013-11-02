@@ -9,6 +9,7 @@ _mission_timer = -60;
 _info_combatlogger = '';
 
 debugMonitor = true;
+customMission = "";
 
 _rtime = round(21600 - serverTime);
 
@@ -57,8 +58,8 @@ while {true} do {
 			_minutes,
 			_minutes,
 			"",
-			diag_fps,
-			customPlayerCount,
+			round(diag_fps),
+			0,
 			"extras\debug_monitor\warning.paa",
 			"extras\debug_monitor\pirates.paa",
 			_combatlogger
