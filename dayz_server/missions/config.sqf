@@ -1,8 +1,7 @@
-#include "config_missions.sqf"
-#include "config_map.sqf"
-
 // List of possible Vehicles to Spawn
-					
+
+num_bandit_missions = 2;
+
 dynamic_ai_vehicles = [
 ["AH6X_DZ",1],
 ["AN2_DZ",1],

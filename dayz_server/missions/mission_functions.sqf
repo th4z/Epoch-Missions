@@ -1,6 +1,7 @@
 diag_log ("DEBUG: Mission Code: Loading Mission Functions.......");
 
 mission_cleaner = {
+	private ["_last_index", "_index", "_group"];
 	while {true} do {
 		sleep 600;
 		// Remove AI Group + Map Marker if all units are dead
@@ -24,7 +25,7 @@ mission_cleaner = {
 
 
 mission_check = {
-	private ["_distance", "_isNearList", "_isNear", "_pos"];
+	private ["_pos", "_distance", "_isNearList", "_isNear"];
 	_pos = _this select 0;
 	_distance = _this select 1;
 	// Check if Player is within 200 Metres...
@@ -45,6 +46,7 @@ mission_check = {
 
 
 mission_veh_pool = {
+	private ["_veh_pool", "_vehicle", "_velimit", "_qty", "_veh_pool"];
 	_veh_pool = [];
 	{
 		_vehicle = _x select 0;
@@ -64,6 +66,7 @@ mission_veh_pool = {
 };
 
 mission_spawn_ai = {
+	private ["_position", "_snipers", "_soldiers", "_ai_setting", "_marker", "_group", "_id2", "_group2", "_marker2"];
 	diag_log format ["DEBUG: Mission SPAWN AI: _this: %1", _this];
 
 	_position = _this select 0;
@@ -110,6 +113,7 @@ mission_spawn_ai = {
 
 
 mission_spawn_crates = {
+	private ["_position", "_type", "_loot_type", "_crate"];
 	// Spawn Crates  [_crate_position,_type,"Random"] call mission_spawn_crates
 	diag_log format ["DEBUG: Mission Code Spawn Loot: _this: %1", _this];
 	_position = _this select 0;
@@ -124,6 +128,7 @@ mission_spawn_crates = {
 
 
 mission_spawn_vehicle = {
+	private ["_vehicle", "_position", "_spawnDMG", "_dir", "_veh", "_objPosition", "_num", "_allCfgLoots", "_iClass", "_itemTypes", "_index", "_weights", "_cntWeights", "_index", "_itemType"];
 	diag_log format ["DEBUG: Mission Code Spawn Vehicle: _this: %1", _this];
 	//15:00:40 "DEBUG: Mission Code Spawn Vehicle: _this: [["Mi17_DZ",1],[13041,12753.5],false]"
 	_vehicle = _this select 0;
@@ -154,7 +159,6 @@ mission_spawn_vehicle = {
 		_index = _weights select _index;
 		_itemType = _itemTypes select _index;
 		_veh addMagazineCargoGlobal [_itemType,1];
-		//diag_log("DEBUG: spawed loot inside vehicle " + str(_itemType));
 	};
 
 	[_veh,[_dir,_objPosition],_vehicle,_spawnDMG,"0"] call server_publishVeh;
@@ -162,12 +166,14 @@ mission_spawn_vehicle = {
 };
 
 mission_kill_vehicle = {
-	_veh = _this select 0;
+	private ["_vehicle", "_timer", "_loot_type", "_blowup"];
+
+	_vehicle = _this select 0;
 	_timer = time + _this select 1;
 	
 	waitUntil{
 		sleep 1; 
-		if {{isPlayer _x && _x distance _veh < 30} count playableunits > 0} exitWith {_blowup = false; true};
+		if {{isPlayer _x && _x distance _vehicle < 30} count playableunits > 0} exitWith {_blowup = false; true};
 		if (time > _timer) exitWith {_blowup = true; true};
 		false
 	};
@@ -177,11 +183,12 @@ mission_kill_vehicle = {
 };
 
 mission_spawn = {
+	private ["_chance", "_position", "_mission_type", "_isNear", "_crates", "_ai_info", "_veh_pool", "_vehicle", "_vehicle_position", "_crate_position", "_type", "_text", "_timeout", "_group_0", "_group_1", "_last_index", "_index", "_missions", "_timeout2"];
 	// Spawn around buildings and 50% near roads
 	_chance = floor(random 2);
 	_position = [];
 	_mission_type = "";
-		
+
 	
 	for "_x" from 1 to 10 do {
 		switch (_chance) do

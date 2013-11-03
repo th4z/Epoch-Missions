@@ -1,3 +1,4 @@
+private ["_player_name"];
 waitUntil {sleep 1; customCombatLogger == ''};
 
 _player_name = 	_this select 0;

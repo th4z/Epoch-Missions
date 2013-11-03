@@ -1,4 +1,4 @@
-﻿private ["_humanity","_rtime","_hours","_minutes","_minutes2","_pic","_info_player", "_warning", "_info_combatlogger", "_info_mission"];
+﻿private ["_warning", "_combatlogger", "_combatlogger_timer", "_mission", "_mission_timer", "_info_combatlogger", "_rtime", "_hours", "_minutes", "_minutes2", "_humanity", "_pic", "_info_player"];
 _warning = false;
 _combatlogger = '';
 _combatlogger_timer = -60;
@@ -7,6 +7,9 @@ _mission = '';
 _mission_timer = -60;
 
 _info_combatlogger = '';
+
+ServerRestartTimer_hours = 0;
+ServerRestartTimer_minutes = 0;
 
 debugMonitor = true;
 customMission = "";
@@ -22,7 +25,14 @@ while {true} do {
 	};
 
 	if (debugMonitor) then {
+		_hours = (_rtime/60/60);
+		_hours = toArray (str _hours);
+		_hours resize 1;
+		_hours = toString _hours;
+		_hours = compile _hours;
+		_hours = call _hours;
 		_minutes = round(_rtime/60);
+		_minutes2 = _minutes - (_hours*60);
 		
 		//Debug Info
 		_humanity =	player getVariable["humanity",0];
@@ -47,7 +57,8 @@ while {true} do {
 			<t size='1' font='Bitstream' align='Center' color='#CC0000'>%7</t>"
 			+ customMission + 
 			_info_combatlogger +
-			"<t size='1'font='Bitstream'align='center' color='#104E8B' >"+ (localize "STR_custom_f10toggle") + "</t><br/>";
+			"<t size='1'font='Bitstream'align='center' color='#104E8B' >"+ (localize "STR_custom_f5toggle") + "</t><br/>
+			<t size='1'font='Bitstream'align='center' color='#104E8B' >"+ (localize "STR_custom_f10toggle") + "</t><br/>";
 
 		hintSilent parseText format 
 			[_info_player,
@@ -55,8 +66,8 @@ while {true} do {
 			(r_player_blood),
 			round (player getVariable['humanity', 0]),
 			_pic,
-			_minutes,
-			_minutes,
+			_hours,
+			_minutes2,
 			"",
 			round(diag_fps),
 			0,

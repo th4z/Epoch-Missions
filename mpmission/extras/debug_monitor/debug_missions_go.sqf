@@ -1,3 +1,4 @@
+private ["_id", "_text", "_position", "_marker"];
 waitUntil {sleep 1; customMission == ''};
 
 diag_log format ["DEBUG: Mission Code: Debug Monitor: %1", _this];
@@ -5,11 +6,11 @@ _id = _this select 0;
 _text = 	_this select 1;
 _position = _this select 2;
 
-_MainMarker75 = createMarker[_id, _position];
-_MainMarker75 setMarkerColor "ColorRed";
-_MainMarker75 setMarkerShape "ELLIPSE";
-_MainMarker75 setMarkerBrush "Grid";
-_MainMarker75 setMarkerSize [300,300];
+_marker = createMarker[_id, _position];
+_marker setMarkerColor "ColorRed";
+_marker setMarkerShape "ELLIPSE";
+_marker setMarkerBrush "Grid";
+_marker setMarkerSize [300,300];
 
 customMission = "<br/>
 				<img align='Center' size='4.75' image='%11'/><br/>
