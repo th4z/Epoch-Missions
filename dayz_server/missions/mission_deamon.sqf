@@ -25,7 +25,7 @@ while {true} do {
 	
 	_wait = [1500,650] call fnc_hTime;
 	//_wait = 180;
-	sleep = _wait;
+	sleep _wait;
 
 	{
 		diag_log format ["DEBUG MISSIONS: _x: %1 scriptDone: %2", _x, (scriptDone _x)];
