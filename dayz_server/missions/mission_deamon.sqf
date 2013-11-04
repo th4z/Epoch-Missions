@@ -1,4 +1,4 @@
-private ["_bandit_missions", "_null", "_wait"];
+private ["_bandit_missions", "_null", "_wait", "_handle"];
 diag_log ("DEBUG: Mission Code: Start.......");
 
 #include "config.sqf"
@@ -16,20 +16,24 @@ _null = [] spawn mission_cleaner;
 sleep 300;
 
 for "_x" from 1 to num_bandit_missions do {
-	_bandit_missions = _bandit_missions + [[] spawn mission_spawn];
+	_handle = [] spawn mission_spawn;
+	_bandit_missions = _bandit_missions + [_handle];
 };	
 
 while {true} do {
 	diag_log ("DEBUG: Mission Code: Waiting....");
 	
 	_wait = [1500,650] call fnc_hTime;
+	//_wait = 180;
 	sleep = _wait;
-	//sleep 180;
+
 	{
+		diag_log format ["DEBUG MISSIONS: _x: %1 scriptDone: %2", _x, (scriptDone _x)];
 		if (scriptDone _x) then {
 			if ((random 10) > 6) exitWith {
 				_x = [] spawn mission_spawn;
 			};
 		};
 	} forEach _bandit_missions;
+	diag_log format ["DEBUG MISSIONS: _bandit_missions: %1", _bandit_missions];
 };
