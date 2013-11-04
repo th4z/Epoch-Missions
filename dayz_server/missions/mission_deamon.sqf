@@ -1,4 +1,4 @@
-private ["_bandit_missions", "_null"];
+private ["_bandit_missions", "_null", "_wait"];
 diag_log ("DEBUG: Mission Code: Start.......");
 
 #include "config.sqf"
@@ -22,7 +22,8 @@ for "_x" from 1 to num_bandit_missions do {
 while {true} do {
 	diag_log ("DEBUG: Mission Code: Waiting....");
 	
-	sleep [1500,650] call fnc_hTime;
+	_wait = [1500,650] call fnc_hTime;
+	sleep = _wait;
 	//sleep 180;
 	{
 		if (scriptDone _x) then {
