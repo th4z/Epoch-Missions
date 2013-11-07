@@ -1,249 +1,122 @@
+crate_add_loot = {
+	private ["_iItem","_iClass","_iPos","_radius","_item","_itemTypes","_index","_weights","_cntWeights","_qty","_max","_tQty","_canType","_mags","_dateNow"];
+
+	_iItem = 	_this select 0;
+	_iClass = 	_this select 1;
+	_crate =    _this select 2;
+	diag_log format ["DEBUG ADD LOOT: _iItem: %1 _iClass: %2 _crate: %3", _iItem, _iClass, _crate];
+	switch (_iClass) do
+	{
+		default
+		{
+			_itemTypes = [] + ((getArray (missionconfigFile >> "cfgLoot" >> _iClass)) select 0);
+			_index = dayz_CLBase find _iClass;
+			_weights = dayz_CLChances select _index;
+			_cntWeights = count _weights;
+			_qty = 3;
+			_max = 1 + round(random 3);
+			while {_qty < _max} do
+			{
+				_tQty = 1 + round(random 1);
+				_index = floor(random _cntWeights);
+				_index = _weights select _index;
+				_canType = _itemTypes select _index;
+				_crate addMagazineCargoGlobal [_canType,_tQty];
+				_qty = _qty + _tQty;
+			};
+			if (_iItem != "") then
+			{
+				_crate addWeaponCargoGlobal [_iItem,random(4)];
+			};
+		};
+		case "single":
+		{
+			_amount = round(random 5);
+			_itemTypes = [] + ((getArray (missionconfigFile >> "cfgLoot" >> _iItem)) select 0);
+			_index = dayz_CLBase find _iItem;
+			_weights = dayz_CLChances select _index;
+			_cntWeights = count _weights;
+				
+			_index = floor(random _cntWeights);
+			_index = _weights select _index;
+			_canType = _itemTypes select _index;
+			
+			_crate addMagazineCargoGlobal [_canType,_amount];
+			_crate addMagazineCargoGlobal ["ItemSilverBar",_amount];
+			
+		};
+		case "backpack":
+		{
+			_amount = round(random 2);
+			_itemTypes = [] + ((getArray (missionconfigFile >> "cfgLoot" >> _iItem)) select 0);
+			_index = dayz_CLBase find _iItem;
+			_weights = dayz_CLChances select _index;
+			_cntWeights = count _weights;
+			_index = floor(random _cntWeights);
+			_index = _weights select _index;
+			_iItem = _itemTypes select _index;
+			
+			_crate addBackpackCargoGlobal [_iItem,1];
+		};
+		
+		case "weapon":
+		{
+			_amount = round(random 3);
+			_crate addWeaponCargoGlobal [_iItem,_amount];
+			_mags = [] + getArray (configFile >> "cfgWeapons" >> _iItem >> "magazines");
+			if ((count _mags) > 0) then
+			{
+				if (_mags select 0 == "Quiver") then { 
+					_mags set [0, "WoodenArrow"] 
+				};
+				_crate addMagazineCargoGlobal [(_mags select 0), (_amount*(round(random 5)))];
+			};
+		};
+		case "weaponnomags":
+		{
+			//_crate addWeaponCargoGlobal [_iItem,1];
+			_amount = round(random 6);
+			_crate addMagazineCargoGlobal [_iItem, _amount];
+		};
+		case "magazine":
+		{
+			_amount = round(random 6);
+			_crate addMagazineCargoGlobal [_iItem,_amount];
+		};
+		case "object":
+		{
+			_amount = round(random 5);
+			_crate addMagazineCargoGlobal ["ItemGoldBar", _amount];
+		};
+	};
+};
+
+
 private ["_crate", "_loot_type", "_loot", "_chance", "_item", "_type", "_amount", "_mags"];
 
 _crate = _this select 0;
-_loot_type = _this select 1;
+_lootTable = _this select 1;
 
-clearWeaponCargoGlobal _crate;
-clearMagazineCargoGlobal _crate;
-
-// Item | Type | Chance | Amount
-if (_loot_type == "Random") then {
-	_loot_type = ["Building Supplies", "Medical Supplies", "Miltary Supplies", "Miltary Supplies", "Money", "Rare", "Residental Supplies"] call BIS_fnc_selectRandom;
+if (_lootTable == "Random") then {
+	_lootTable = ["Military", "MilitaryIndustrial", "MilitarySpecial", "Supermarket", "Farm", "Industrial", "Office", "Residential"] call BIS_fnc_selectRandom;
 };
 
-switch(_loot_type) do
-{
-	case "Building Supplies":
-	{
-		_loot = [
-				["ItemToolbox", 	 "weapon", 0.3, 5],
-				["ItemMatchbox", 	 "weapon", 0.3, 5],
-				["ItemJerrycan", 	   	   "", 0.5, 5],
-				["ItemFuelBarrel", 		   "", 0.5, 5],
-				["ItemSledge",		 "weapon", 0.5, 2],
-				["PartPlywoodPack","magazine", 0.8, 10],
-				["CinderBlocks",	"magazine",0.8, 10],
-				["MortarBucket",	"magazine",0.8, 10],
-				["ItemFuelPump",	"magazine",0.5, 5],
-				["ItemTankTrap",	"magazine",0.5, 5],
-				["PartGeneric",	"magazine",0.5, 5],
-				["ItemCopperBar",			"",	0.5, 10],
-				
-				
-				
-				["Remington870_lamp", 	  "weapon",  0.8, 1],
-				["PipeBomb", 					"",  0.2, 4],
-				["ItemComboLock",				"",  0.2, 4],
-				
+_config = 		missionConfigFile >> "CfgBuildingLoot" >> _lootTable;
+_itemTypes =	[] + getArray (_config >> "itemType");
+_index =        dayz_CBLBase find toLower(_lootTable);
+_weights =		dayz_CBLChances select _index;
+_cntWeights = count _weights;
 
-				["DZ_ALICE_Pack_EP1", "backpack", 0.4, 3],
 
-				["HandChemGreen", 		"", 0.5, 10],
-				["HandRoadFlare", 		"",	1.0, 10],
-				["HandChemRed", 		"", 0.5, 10]];
-	};
-		
-	case "Medical":
-	{
-		_loot = [
-				["ItemAntibiotic",	"", 0.5, 5],
-				["ItemMorphine", 	"", 0.5, 5],
-				["ItemSodaRbull", 	"", 0.5, 5],
+_num = 10;
+_amount = round(random 8);
 
-				
-				
-				["ItemBandage", 	"", 0.8, 10],
-				["ItemPainkiller", 	"", 0.8, 5],
-				["ItemBloodbag", 	"", 0.5, 10],
-				["ItemHeatPack", 	"", 0.5, 10],				
-				["ItemWire", 	"", 0.5, 4],
-				["ItemTinBar",		"",	0.5, 10],
-				
 
-				["glock17_EP1", 	"weapon",  0.8, 1],
-				["MakarovSD", 		"weapon",  0.8, 1],
-				["MR43", 		"weapon",  0.8, 2],
-				
-
-				["DZ_Czech_Vest_Puch", "backpack", 0.4, 4],
-
-				["FoodCanBakedBeans", 		"", 1.0, 10],
-				["FoodCanUnlabeled", 		"", 1.0, 10],
-				["ItemWaterbottle", 		"", 0.5, 10]];
-	};
-		
-	case "Miltary":
-	{
-		_loot = [
-				["ItemToolbox", 	"weapon", 0.5, 5],
-				["ItemMatchbox", 	"weapon", 0.5, 5],
-				["ItemCompass",		"weapon", 0.5, 5],
-				["ItemMap",			"weapon", 0.5, 5],
-				["ItemGPS",			"weapon", 0.3, 5],
-				["ItemRadio",		"weapon", 0.3, 5],
-				["ItemEtool", 	   "weapon", 0.3, 5],
-				["UZI_SD_EP1",	   "weapon", 0.6, 5],
-				["M249_DZ",		   "weapon", 0.2, 5],
-				["M110_NVG_EP1",		   "weapon", 0.2, 5],
-				
-				
-				["ItemBandage", 		 "", 0.8, 10],
-				["ItemPainkiller", 		 "", 0.8, 5],
-				["ItemBloodbag", 		 "", 0.5, 10],
-
-				["glock17_EP1", 	"weapon",  0.8, 2],
-				["MakarovSD", 		"weapon",  0.8, 2],
-				["UZI_EP1", 		"weapon",  0.8, 2],
-				["Sa61_EP1", 		"weapon",  0.6, 3],
-				
-				["30Rnd_556x45_Stanag", 		"",  0.4, 10],
-				["30Rnd_556x45_StanagSD", 		"",  0.2, 10],
-				
-				["30Rnd_545x39_AK", 		"",  0.4, 10],
-				["30Rnd_545x39_AKSD", 		"",  0.4, 10],
-				
-				["20Rnd_762x51_B_SCAR", 		"",  0.4, 10],
-				
-				
-				
-
-				["DZ_LargeGunBag_EP1", "backpack", 0.4, 1],
-
-				["FoodCanBakedBeans", 	"", 1.0, 10],
-				["HandRoadFlare", 		"", 1.0, 10],
-				["HandGrenade_west", 	"", 0.5, 10]];
-	};
-		
-	case "Money":
-	{
-		_loot = [
-				["ItemToolbox", 	"weapon", 0.5, 5],
-				["ItemMatchbox", 	"weapon", 0.5, 5],
-				
-				["ItemBandage", 		 "", 0.8, 10],
-				["ItemPainkiller", 		 "", 0.8, 5],
-				["ItemBloodbag", 		 "", 0.5, 10],
-
-				["ItemSilverBar", 	"",  0.8, 8],
-				["ItemGoldBar",		"",  0.8, 4],
-
-				["DZ_Backpack_EP1", "backpack", 0.4, 1],
-
-				["FoodCanBakedBeans", 		"", 1.0, 10],
-				["HandRoadFlare", 			"", 1.0, 10],
-				["ItemGoldBar10oz", 		"", 0.5, 4]];
-	};
-	
-	case "Rare":
-	{
-		_loot = [
-				["ItemToolbox", 	"weapon",	0.5, 5],
-				["ItemMatchbox", 	"weapon",	0.5, 5],
-				["ItemGenerator", 		  "",	0.5, 5],
-				["ItemKeyKit", 		 "weapon", 	0.5, 5],
-				["ItemBandage", 		 "", 	0.8, 10],
-				["ItemPainkiller", 		 "", 	0.8, 5],
-				["ItemBloodbag", 		 "", 	0.5, 10],
-
-				["glock17_EP1", 	"weapon",	0.8, 1],
-				["G36_C_SD_camo", 	"weapon",	0.6, 3],
-				
-				["MakarovSD", 		"weapon",	0.8, 1],
-				["NVGoggles",		"weapon",	0.8, 1],
-
-				["DZ_British_ACU", "backpack", 0.4, 1],
-
-				["FoodCanBakedBeans", 		"", 1.0, 10],
-				["HandRoadFlare", 			"", 1.0, 10],
-				["ItemSilverBar", 		"", 0.5, 10]
-				];
-	};
-		
-	case "Residental":
-	{
-		_loot = [
-				["ItemMatchbox", 	"weapon", 0.5, 5],
-				["ItemKnife",		"weapon", 0.5, 5],
-				
-				["ItemBandage", 		 "", 0.8, 10],
-				["ItemPainkiller", 		 "", 0.8, 5],
-
-				["ItemSodaMdew", 		 	"", 0.5, 10],
-				["ItemSodaRbull", 			"", 0.5, 10],
-				["ItemSodaOrangeSherbet", 	"", 0.5, 10],
-				["FoodNutmix", 	"", 0.5, 10],
-				["FoodCanBakedBeans", 		"", 1.0, 10],
-				["FoodMRE", 		"", 1.0, 10],
-				
-				
-				["PartPlankPack", 	"magazine", 0.5, 5],
-				["ItemFishingPole",	  "weapon", 0.5, 5],
-				["ItemLightBulb",			"", 0.5, 5],
-				
-				["ItemAluminumBar", 		"", 0.5, 10],
-
-				["Winchester1866", 		"weapon",  0.8, 3],
-
-				["DZ_Backpack_EP1", "backpack", 0.4, 1],
-
-				["HandRoadFlare", 			"", 1.0, 10],
-				["HandGrenade_west", 		"", 0.5, 10]];
-	};
-		
-	default
-	{
-		_loot = [
-				["ItemToolbox", 	"weapon", 0.5, 5],
-				["ItemMatchbox", 	"weapon", 0.5, 5],
-				
-				["ItemBandage", 		 "", 0.8, 10],
-				["ItemPainkiller", 		 "", 0.8, 5],
-				["ItemBloodbag", 		 "", 0.5, 10],
-
-				["glock17_EP1", 		"weapon",  0.8, 1],
-				["MakarovSD", 			"weapon",  0.8, 1],
-
-				["DZ_Backpack_EP1", 	"backpack", 0.4, 1],
-
-				["FoodCanBakedBeans", 		"", 1.0, 10],
-				["HandRoadFlare", 			"", 1.0, 10],
-				["ItemCopperBar", 		"", 0.5, 10]];
-	};
+for "_x" from 1 to _num do {
+	//create loot
+	sleep 1;
+	_index = floor(random _cntWeights);
+	_index = _weights select _index;
+	_itemType = _itemTypes select _index;
+	[_itemType select 0, _itemType select 1, _crate] spawn crate_add_loot;
 };
-
-// Item | Type | Chance | Amount
-{
-	_chance = (_x select 2);
-	if ((random 1) < _chance) then {
-		_item = (_x select 0);
-		_type = (_x select 1);
-		_amount = (_x select 3);
-		diag_log format ["DEBUG MISSIONS: fillBoxes _item: %1", _item];
-		switch (_type) do
-		{
-			case "weapon":
-			{
-				_amount = round(random _amount);
-				_crate addWeaponCargoGlobal [_item, _amount];
-				_mags = [] + getArray (configFile >> "cfgWeapons" >> _item >> "magazines");
-				if ((count _mags) > 0) then
-				{
-					if (_mags select 0 == "Quiver") then { _mags set [0, "WoodenArrow"] }; // Prevent spawning a Quiver
-					_crate addMagazineCargoGlobal [(_mags select 0), ((round(random 6))*_amount)];
-				};
-			};
-			
-			case "backpack":
-			{
-				_amount = round(random _amount);
-				_crate addBackpackCargoGlobal [_item, _amount];
-			};
-			
-			default
-			{
-				_amount = round(random _amount);
-				_crate addMagazineCargoGlobal [_item, _amount];
-			};
-		};
-	};
-} forEach _loot;

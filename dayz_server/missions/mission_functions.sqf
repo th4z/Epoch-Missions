@@ -29,7 +29,7 @@ mission_check = {
 	_pos = _this select 0;
 	_distance = _this select 1;
 	// Need to add check to parse & check entities are playable i.e not SARGE AI
-	_isNearList = _pos nearEntities ["CAManBase",_distance];
+	_isNearList = _pos nearEntities ["CAManBase", _distance];
 	_isNear = false;
 	
 	// Check for Players & Ignore SARGE AI
@@ -40,6 +40,16 @@ mission_check = {
 			};
 		} forEach _isNearList;
 	};
+/*
+	if !(_isNear) then {
+		_isNearList = _pos nearEntities ["LandVehicle", "Air", _distance];
+			{
+				if (vehicle _x getVariable ["Sarge",0] == 0) then {
+					_isNear = true;
+				};
+			} forEach _isNearList;
+*/	
+	diag_log ["DEBUG MISSIONS: playableUnits: %1", playableUnits];
 	_isNear
 };
 
@@ -120,6 +130,8 @@ mission_spawn_crates = {
 	_loot_type = _this select 2;
 
 	_crate = createVehicle [_type, _position, [], 0, "CAN_COLLIDE"];
+	clearWeaponCargoGlobal _crate;
+	clearMagazineCargoGlobal _crate;
 	[_crate, _loot_type] execVM "\z\addons\dayz_server\missions\misc\fillBoxes.sqf";
 	_crate setVariable ["Sarge", 1, true];  // Stop Server Cleanup Killing Box
 	_crate
@@ -251,7 +263,8 @@ mission_spawn = {
 				};
 
 				//  Spawn Supplies -- Crates
-				for "_i" from 0 to 4 do
+				//for "_i" from 0 to 4 do
+				for "_i" from 0 to 1 do
 				{
 					waitUntil{!isNil "BIS_fnc_selectRandom"};
 					_crate_position = [_position,0,30,3,0,2000,0] call BIS_fnc_findSafePos;
@@ -343,7 +356,7 @@ mission_spawn = {
 		// Wait till no Players within 200 metres && Mission Timeout Check for Crates
 		_isNear = true;
 		_timeout = time + 900;
-		_timeout2 = _timeout + 600;
+		_timeout2 = _timeout + 900;
 		while {_isNear} do
 		{
 			sleep 30;
