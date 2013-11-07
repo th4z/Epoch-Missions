@@ -28,7 +28,6 @@ mission_check = {
 	private ["_pos", "_distance", "_isNearList", "_isNear"];
 	_pos = _this select 0;
 	_distance = _this select 1;
-	// Check if Player is within 200 Metres...
 	// Need to add check to parse & check entities are playable i.e not SARGE AI
 	_isNearList = _pos nearEntities ["CAManBase",_distance];
 	_isNear = false;
@@ -348,7 +347,7 @@ mission_spawn = {
 		while {_isNear} do
 		{
 			sleep 30;
-			_isNear = [(_mission_info select 0), 200] call mission_check;
+			_isNear = [(_mission_info select 0), 500] call mission_check;
 			if ((!_isNear) && (time > _timeout)) then {
 				_isNear = false;
 			};

@@ -1,18 +1,14 @@
-﻿private ["_warning", "_combatlogger", "_combatlogger_timer", "_mission", "_mission_timer", "_info_combatlogger", "_rtime", "_hours", "_minutes", "_minutes2", "_humanity", "_pic", "_info_player"];
+﻿private ["_warning", "_rtime", "_hours", "_minutes", "_minutes2", "_humanity", "_pic", "_info_player"];
 _warning = false;
-_combatlogger = '';
-_combatlogger_timer = -60;
-
-_mission = '';
-_mission_timer = -60;
-
-_info_combatlogger = '';
 
 ServerRestartTimer_hours = 0;
 ServerRestartTimer_minutes = 0;
 
-debugMonitor = true;
+customCombatLogger = "";
 customMission = "";
+customStudyBody = "";
+
+debugMonitor = true;
 
 _rtime = round(21600 - serverTime);
 
@@ -46,34 +42,30 @@ while {true} do {
 		};
 		
 		_info_player = 
-			"<t size='1' font='Bitstream' align='Center' >%1</t><br/>
-			<img size='4.75' image='%4'/><br/>
-			<t size='1' font='Bitstream' align='left' color='#CC0000'>" + (localize "STR_custom_blood") + ": </t><t size='1' font='Bitstream' align='right'>%2</t><br/>
-			<t size='1' font='Bitstream' align='left' color='#0066CC'>" + (localize "STR_custom_humanity") + ": </t><t size='1' font='Bitstream' align='right'>%3</t><br/>
+			"<t size='1' font='Bitstream' align='Center' >%4</t><br/>
+			<img size='4.75' image='%7'/><br/>
+			<t size='1' font='Bitstream' align='left' color='#CC0000'>" + (localize "STR_custom_blood") + ": </t><t size='1' font='Bitstream' align='right'>%5</t><br/>
+			<t size='1' font='Bitstream' align='left' color='#0066CC'>" + (localize "STR_custom_humanity") + ": </t><t size='1' font='Bitstream' align='right'>%6</t><br/>
 			<br/>
-			<t size='1' font='Bitstream' align='left' color='#FFBF00'>"+ (localize "STR_custom_serverrestart") + ": </t><t size='1' font='Bitstream' align='right'>%5h %6min</t><br/>
-			<t size='1' font='Bitstream' align='left' color='#FFBF00'>"+ (localize "STR_custom_playersalive") + ": </t><t size='1' font='Bitstream' align='right'>%9</t><br/>
-			<t size='1' font='Bitstream' align='left' color='#FFBF00'>FPS: </t><t size='1' font='Bitstream' align='right'>%8</t><br/>
-			<t size='1' font='Bitstream' align='Center' color='#CC0000'>%7</t>"
-			+ customMission + 
-			_info_combatlogger +
+			<t size='1' font='Bitstream' align='left' color='#FFBF00'>"+ (localize "STR_custom_serverrestart") + ": </t><t size='1' font='Bitstream' align='right'>%8h %9min</t><br/>
+			<t size='1' font='Bitstream' align='left' color='#FFBF00'>"+ (localize "STR_custom_playersalive") + ": </t><t size='1' font='Bitstream' align='right'>%3</t><br/>
+			<t size='1' font='Bitstream' align='left' color='#FFBF00'>FPS: </t><t size='1' font='Bitstream' align='right'>%10</t><br/>"
+			+ customMission + customCombatLogger + customStudyBody +
 			"<t size='1'font='Bitstream'align='center' color='#104E8B' >"+ (localize "STR_custom_f5toggle") + "</t><br/>
 			<t size='1'font='Bitstream'align='center' color='#104E8B' >"+ (localize "STR_custom_f10toggle") + "</t><br/>";
 
 		hintSilent parseText format 
 			[_info_player,
+			"extras\debug_monitor\pirates.paa",
+			"extras\debug_monitor\warning.paa",
+			"-1",
 			('' + (gettext (configFile >> 'CfgVehicles' >> (typeof vehicle player) >> 'displayName'))),
-			(r_player_blood),
+			round (r_player_blood),
 			round (player getVariable['humanity', 0]),
 			_pic,
 			_hours,
 			_minutes2,
-			"",
-			round(diag_fps),
-			0,
-			"extras\debug_monitor\warning.paa",
-			"extras\debug_monitor\pirates.paa",
-			_combatlogger
+			round(diag_fps)
 			];
 	};
 	sleep 1;	

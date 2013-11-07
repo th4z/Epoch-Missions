@@ -13,8 +13,7 @@ _marker setMarkerBrush "Grid";
 _marker setMarkerSize [300,300];
 
 customMission = "<br/>
-				<img align='Center' size='4.75' image='%11'/><br/>
-				<t size='1' font='Bitstream' align='left' color='#CC0000'>%12 </t><br/>
+				<img align='Center' size='4.75' image='%1'/><br/>
 				<t size='1' font='Bitstream' align='left' color='#CC0000'>" + _text + "</t><br/>";
 sleep 30;
 customMission = '';
