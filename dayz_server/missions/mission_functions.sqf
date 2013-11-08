@@ -263,7 +263,7 @@ mission_spawn = {
 				};
 
 				//  Spawn Supplies -- Crates
-				for "_i" from 0 to 4 do
+				for "_i" from 0 to 5 do
 				{
 					waitUntil{!isNil "BIS_fnc_selectRandom"};
 					_crate_position = [_position,0,30,3,0,2000,0] call BIS_fnc_findSafePos;

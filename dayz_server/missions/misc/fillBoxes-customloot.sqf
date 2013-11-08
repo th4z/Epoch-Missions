@@ -9,7 +9,7 @@ crate_add_loot = {
 	{
 		default
 		{
-			_itemTypes = [] + ((getArray (configFile >> "cfgLoot" >> _iClass)) select 0);
+			_itemTypes = [] + ((getArray (missionconfigFile >> "cfgLoot" >> _iClass)) select 0);
 			_index = dayz_CLBase find _iClass;
 			_weights = dayz_CLChances select _index;
 			_cntWeights = count _weights;
@@ -32,7 +32,7 @@ crate_add_loot = {
 		case "single":
 		{
 			_amount = round(random 5);
-			_itemTypes = [] + ((getArray (configFile >> "cfgLoot" >> _iItem)) select 0);
+			_itemTypes = [] + ((getArray (missionconfigFile >> "cfgLoot" >> _iItem)) select 0);
 			_index = dayz_CLBase find _iItem;
 			_weights = dayz_CLChances select _index;
 			_cntWeights = count _weights;
@@ -48,7 +48,7 @@ crate_add_loot = {
 		case "backpack":
 		{
 			_amount = round(random 2);
-			_itemTypes = [] + ((getArray (configFile >> "cfgLoot" >> _iItem)) select 0);
+			_itemTypes = [] + ((getArray (missionconfigFile >> "cfgLoot" >> _iItem)) select 0);
 			_index = dayz_CLBase find _iItem;
 			_weights = dayz_CLChances select _index;
 			_cntWeights = count _weights;
@@ -101,7 +101,7 @@ if (_lootTable == "Random") then {
 	_lootTable = ["Military", "MilitaryIndustrial", "MilitarySpecial", "Supermarket", "Farm", "Industrial", "Office", "Residential"] call BIS_fnc_selectRandom;
 };
 
-_config = 		configFile >> "CfgBuildingLoot" >> _lootTable;
+_config = 		missionConfigFile >> "CfgBuildingLoot" >> _lootTable;
 _itemTypes =	[] + getArray (_config >> "itemType");
 _index =        dayz_CBLBase find toLower(_lootTable);
 _weights =		dayz_CBLChances select _index;
