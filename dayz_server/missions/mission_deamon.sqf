@@ -30,7 +30,7 @@ while {true} do {
 	{
 		diag_log format ["DEBUG MISSIONS: _x: %1 scriptDone: %2", _x, (scriptDone _x)];
 		if (scriptDone _x) then {
-			if ((random 10) > 6) exitWith {
+			if ((random 10) > 4) exitWith {
 				_x = [] spawn mission_spawn;
 			};
 		};
