@@ -1,8 +1,11 @@
 // List of possible Vehicles to Spawn
 
-num_bandit_missions = 2;
+missions_max_number = 2;
 
-dynamic_ai_vehicles = [
+missions_crates = ["USVehicleBox","USVehicleBox","USLaunchersBox","USVehicleBox"];
+missions_num_of_crates = 5;
+
+mission_dynamic_ai_vehicles = [
 ["AH6X_DZ",1],
 ["AN2_DZ",1],
 ["ArmoredSUV_PMC_DZE",1],

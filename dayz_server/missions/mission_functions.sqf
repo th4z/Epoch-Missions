@@ -4,7 +4,6 @@ mission_cleaner = {
 	private ["_last_index", "_index", "_group"];
 	while {true} do {
 		sleep 600;
-		// Remove AI Group + Map Marker if all units are dead
 		_last_index = count mission_ai_groups;
 		_index = 0;
 		while {(_index < _last_index)} do
@@ -28,28 +27,32 @@ mission_check = {
 	private ["_pos", "_distance", "_isNearList", "_isNear"];
 	_pos = _this select 0;
 	_distance = _this select 1;
-	// Need to add check to parse & check entities are playable i.e not SARGE AI
+
 	_isNearList = _pos nearEntities ["CAManBase", _distance];
 	_isNear = false;
 	
 	// Check for Players & Ignore SARGE AI
-	if ((count(_isNearList)) != 0) then {
+	if ((count(_isNearList)) > 0) then {
 		{
-			if (vehicle _x getVariable ["Sarge",0] == 0) then {
+			if (isPlayer _x) then {
 				_isNear = true;
 			};
 		} forEach _isNearList;
 	};
-/*
+
 	if !(_isNear) then {
-		_isNearList = _pos nearEntities ["LandVehicle", "Air", _distance];
+		_isNearList = _pos nearEntities [["LandVehicle", "Air"], _distance];
+		diag_log format ["DEBUG MISSIONS: Vehicles: _isNearList: %1", _isNearList];
+		{
 			{
-				if (vehicle _x getVariable ["Sarge",0] == 0) then {
+				diag_log format ["DEBUG MISSIONS: Vehicle: _x: %1 Crew: %2", _x, (crew _x)];
+				if (isPlayer _x) then {
+					diag_log ("DEBUG MISSIONS: Vehicle: Player Detected");
 					_isNear = true;
 				};
-			} forEach _isNearList;
-*/	
-	diag_log ["DEBUG MISSIONS: playableUnits: %1", playableUnits];
+			} forEach (crew _x);
+		} forEach _isNearList;
+	};
 	_isNear
 };
 
@@ -69,7 +72,7 @@ mission_veh_pool = {
 			_veh_pool = _veh_pool + [[_vehicle, _velimit]];
 		};
 		diag_log format ["DEBUG: Mission Code: Vehicle: %1: Limit: %2: Qty: %3", _vehicle, _velimit, _qty];
-	} forEach dynamic_ai_vehicles;
+	} forEach mission_dynamic_ai_vehicles;
 	diag_log format ["DEBUG: Mission Code: AI Vehicle Pool: %1", _veh_pool];
 	_veh_pool
 };
@@ -123,7 +126,7 @@ mission_spawn_ai = {
 
 mission_spawn_crates = {
 	private ["_position", "_type", "_loot_type", "_crate"];
-	// Spawn Crates  [_crate_position,_type,"Random"] call mission_spawn_crates
+
 	diag_log format ["DEBUG: Mission Code Spawn Loot: _this: %1", _this];
 	_position = _this select 0;
 	_type = _this select 1;
@@ -141,20 +144,19 @@ mission_spawn_crates = {
 mission_spawn_vehicle = {
 	private ["_vehicle", "_position", "_spawnDMG", "_dir", "_veh", "_objPosition", "_num", "_allCfgLoots", "_iClass", "_itemTypes", "_index", "_weights", "_cntWeights", "_index", "_itemType"];
 	diag_log format ["DEBUG: Mission Code Spawn Vehicle: _this: %1", _this];
-	//15:00:40 "DEBUG: Mission Code Spawn Vehicle: _this: [["Mi17_DZ",1],[13041,12753.5],false]"
+
 	_vehicle = _this select 0;
 	_position = _this select 1;
 	_spawnDMG = _this select 2;
 	
 	_dir = round(random 180);
-
 	
 	_veh = createVehicle [_vehicle, _position, [], 0, "CAN_COLLIDE"];
 	_veh setdir _dir;
 	_veh setpos _position;	
 	_objPosition = getPosATL _veh;
 
-	// Add 0-3 loots to vehicle using random cfgloots 
+	// Add 0-4 loots to vehicle using random cfgloots 
 	_num = floor(random 4);
 	_allCfgLoots = ["trash","civilian","food","generic","medical","military","policeman","hunter","worker","clothes","militaryclothes","specialclothes","trash"];
 	
@@ -269,7 +271,7 @@ mission_spawn = {
 					_crate_position = [_position,0,30,3,0,2000,0] call BIS_fnc_findSafePos;
 					if ((count _crate_position) == 2) then {
 						waitUntil{!isNil "BIS_fnc_selectRandom"};
-						_type = ["USVehicleBox","USVehicleBox","USLaunchersBox","USVehicleBox"] call BIS_fnc_selectRandom;
+						_type = missions_crates call BIS_fnc_selectRandom;
 						_crates = _crates + [[_crate_position, _type, "Random"] call mission_spawn_crates];
 					};
 				};
@@ -289,13 +291,13 @@ mission_spawn = {
 				};
 				
 				//  Spawn Supplies -- Crates
-				for "_i" from 0 to 4 do
+				for "_i" from 0 to missions_num_of_crates do
 				{
 					waitUntil{!isNil "BIS_fnc_selectRandom"};
 					_crate_position = [_position,0,30,3,0,2000,0] call BIS_fnc_findSafePos;
 					if ((count _crate_position) == 2) then {
 						waitUntil{!isNil "BIS_fnc_selectRandom"};
-						_type = ["USVehicleBox","USVehicleBox","USLaunchersBox","USVehicleBox"] call BIS_fnc_selectRandom;
+						_type = missions_crates call BIS_fnc_selectRandom;
 						_crates = _crates + [[_crate_position,_type,"Random"] call mission_spawn_crates];
 					};
 				};
@@ -319,6 +321,7 @@ mission_spawn = {
 		diag_log format ["DEBUG: Mission Code: AI INFO: %1", _ai_info];
 		
 		// Wait till all AI Dead or Mission Times Out
+
 		_timeout = time + 1800;
 		_group_0 = ((_ai_info select 0) select 1);
 		_group_1 = ((_ai_info select 1) select 1);
@@ -328,13 +331,7 @@ mission_spawn = {
 			if (time > _timeout) exitWith {true};
 			false
 		};
-		
-		// Send Message to Players about mission completed / failed
-		if ((count units _group_0 == 0) && (count units _group_1 == 1)) then {
-			_text = (_mission_info select 8);
-		} else {
-			_text = (_mission_info select 9);
-		};
+
 		
 		_last_index = count Missions;
 		_index = 0;
@@ -359,7 +356,7 @@ mission_spawn = {
 		while {_isNear} do
 		{
 			sleep 30;
-			_isNear = [(_mission_info select 0), 500] call mission_check;
+			_isNear = [_crate_position, 500] call mission_check;
 			if ((!_isNear) && (time > _timeout)) then {
 				_isNear = false;
 			};

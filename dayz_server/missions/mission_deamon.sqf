@@ -15,7 +15,7 @@ _null = [] spawn mission_cleaner;
 
 sleep 300;
 
-for "_x" from 1 to num_bandit_missions do {
+for "_x" from 1 to missions_max_number do {
 	_handle = [] spawn mission_spawn;
 	_bandit_missions = _bandit_missions + [_handle];
 };	
