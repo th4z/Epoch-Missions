@@ -4,7 +4,7 @@ crate_add_loot = {
 	_iItem = 	_this select 0;
 	_iClass = 	_this select 1;
 	_crate =    _this select 2;
-	diag_log format ["DEBUG ADD LOOT: _iItem: %1 _iClass: %2 _crate: %3", _iItem, _iClass, _crate];
+
 	switch (_iClass) do
 	{
 		default
@@ -98,7 +98,7 @@ _crate = _this select 0;
 _lootTable = _this select 1;
 
 if (_lootTable == "Random") then {
-	_lootTable = ["Military", "MilitaryIndustrial", "MilitarySpecial", "Supermarket", "Farm", "Industrial", "Office", "Residential"] call BIS_fnc_selectRandom;
+	_lootTable = ["Military", "MilitaryIndustrial", "MilitarySpecial", "Supermarket", "Industrial", "HeliCrash_No50s", "SupplyDrop"] call BIS_fnc_selectRandom;
 };
 
 _config = 		missionConfigFile >> "CfgBuildingLoot" >> _lootTable;
@@ -112,7 +112,7 @@ _num = 10;
 _amount = round(random 8);
 
 
-for "_x" from 1 to _num do {
+for "_x" from 1 to (_num + _amount) do {
 	//create loot
 	sleep 1;
 	_index = floor(random _cntWeights);

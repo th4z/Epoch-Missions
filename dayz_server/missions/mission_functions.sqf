@@ -1,5 +1,3 @@
-diag_log ("DEBUG: Mission Code: Loading Mission Functions.......");
-
 mission_cleaner = {
 	private ["_last_index", "_index", "_group"];
 	while {true} do {
@@ -65,69 +63,111 @@ mission_veh_pool = {
 		_velimit = _x select 1;
 		_qty = {_x == _vehicle} count serverVehicleCounter;
 		if (isNil {_qty}) then {
-			diag_log format ["DEBUG: Mission Code: Vehicle: %1 None DETECTED !!!", _vehicle];
 			_qty = 0;
 		};
 		if (_qty <= _velimit) then {
 			_veh_pool = _veh_pool + [[_vehicle, _velimit]];
 		};
-		diag_log format ["DEBUG: Mission Code: Vehicle: %1: Limit: %2: Qty: %3", _vehicle, _velimit, _qty];
 	} forEach mission_dynamic_ai_vehicles;
-	diag_log format ["DEBUG: Mission Code: AI Vehicle Pool: %1", _veh_pool];
 	_veh_pool
 };
 
 mission_spawn_ai = {
-	private ["_position", "_snipers", "_soldiers", "_ai_setting", "_marker", "_group", "_id2", "_group2", "_marker2"];
-	diag_log format ["DEBUG: Mission SPAWN AI: _this: %1", _this];
-
+	// Spawn SARGE AI
+	// 		Create Dynamic SARGE MARKER
+	
+	private ["_position", "_snipers", "_soldiers", "_ai_setting"];
+	
+	
 	_position = _this select 0;
 	_snipers = _this select 1;
 	_soldiers = _this select 2;
 	_ai_setting = (_this select 3) call BIS_fnc_selectRandom;
-	// Spawn SARGE AI
-	// 		Create Dynamic SARGE MARKER
-	_id  = mission_id;
-	mission_id  = mission_id  + 1;
-	_marker = createMarker [("SAR_mission_" + str(_id)), _position];
-	_marker setMarkerShape "RECTANGLE";
-	_marker setMarkeralpha 0;
-	_marker setMarkerType "Flag";
-	_marker setMarkerBrush "Solid";
-	_marker setMarkerSize [200,200];
-	missionNamespace setVariable ["SAR_mission_" + str(_id), _marker];  
-	_group = [missionNameSpace getVariable ("SAR_mission_" + str(_id)), 3, _snipers, _soldiers, _ai_setting, false] call SAR_AI;
 
+	_id1  = mission_id;
+	mission_id  = mission_id  + 1;
 	_id2 = mission_id;
 	mission_id = mission_id + 1;
+	_id3 = mission_id;
+	mission_id = mission_id + 1;
+	_group1 = 0;
 	_group2 = 0;
-	if ((random 10) > 3) then {
-		_marker2 = createMarker [("SAR_mission_" + str(_id2)), _position];
-		_marker2 setMarkerShape "RECTANGLE";
-		_marker2 setMarkeralpha 0;
-		_marker2 setMarkerType "Flag";
-		_marker2 setMarkerBrush "Solid";
-		_marker2 setMarkerSize [650,650];
-		missionNamespace setVariable ["SAR_mission_" + str(_id2), _marker2];
-		_group2 = [missionNameSpace getVariable ("SAR_mission_" + str(_id2)), 3, false] call SAR_AI_heli;
-	} else {
-		_marker2 = createMarker [("SAR_mission_" + str(_id2)), _position];
-		_marker2 setMarkerShape "RECTANGLE";
-		_marker2 setMarkeralpha 0;
-		_marker2 setMarkerType "Flag";
-		_marker2 setMarkerBrush "Solid";
-		_marker2 setMarkerSize [80,80];
-		missionNamespace setVariable ["SAR_mission_" + str(_id2), _marker2];
-		_group2 = [missionNameSpace getVariable ("SAR_mission_" + str(_id2)), 3, _snipers, _soldiers, _ai_setting, false] call SAR_AI;
+	_group3 = 0;
+	_marker1 = 0;
+	_marker2 = 0;
+	_marker3 = 0;
+	
+	diag_log ("DEBUG MISSIONS: SPAWN GROUP 1");
+	_marker1 = createMarker [("SAR_mission_" + str(_id1)), _position];
+	_marker1 setMarkerShape "RECTANGLE";
+	_marker1 setMarkeralpha 0;
+	_marker1 setMarkerType "Flag";
+	_marker1 setMarkerBrush "Solid";
+	_marker1 setMarkerSize [200,200];
+	missionNamespace setVariable ["SAR_mission_" + str(_id1), _marker1];  
+	_group1 = [missionNameSpace getVariable ("SAR_mission_" + str(_id1)), 3, _snipers, _soldiers, _ai_setting, false] call SAR_AI;
+
+	diag_log ("DEBUG MISSIONS: SPAWN GROUP 2");
+	_chance = (random 10);	
+	switch (true) do {
+		case (_chance <= 3):
+		{
+			// AI HELI 30% Chance
+			_marker2 = createMarker [("SAR_mission_" + str(_id2)), _position];
+			_marker2 setMarkerShape "RECTANGLE";
+			_marker2 setMarkeralpha 0;
+			_marker2 setMarkerType "Flag";
+			_marker2 setMarkerBrush "Solid";
+			_marker2 setMarkerSize [650,650];
+			missionNamespace setVariable ["SAR_mission_" + str(_id2), _marker2];
+			_group2 = [missionNameSpace getVariable ("SAR_mission_" + str(_id2)), 3, false] call SAR_AI_heli;
+		};
+		
+		case (_chance <= 5):
+		{
+			// AI HELI 20% Chance
+			_marker2 = createMarker [("SAR_mission_" + str(_id2)), _position];
+			_marker2 setMarkerShape "RECTANGLE";
+			_marker2 setMarkeralpha 0;
+			_marker2 setMarkerType "Flag";
+			_marker2 setMarkerBrush "Solid";
+			_marker2 setMarkerSize [400,400];
+			missionNamespace setVariable ["SAR_mission_" + str(_id2), _marker2];
+			_group2 = [missionNameSpace getVariable ("SAR_mission_" + str(_id2)), 3, false] call SAR_AI_heli;
+		};
+		
+		default
+		{
+			_marker2 = createMarker [("SAR_mission_" + str(_id2)), _position];
+			_marker2 setMarkerShape "RECTANGLE";
+			_marker2 setMarkeralpha 0;
+			_marker2 setMarkerType "Flag";
+			_marker2 setMarkerBrush "Solid";
+			_marker2 setMarkerSize [200,200];
+			missionNamespace setVariable ["SAR_mission_" + str(_id2), _marker2];  
+			_group2 = [missionNameSpace getVariable ("SAR_mission_" + str(_id2)), 3, _snipers, _soldiers, _ai_setting, false] call SAR_AI;
+		};
+		
 	};
-	[[("SAR_mission_" + str(_id)), _group],[("SAR_mission_" + str(_id2)), _group2]]
+
+	diag_log ("DEBUG MISSIONS: SPAWN GROUP 3");
+	// Second Group of AI Soldiers
+	_marker3 = createMarker [("SAR_mission_" + str(_id3)), _position];
+	_marker3 setMarkerShape "RECTANGLE";
+	_marker3 setMarkeralpha 0;
+	_marker3 setMarkerType "Flag";
+	_marker3 setMarkerBrush "Solid";
+	_marker3 setMarkerSize [80,80];
+	missionNamespace setVariable ["SAR_mission_" + str(_id3), _marker3];
+	_group3 = [missionNameSpace getVariable ("SAR_mission_" + str(_id3)), 3, _snipers, _soldiers, _ai_setting, false] call SAR_AI;
+	
+	[[("SAR_mission_" + str(_id1)), _group1],[("SAR_mission_" + str(_id2)), _group2],[("SAR_mission_" + str(_id3)), _group3]];
 };
 
 
 mission_spawn_crates = {
 	private ["_position", "_type", "_loot_type", "_crate"];
 
-	diag_log format ["DEBUG: Mission Code Spawn Loot: _this: %1", _this];
 	_position = _this select 0;
 	_type = _this select 1;
 	_loot_type = _this select 2;
@@ -143,7 +183,6 @@ mission_spawn_crates = {
 
 mission_spawn_vehicle = {
 	private ["_vehicle", "_position", "_spawnDMG", "_dir", "_veh", "_objPosition", "_num", "_allCfgLoots", "_iClass", "_itemTypes", "_index", "_weights", "_cntWeights", "_index", "_itemType"];
-	diag_log format ["DEBUG: Mission Code Spawn Vehicle: _this: %1", _this];
 
 	_vehicle = _this select 0;
 	_position = _this select 1;
@@ -247,6 +286,7 @@ mission_spawn = {
 	
 	// only proceed if two params otherwise BIS_fnc_findSafePos failed and may spawn in air
 	if ((count _position) == 2) then {
+		diag_log ("DEBUG: Mission Code: Starting New Mission");
 		_chance = floor(random 1);
 		_crates = [];
 		_ai_info = [];
@@ -276,7 +316,7 @@ mission_spawn = {
 					};
 				};
 				_ai_info = [_position, 2, 6, ["ambush","patrol"]] call mission_spawn_ai;
-				mission_ai_groups = mission_ai_groups + [(_ai_info select 0)] + [(_ai_info select 1)];
+				mission_ai_groups = mission_ai_groups + [(_ai_info select 0)] + [(_ai_info select 1)] + [(_ai_info select 2)];
 				};
 
 			case "Building":{
@@ -318,16 +358,16 @@ mission_spawn = {
 		_text = "Bandits Have Been Spotted, Check your Map";
 		customMissionGo = [(((_ai_info select 0) select 0) + "_player_marker"), _text, _position];
 		publicVariable "customMissionGo";
-		diag_log format ["DEBUG: Mission Code: AI INFO: %1", _ai_info];
 		
 		// Wait till all AI Dead or Mission Times Out
 
 		_timeout = time + 1800;
-		_group_0 = ((_ai_info select 0) select 1);
-		_group_1 = ((_ai_info select 1) select 1);
+		_group_1 = ((_ai_info select 0) select 1);
+		_group_2 = ((_ai_info select 1) select 1);
+		_group_3 = ((_ai_info select 1) select 2);
 		waitUntil{
 			sleep 30;
-			if ((count units _group_0 == 0) && (count units _group_1 == 1)) exitWith {true};
+			if ((count units _group_1 == 0) && (count units _group_2 == 0) && (count units _group_3 == 0)) exitWith {true};
 			if (time > _timeout) exitWith {true};
 			false
 		};
@@ -372,12 +412,14 @@ mission_spawn = {
 		} forEach _crates;
 		// Temp Kill All AI
 		{
-			diag_log format ["DEBUG: Mission Code: Killing Group 0 AI %1", _x];
-			_x setDamage 1;
-		} forEach units _group_0;
-		{
-			diag_log format ["DEBUG: Mission Code: Killing Group 1 AI %1", _x];
 			_x setDamage 1;
 		} forEach units _group_1;
+		{
+			_x setDamage 1;
+		} forEach units _group_2;
+		{
+			_x setDamage 1;
+		} forEach units _group_3;
+		
 	};
 };
