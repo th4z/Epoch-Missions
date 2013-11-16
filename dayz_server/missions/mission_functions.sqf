@@ -364,7 +364,7 @@ mission_spawn = {
 		_timeout = time + 1800;
 		_group_1 = ((_ai_info select 0) select 1);
 		_group_2 = ((_ai_info select 1) select 1);
-		_group_3 = ((_ai_info select 1) select 2);
+		_group_3 = ((_ai_info select 2) select 1);
 		waitUntil{
 			sleep 30;
 			if ((count units _group_1 == 0) && (count units _group_2 == 0) && (count units _group_3 == 0)) exitWith {true};
