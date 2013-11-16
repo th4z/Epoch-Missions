@@ -54,7 +54,31 @@ Add
 	[] execVM "\z\addons\dayz_server\missions\mission_deamon.sqf";
 
 
+<h5>STEP 3 -- SARGE AI OPTIONAL TWEAKS</h5>
 
+Saving SARGE AI Helis to Hive
+This way if a player captures an AI Heli it will stay after server restart.
+
+
+Look for
+// create the vehicle
+Change the code to
+
+// create the vehicle
+_vehicle = (SAR_heli_type call SAR_fnc_selectRandom);
+_position = [(_rndpos select 0) + 10, _rndpos select 1, 80];
+_heli = createVehicle [_vehicle, _position, [], 0, "FLY"];
+_dir = round(random 180);
+_heli setpos _position;
+_objPosition = getPosATL _heli;
+[_heli,[_dir,_objPosition],_vehicle,false,"0"] call server_publishVeh;
+_heli setFuel 1;
+_heli setVariable ["Sarge",1,true];
+_heli engineon true; 
+//_heli allowDamage false;
+_heli setVehicleAmmo 1;
+
+Thats it nice & simple
 
 <h5>Notes</h5>
 
