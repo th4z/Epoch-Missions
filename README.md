@@ -54,42 +54,28 @@ Add
 	[] execVM "\z\addons\dayz_server\missions\mission_deamon.sqf";
 
 
-<h5>STEP 3 -- SARGE AI OPTIONAL TWEAKS</h5>
+<h5>STEP 3 -- SARGE AI INSTALL</h5>
 
-Saving SARGE AI Helis to Hive
-This way if a player captures an AI Heli it will stay after server restart.
+Read Instructions at
+https://github.com/Swiss-Sarge/SAR_AI-1.5.0
 
+Changes to Sarge are
 
-Look for
-// create the vehicle
-Change the code to
+Files provided are custom/altered Sarge files that will save the AI vehicles to the database.
+It also returns the group for when it spawns AI Land Vehicles.
 
-// create the vehicle
-_vehicle = (SAR_heli_type call SAR_fnc_selectRandom);
-_position = [(_rndpos select 0) + 10, _rndpos select 1, 80];
-_heli = createVehicle [_vehicle, _position, [], 0, "FLY"];
-_dir = round(random 180);
-_heli setpos _position;
-_objPosition = getPosATL _heli;
-[_heli,[_dir,_objPosition],_vehicle,false,"0"] call server_publishVeh;
-_heli setFuel 1;
-_heli setVariable ["Sarge",1,true];
-_heli engineon true; 
-//_heli allowDamage false;
-_heli setVehicleAmmo 1;
+Contains fix for AI suriviors bloodbag players
+Also contains invisible AI workaround aswell
 
-Thats it nice & simple
 
 <h5>Notes</h5>
-
- * U need to have SARGE AI setup & working
- 
- * Missions are very basic atm
  
  * Yes i will write more here when i get a chance
 
- * Mission Vehicles are saved to Hive
+ * Mission & AI Vehicles are saved to Hive
  
  * Mission Locations are near Roads / Buildings
+ 
+ * Missions will work with any map basicly. Using same code as epoch for spawning vehicle locations.
  
  * Edit the debug monitor code to suit your server... One provided is an example not all features are provided

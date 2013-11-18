@@ -69,7 +69,7 @@ if (!isDedicated) then {
 	"norrnRaDrag"			addPublicVariableEventHandler {[_this select 1] execVM "\z\addons\dayz_code\medical\publicEH\animDrag.sqf"};
 	"norrnRnoAnim"			addPublicVariableEventHandler {[_this select 1] execVM "\z\addons\dayz_code\medical\publicEH\noAnim.sqf"};
 	// Custom
-	"customPlayerCount"	addPublicVariableEventHandler {customPlayerCount = (_this select 1); diag_log format["Player Count: %1", (_this select 1)]};
+	//"customPlayerCount"	addPublicVariableEventHandler {customPlayerCount = (_this select 1); diag_log format["Player Count: %1", (_this select 1)]};
 	//"customCombatLogger" addPublicVariableEventHandler {[_this select 1] execVM "extras\debug_monitor\debug_combat_logger.sqf"};
 	"customMissionGo" addPublicVariableEventHandler {_this select 1 execVM "extras\debug_monitor\debug_missions_go.sqf"};
 	"customMissionEnd" addPublicVariableEventHandler {_this select 1 execVM "extras\debug_monitor\debug_missions_end.sqf"};
