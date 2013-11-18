@@ -1,16 +1,11 @@
 ﻿private ["_warning", "_rtime", "_hours", "_minutes", "_minutes2", "_humanity", "_pic", "_info_player"];
 _warning = false;
 
-ServerRestartTimer_hours = 0;
-ServerRestartTimer_minutes = 0;
-
 customCombatLogger = "";
 customMission = "";
 customStudyBody = "";
 
 debugMonitor = true;
-
-_rtime = round(21600 - serverTime);
 
 while {true} do {
 	_rtime = round(21600 - serverTime);
@@ -32,8 +27,6 @@ while {true} do {
 		
 		//Debug Info
 		_humanity =	player getVariable["humanity",0];
-
-		_pic = (gettext (configFile >> 'CfgVehicles' >> (typeof vehicle player) >> 'picture'));
 		
 		if (player == vehicle player) then {
 			_pic = (gettext (configFile >> 'cfgWeapons' >> (currentWeapon player) >> 'picture'));

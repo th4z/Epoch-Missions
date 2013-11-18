@@ -5,6 +5,18 @@ missions_max_number = 2;
 missions_crates = ["USVehicleBox","USVehicleBox","USLaunchersBox","USVehicleBox"];
 missions_num_of_crates = 5;
 
+mission_patrol_land_vehicles = [
+"HMMWV_M1035_DES_EP1",
+"HMMWV_M1151_M2_CZ_DES_EP1_DZE",
+"HMMWV_M998A2_SOV_DES_EP1_DZE",
+"LandRover_MG_TK_EP1_DZE",
+"LandRover_Special_CZ_EP1_DZE",
+"Pickup_PK_GUE_DZE",
+"Pickup_PK_INS_DZE",
+"Pickup_PK_TK_GUE_EP1_DZE",
+"UAZ_MG_TK_EP1_DZE"
+];
+
 mission_dynamic_ai_vehicles = [
 ["AH6X_DZ",1],
 ["AN2_DZ",1],

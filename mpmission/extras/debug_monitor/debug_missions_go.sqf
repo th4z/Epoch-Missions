@@ -1,13 +1,20 @@
-private ["_id", "_text", "_position", "_marker"];
+private ["_id", "_text", "_position", "_marker", "_vehicle_spawn", "_vehicle"];
 waitUntil {sleep 1; customMission == ''};
 
-diag_log format ["DEBUG: Mission Code: Debug Monitor: %1", _this];
 _id = _this select 0;
-_text = 	_this select 1;
-_position = _this select 2;
+_position = _this select 1;
+_text = _this select 2;
+_vehicle_spawn = _this select 3;
+_vehicle = _this select 4;
 
 _marker = createMarker[_id, _position];
-_marker setMarkerColor "ColorRed";
+
+if !(_vehicle_spawn) then {
+	_marker setMarkerColor "ColorRed";
+} else {
+	_marker setMarkerColor "ColorBlue";
+};
+
 _marker setMarkerShape "ELLIPSE";
 _marker setMarkerBrush "Grid";
 _marker setMarkerSize [300,300];

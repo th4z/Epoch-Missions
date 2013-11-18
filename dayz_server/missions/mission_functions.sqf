@@ -72,6 +72,7 @@ mission_veh_pool = {
 	_veh_pool
 };
 
+
 mission_spawn_ai = {
 	// Spawn SARGE AI
 	// 		Create Dynamic SARGE MARKER
@@ -110,9 +111,10 @@ mission_spawn_ai = {
 	diag_log ("DEBUG MISSIONS: SPAWN GROUP 2");
 	_chance = (random 10);	
 	switch (true) do {
-		case (_chance <= 3):
+
+		case (_chance <= 2):
 		{
-			// AI HELI 30% Chance
+			// AI HELI 20% Chance  650 range
 			_marker2 = createMarker [("SAR_mission_" + str(_id2)), _position];
 			_marker2 setMarkerShape "RECTANGLE";
 			_marker2 setMarkeralpha 0;
@@ -123,21 +125,37 @@ mission_spawn_ai = {
 			_group2 = [missionNameSpace getVariable ("SAR_mission_" + str(_id2)), 3, false] call SAR_AI_heli;
 		};
 		
-		case (_chance <= 5):
+		case (_chance <= 4):
 		{
-			// AI HELI 20% Chance
+			// AI HELI 20% Chance 300 range
 			_marker2 = createMarker [("SAR_mission_" + str(_id2)), _position];
 			_marker2 setMarkerShape "RECTANGLE";
 			_marker2 setMarkeralpha 0;
 			_marker2 setMarkerType "Flag";
 			_marker2 setMarkerBrush "Solid";
-			_marker2 setMarkerSize [400,400];
+			_marker2 setMarkerSize [300,300];
 			missionNamespace setVariable ["SAR_mission_" + str(_id2), _marker2];
 			_group2 = [missionNameSpace getVariable ("SAR_mission_" + str(_id2)), 3, false] call SAR_AI_heli;
+			[_group2] call mission_kill_vehicle_group;
+		};
+		
+		case (_chance <= 7):
+		{
+			// AI Land Vehicles 30% Chance  300 range
+			_marker2 = createMarker [("SAR_mission_" + str(_id2)), _position];
+			_marker2 setMarkerShape "RECTANGLE";
+			_marker2 setMarkeralpha 0;
+			_marker2 setMarkerType "Flag";
+			_marker2 setMarkerBrush "Solid";
+			_marker2 setMarkerSize [300,300];
+			missionNamespace setVariable ["SAR_mission_" + str(_id2), _marker2];
+			_group2 = [missionNameSpace getVariable ("SAR_mission_" + str(_id2)), 3, [(mission_patrol_land_vehicles call BIS_fnc_selectRandom)], [[1,1,1]], false] call SAR_AI_land;
+			[_group2] call mission_kill_vehicle_group;
 		};
 		
 		default
 		{
+			// Extra AI Foot Patrol 30% Chance
 			_marker2 = createMarker [("SAR_mission_" + str(_id2)), _position];
 			_marker2 setMarkerShape "RECTANGLE";
 			_marker2 setMarkeralpha 0;
@@ -147,7 +165,6 @@ mission_spawn_ai = {
 			missionNamespace setVariable ["SAR_mission_" + str(_id2), _marker2];  
 			_group2 = [missionNameSpace getVariable ("SAR_mission_" + str(_id2)), 3, _snipers, _soldiers, _ai_setting, false] call SAR_AI;
 		};
-		
 	};
 
 	diag_log ("DEBUG MISSIONS: SPAWN GROUP 3");
@@ -217,6 +234,21 @@ mission_spawn_vehicle = {
 	[_veh, 900] spawn mission_kill_vehicle;
 };
 
+
+mission_kill_vehicle_group = {
+	private ["_group", "_units"];
+	_group = _this select 0;
+	_units = units _group;
+	
+	{
+		if ((_x isKindOf "LandVehicle") || (_x isKindOf "Air")) then {
+			[_x, 3600] spawn mission_kill_vehicle;		
+		};
+	} forEach _units;
+
+};
+
+
 mission_kill_vehicle = {
 	private ["_vehicle", "_timer", "_loot_type", "_blowup"];
 
@@ -233,6 +265,7 @@ mission_kill_vehicle = {
 		_vehicle setDamage 1;
 	};
 };
+
 
 mission_spawn = {
 	private ["_chance", "_position", "_mission_type", "_isNear", "_crates", "_ai_info", "_veh_pool", "_vehicle", "_vehicle_position", "_crate_position", "_type", "_text", "_timeout", "_group_0", "_group_1", "_last_index", "_index", "_missions", "_timeout2"];
@@ -290,6 +323,8 @@ mission_spawn = {
 		_chance = floor(random 1);
 		_crates = [];
 		_ai_info = [];
+		_vehicle = 0;
+		_vehicle_spawn = false;
 
 		switch (_mission_type) do
 		{
@@ -301,6 +336,7 @@ mission_spawn = {
 						_vehicle = (_veh_pool call BIS_fnc_selectRandom) select 0;
 						_vehicle_position = [_position,0,50,5,0,2000,0] call BIS_fnc_findSafePos;
 						[_vehicle, _vehicle_position, false] call mission_spawn_vehicle;
+						_vehicle_spawn = true;
 					};
 				};
 
@@ -315,7 +351,7 @@ mission_spawn = {
 						_crates = _crates + [[_crate_position, _type, "Random"] call mission_spawn_crates];
 					};
 				};
-				_ai_info = [_position, 2, 6, ["ambush","patrol"]] call mission_spawn_ai;
+				_ai_info = [_position, 1, 5, ["ambush","patrol"]] call mission_spawn_ai;
 				mission_ai_groups = mission_ai_groups + [(_ai_info select 0)] + [(_ai_info select 1)] + [(_ai_info select 2)];
 				};
 
@@ -327,6 +363,7 @@ mission_spawn = {
 						_vehicle = (_veh_pool call BIS_fnc_selectRandom) select 0;
 						_vehicle_position = [_position,0,50,5,0,2000,0] call BIS_fnc_findSafePos;
 						[_vehicle, _vehicle_position, false] call mission_spawn_vehicle;
+						_vehicle_spawn = true;
 					};
 				};
 				
@@ -341,7 +378,7 @@ mission_spawn = {
 						_crates = _crates + [[_crate_position,_type,"Random"] call mission_spawn_crates];
 					};
 				};
-				_ai_info = [_position, 2, 6, ["ambush","fortify","patrol"]] call mission_spawn_ai;
+				_ai_info = [_position, 1, 4, ["ambush","fortify","patrol"]] call mission_spawn_ai;
 				mission_ai_groups = mission_ai_groups + [(_ai_info select 0)] + [(_ai_info select 1)];
 				};
 			case "Open Area":{
@@ -356,7 +393,7 @@ mission_spawn = {
 
 		// Start Mission
 		_text = "Bandits Have Been Spotted, Check your Map";
-		customMissionGo = [(((_ai_info select 0) select 0) + "_player_marker"), _text, _position];
+		customMissionGo = [(((_ai_info select 0) select 0) + "_player_marker"), _position, _text, _vehicle_spawn, _vehicle];
 		publicVariable "customMissionGo";
 		
 		// Wait till all AI Dead or Mission Times Out
@@ -371,7 +408,6 @@ mission_spawn = {
 			if (time > _timeout) exitWith {true};
 			false
 		};
-
 		
 		_last_index = count Missions;
 		_index = 0;
@@ -420,6 +456,5 @@ mission_spawn = {
 		{
 			_x setDamage 1;
 		} forEach units _group_3;
-		
 	};
 };
