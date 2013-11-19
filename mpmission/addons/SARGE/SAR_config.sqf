@@ -38,9 +38,9 @@ SAR_max_grps_soldiers = 1;
 SAR_max_grps_survivors = 1;
 
 // chance for a group to spawn (1-100)
-SAR_chance_bandits = 15;
-SAR_chance_soldiers = 15;
-SAR_chance_survivors = 15;
+SAR_chance_bandits = 20;
+SAR_chance_soldiers = 20;
+SAR_chance_survivors = 20;
 
 // maximum size of group (including Leader)
 SAR_max_grpsize_bandits = 4;
@@ -96,7 +96,7 @@ SAR_KILL_MSG = true;
 // -----------------------------------------------
 
 // Enable / disable AI xp system
-SAR_AI_XP_SYSTEM = true;
+SAR_AI_XP_SYSTEM = false;
 
 // xp needed to reach this level
 SAR_AI_XP_LVL_1 = 0;
@@ -478,7 +478,7 @@ SAR_sold_leader_tools =  [
 ["ItemKnife",50],
 ["ItemFlashlightRed",50],
 ["Binocular_Vector",5],
-["NVGoggles",10],
+["NVGoggles",50],
 ["ItemEtool",5],
 ["ItemWatch",100],
 ["ItemRadio",100],
@@ -521,7 +521,7 @@ SAR_sold_rifleman_tools = [
 ["ItemWatch",100],
 ["ItemEtool",5],
 ["ItemKnife",50],
-["ItemMatchbox_DZEbox",50]
+["ItemMatchbox_DZE",50]
 ];
 
 //potential weapon list for snipers
@@ -550,7 +550,7 @@ SAR_sold_sniper_items = [
 
 SAR_sold_sniper_tools = [
 ["ItemMap",50],
-["ItemCompass",100],
+["NVGoggles",100],
 ["ItemKnife",60],
 ["ItemWatch",100],
 ["Binocular_Vector",5]
@@ -671,7 +671,7 @@ SAR_band_leader_items = [
 
 SAR_band_leader_tools =  [
 ["ItemMap",75],
-["ItemWatch",75],
+["NVGoggles",75],
 ["ItemKnife",60],
 ["ItemRadio",30]
 ];
@@ -703,7 +703,7 @@ SAR_band_rifleman_items = [
 SAR_band_rifleman_tools = [
 ["ItemWatch",75],
 ["ItemKnife",60],
-["ItemMatchbox_DZEbox",50]
+["ItemMatchbox_DZE",50]
 ];
 
 //potential weapon list for snipers
@@ -728,7 +728,7 @@ SAR_band_sniper_tools = [
 ["ItemWatch",75],
 ["ItemKnife",60],
 ["ItemCompass",50],
-["ItemMatchbox_DZEbox",50],
+["NVGoggles",50],
 ["Binocular",10],
 ["Binocular_Vector",5]
 ];
