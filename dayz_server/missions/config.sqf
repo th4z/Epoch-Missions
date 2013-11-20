@@ -1,10 +1,17 @@
-// List of possible Vehicles to Spawn
-
+// Number of Max Concurrent Missions
 missions_max_number = 2;
 
+// ----- LOOT -----
+
+// Type of Crates to Spawn with Loot
 missions_crates = ["USVehicleBox","USVehicleBox","USLaunchersBox","USVehicleBox"];
+
+// Number of Crates to Spawn
 missions_num_of_crates = 5;
 
+// ----- VEHICLES ----- 
+
+// Type of Land Vehicles to AI
 mission_patrol_land_vehicles = [
 "HMMWV_M1035_DES_EP1",
 "HMMWV_M1151_M2_CZ_DES_EP1_DZE",
@@ -17,6 +24,7 @@ mission_patrol_land_vehicles = [
 "UAZ_MG_TK_EP1_DZE"
 ];
 
+// Type of Vehicles to Spawn @ Missions to Loot
 mission_dynamic_ai_vehicles = [
 ["AH6X_DZ",1],
 ["AN2_DZ",1],

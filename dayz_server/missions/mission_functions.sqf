@@ -40,12 +40,9 @@ mission_check = {
 
 	if !(_isNear) then {
 		_isNearList = _pos nearEntities [["LandVehicle", "Air"], _distance];
-		diag_log format ["DEBUG MISSIONS: Vehicles: _isNearList: %1", _isNearList];
 		{
 			{
-				diag_log format ["DEBUG MISSIONS: Vehicle: _x: %1 Crew: %2", _x, (crew _x)];
 				if (isPlayer _x) then {
-					diag_log ("DEBUG MISSIONS: Vehicle: Player Detected");
 					_isNear = true;
 				};
 			} forEach (crew _x);
@@ -98,7 +95,6 @@ mission_spawn_ai = {
 	_marker2 = 0;
 	_marker3 = 0;
 	
-	diag_log ("DEBUG MISSIONS: SPAWN GROUP 1");
 	_marker1 = createMarker [("SAR_mission_" + str(_id1)), _position];
 	_marker1 setMarkerShape "RECTANGLE";
 	_marker1 setMarkeralpha 0;
@@ -108,7 +104,6 @@ mission_spawn_ai = {
 	missionNamespace setVariable ["SAR_mission_" + str(_id1), _marker1];  
 	_group1 = [missionNameSpace getVariable ("SAR_mission_" + str(_id1)), 3, _snipers, _soldiers, _ai_setting, false] call SAR_AI;
 
-	diag_log ("DEBUG MISSIONS: SPAWN GROUP 2");
 	_chance = (random 10);	
 	switch (true) do {
 
@@ -167,7 +162,6 @@ mission_spawn_ai = {
 		};
 	};
 
-	diag_log ("DEBUG MISSIONS: SPAWN GROUP 3");
 	// Second Group of AI Soldiers
 	_marker3 = createMarker [("SAR_mission_" + str(_id3)), _position];
 	_marker3 setMarkerShape "RECTANGLE";
@@ -242,7 +236,7 @@ mission_kill_vehicle_group = {
 	
 	{
 		if ((_x isKindOf "LandVehicle") || (_x isKindOf "Air")) then {
-			[_x, 3600] spawn mission_kill_vehicle;		
+			[_x, 1800] spawn mission_kill_vehicle;		
 		};
 	} forEach _units;
 
@@ -398,10 +392,11 @@ mission_spawn = {
 		
 		// Wait till all AI Dead or Mission Times Out
 
-		_timeout = time + 1800;
 		_group_1 = ((_ai_info select 0) select 1);
 		_group_2 = ((_ai_info select 1) select 1);
 		_group_3 = ((_ai_info select 2) select 1);
+		
+		_timeout = time + 1800;
 		waitUntil{
 			sleep 30;
 			if ((count units _group_1 == 0) && (count units _group_2 == 0) && (count units _group_3 == 0)) exitWith {true};
@@ -422,9 +417,6 @@ mission_spawn = {
 			_index = _index + 1;
 		};
 		
-		customMissionEnd = [(((_ai_info select 0) select 0) + "_player_marker"), _text, _position];
-		publicVariable "customMissionEnd";
-
 		// Wait till no Players within 200 metres && Mission Timeout Check for Crates
 		_isNear = true;
 		_timeout = time + 900;
@@ -440,6 +432,9 @@ mission_spawn = {
 				_isNear = false;
 			};
 		};
+
+		customMissionEnd = [(((_ai_info select 0) select 0) + "_player_marker"), _text, _position];
+		publicVariable "customMissionEnd";
 
 		diag_log ("DEBUG: Mission Code: Removing AI + Crates");
 		// Remove Crates
