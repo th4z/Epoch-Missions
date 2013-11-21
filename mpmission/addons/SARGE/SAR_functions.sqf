@@ -995,7 +995,6 @@ SAR_AI_mon_read = {
     _path = [SAR_AI_monitor, _gridname] call BIS_fnc_findNestedElement;
 
     {
-
         switch (_x) do 
         {
             case "max_grps":
@@ -1022,15 +1021,12 @@ SAR_AI_mon_read = {
             {
                 _path set [1,6];
             };
-            
         };
+        _resultarray set[count _resultarray, [SAR_AI_monitor, _path] call BIS_fnc_returnNestedElement];
 
-        _resultarray set[count _resultarray,[SAR_AI_monitor, _path ] call BIS_fnc_returnNestedElement];
+    } foreach _typearray;
 
-    }foreach _typearray;
-
-    _resultarray;
-    
+    _resultarray;    
 };
 
 SAR_DEBUG_mon = {

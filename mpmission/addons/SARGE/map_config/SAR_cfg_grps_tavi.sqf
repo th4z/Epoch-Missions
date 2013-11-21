@@ -195,69 +195,7 @@ this number is randomized
  
  
 
-// ---------------------------------------------------------------
-// Definition of area markers for static spawns
-// ---------------------------------------------------------------
 
-// add if needed, see examples in the chernarus file
-
-    // Sabina, heli patrol area
-    _this = createMarker ["SAR_patrol_sabina", [14894.9, 11081.3]];
-    _this setMarkerShape "RECTANGLE";
-    _this setMarkeralpha 0;
-    _this setMarkerType "Flag";
-    _this setMarkerBrush "Solid";
-    _this setMarkerSize [1000, 4500];
-    SAR_marker_helipatrol_sabina = _this;
-
-    // Lyepestok, heli patrol area
-    _this = createMarker ["SAR_patrol_lyepestok", [11579.5, 15413.4]];
-    _this setMarkerShape "RECTANGLE";
-    _this setMarkeralpha 0;
-    _this setMarkerType "Flag";
-    _this setMarkerBrush "Solid";
-    _this setMarkerSize [400, 400];
-    SAR_marker_helipatrol_lyepestok = _this;
-
-    // NWAF, heli patrol area
-    _this = createMarker ["SAR_patrol_nwaf", [10567, 18429.6]];
-    _this setMarkerShape "RECTANGLE";
-    _this setMarkeralpha 0;
-    _this setMarkerType "Flag";
-    _this setMarkerBrush "Solid";
-    _this setMarkerSize [800, 1000];
-    SAR_marker_helipatrol_nwaf = _this;
-
-    // Dubovo, heli patrol area
-    _this = createMarker ["SAR_patrol_dubovo", [16540.9, 12674.3]];
-    _this setMarkerShape "RECTANGLE";
-    _this setMarkeralpha 0;
-    _this setMarkerType "Flag";
-    _this setMarkerBrush "Solid";
-    _this setMarkerSize [500, 5000];
-    SAR_marker_helipatrol_dubovo = _this;
-
-
-    // Krasnoznamensk, heli patrol area
-    _this = createMarker ["SAR_patrol_kraz", [8482.28, 8101.42]];
-    _this setMarkerShape "RECTANGLE";
-    _this setMarkeralpha 0;
-    _this setMarkerType "Flag";
-    _this setMarkerBrush "Solid";
-    _this setMarkerSize [500, 1700];
-    _this setMarkerDir 262.10;
-    SAR_marker_helipatrol_kraz = _this;
-    
-    
-    // Branibor, heli patrol area
-    _this = createMarker ["SAR_patrol_branibor", [7206.91, 4933.56]];
-    _this setMarkerShape "RECTANGLE";
-    _this setMarkeralpha 0;
-    _this setMarkerType "Flag";
-    _this setMarkerBrush "Solid";
-    _this setMarkerSize [400, 5000];
-    _this setMarkerDir 127.30;
-    SAR_marker_helipatrol_branibor = _this;
 
 
 // ----------------------------------------------------------------------------------------
@@ -275,24 +213,6 @@ diag_log format["SAR_AI: Static Spawning for Helicopter patrols started"];
 //                  1,2,3 = soldier, survivors, bandits
 //
 
-    //Heli Patrol Sabina
-    [SAR_marker_helipatrol_sabina,1] call SAR_AI_heli;
-
-    //Heli Patrol Lyepestok
-    [SAR_marker_helipatrol_lyepestok,1] call SAR_AI_heli;
-
-    //Heli patrol NWAF
-    [SAR_marker_helipatrol_nwaf,1] call SAR_AI_heli;
-    
-    //Heli patrol Dubovo
-    [SAR_marker_helipatrol_dubovo,1] call SAR_AI_heli;
-
-    //Heli patrol Krasnoznamensk
-    [SAR_marker_helipatrol_kraz,1] call SAR_AI_heli;
-    
-    //Heli patrol Branibor
-    [SAR_marker_helipatrol_branibor,1] call SAR_AI_heli;
-    
 
     // add if needed, see examples in the chernarus file
 

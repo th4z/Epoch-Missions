@@ -43,12 +43,22 @@ Change it to
 <h5>STEP 2 -- ENABLE MISSIONS</h5>
 
 Edit your mpmission/init.sqf
+
+Look for
+
+	if (isServer) then {
+	
+Change to
+	if (isServer) then {
+		Custom_Plot_Poles = [];
+
 Look for 
 
 	_serverMonitor = 	[] execVM "\z\addons\dayz_server\system\server_monitor.sqf";
 
-Add
-
+Change to
+	_serverMonitor = 	[] execVM "\z\addons\dayz_server\system\server_monitor.sqf";
+	
 	// Mission System
 		// Mission
 	[] execVM "\z\addons\dayz_server\missions\mission_deamon.sqf";

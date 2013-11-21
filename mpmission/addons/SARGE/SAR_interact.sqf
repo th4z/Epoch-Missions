@@ -73,7 +73,6 @@ if (_finished) then {
 	_actingPlayer setVariable["LastTransfusion",time,true];
 	_actingPlayer setVariable["USEC_lowBlood",false,true];
 	_actingPlayer removeMagazine "ItemBloodbag";	
-	//["usecTransfuse",[_actingPlayer,_targetAI]] call broadcastRpcCallAll;
 	r_player_blood = 12000;
 	player setVariable["USEC_BloodQty",r_player_blood,true];
 	

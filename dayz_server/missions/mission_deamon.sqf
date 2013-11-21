@@ -15,14 +15,12 @@ _null = [] spawn mission_cleaner;
 
 sleep 300;
 
-for "_x" from 1 to missions_max_number do {
+for "_x" from 1 to mission_max_number do {
 	_handle = [] spawn mission_spawn;
 	_bandit_missions = _bandit_missions + [_handle];
 };	
 
 while {true} do {
-	diag_log ("DEBUG: Mission Code: Sleeping....");
-	
 	_wait = [1500,650] call fnc_hTime;
 	//_wait = 180;
 	sleep _wait;
@@ -39,4 +37,5 @@ while {true} do {
 			};
 		};
 	} forEach _bandit_missions;
+	diag_log ("DEBUG: Mission Code: Sleeping....");
 };

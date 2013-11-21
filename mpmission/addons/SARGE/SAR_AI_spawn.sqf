@@ -32,8 +32,13 @@ _tmparr set[6,101];
 _tmparr set[7,97];
 
 _markername=toString _tmparr;
+_player = "";
 
-{if(isPlayer _x) then {_player = _x;};} foreach _playerlist;
+{
+	if(isPlayer _x) then {
+		_player = _x;
+	};
+} foreach _playerlist;
 
 if (SAR_DEBUG) then {diag_log format["SAR_DEBUG: Triggered by (might be wrong): %1", _player];};
 
@@ -46,7 +51,7 @@ if (SAR_dynamic_group_respawn) then {
     _respawn = true;
 };
 
-_valuearray= [["max_grps","rnd_grps","max_p_grp","grps_band","grps_sold","grps_surv"],_markername] call SAR_AI_mon_read; 
+_valuearray = [["max_grps","rnd_grps","max_p_grp","grps_band","grps_sold","grps_surv"],_markername] call SAR_AI_mon_read; 
 
 _max_grps=_valuearray select 0;
 _rnd_grps=_valuearray select 1;

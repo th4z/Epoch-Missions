@@ -54,6 +54,11 @@ if (isServer) then {
 	"PVDZE_obj_Trade"		addPublicVariableEventHandler {(_this select 1) spawn server_tradeObj};
 	"PVDZE_plr_TradeMenu"	addPublicVariableEventHandler {(_this select 1) spawn server_traders};
 	"PVDZE_plr_DeathB"		addPublicVariableEventHandler {(_this select 1) spawn server_deaths};
+	
+	// Custom
+	//"customPlotPolesDelete" addPublicVariableEventHandler { diag_log format ["Removed Custom Plot Pole: %1", _this]; 
+															diag_log format ["Custom Plot Pole List: %1", Custom_Plot_Poles];
+															_this select 1 spawn server_delete_plotpole_list};
 };
 
 //Client only
@@ -72,5 +77,4 @@ if (!isDedicated) then {
 	//"customPlayerCount"	addPublicVariableEventHandler {customPlayerCount = (_this select 1); diag_log format["Player Count: %1", (_this select 1)]};
 	//"customCombatLogger" addPublicVariableEventHandler {[_this select 1] execVM "extras\debug_monitor\debug_combat_logger.sqf"};
 	"customMissionGo" addPublicVariableEventHandler {_this select 1 execVM "extras\debug_monitor\debug_missions_go.sqf"};
-	"customMissionEnd" addPublicVariableEventHandler {_this select 1 execVM "extras\debug_monitor\debug_missions_end.sqf"};
 };

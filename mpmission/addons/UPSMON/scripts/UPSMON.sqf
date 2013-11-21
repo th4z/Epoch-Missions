@@ -25,7 +25,7 @@
 //    unit        = Unit to patrol area (1st argument)
 //    markername  = Name of marker that covers the active area. (2nd argument)
 //
-//	Patrol squad samples: (put in the leaders init field)
+//	Patrol squad samples: (put in the leader's init field)
 //    nul=[this,"area0"] execVM "scripts\upsmon.sqf";
 //
 //  Defensive squad samples:
@@ -49,8 +49,8 @@
 //    nosmoke     = Units will not use smoke when s/o wounded or die.
 //    delete:n    = Delete dead units after 'n' seconds.
 //    nowait      = Do not wait at patrol end points.
-//    noslow      = Keep default behaviour of unit (dont change to "safe" and "limited").
-//    noai        = Dont use enhanced AI for evasive and flanking maneuvers.
+//    noslow      = Keep default behaviour of unit (don't change to "safe" and "limited").
+//    noai        = Don't use enhanced AI for evasive and flanking maneuvers.
 //    trigger     = Display a message when no more units are left in sector.
 //    empty:n     = Consider area empty, even if 'n' units are left.
 //    reinforcement  = Makes squad as reinforcement, when alarm KRON_UPS_reinforcement==true this squad will go where enemy were.
@@ -171,7 +171,7 @@ _initstr = "";
 _fortifyorig= false;
 _rlastPos = [0,0,0];
 
-// unit thats moving
+// unit that's moving
 _obj = leader (_this select 0); //group or leader
 _npc = _obj;
 
@@ -198,18 +198,9 @@ _grpname = format["%1_%2",(side _npc),_grpidx];
 _side = side _npc;
 
 
-//To not run all at the same time we hope to have as many seconds as ids
+//To not run all at the same time we hope to have as many seconds as id's
 _rnd = _grpid;
-/*
-// make the group invisible and invincible
-{
 
-    _x allowDamage false;
-    [nil, _x, "per", rHideObject, true] call RE; 
-    _x disableAI "FSM";    
-
-} foreach units _npc;
-*/
 
 sleep _rnd ;
 
@@ -377,7 +368,7 @@ _iscar = "LandVehicle" countType [vehicle _npc]>0;
 _isboat = "Ship" countType [vehicle _npc]>0;
 _isplane = "Air" countType [vehicle _npc]>0;
 
-// we just have to brute-force it for now, and declare *everyone* an enemy who isnt a civilian
+// we just have to brute-force it for now, and declare *everyone* an enemy who isn't a civilian
 _isSoldier = _side != civilian;
 
 _friends=[];
@@ -2705,11 +2696,6 @@ if (_respawn && {_respawnmax > 0} &&  {!_surrended}) then {
         _leader = _group createUnit [_unittype, _orgpos, [], 0, "form"];
 
         // hide & protect unit
-		/*
-        _leader allowDamage false;
-        [nil, _leader, "per", rHideObject, true] call RE; 
-        _leader disableAI "FSM";
-		*/
         
         _leaderskills = call compile format ["SAR_leader_%1_skills",_type];
         
@@ -2782,11 +2768,6 @@ if (_respawn && {_respawnmax > 0} &&  {!_surrended}) then {
             if (_i>1) then {
 
                 _newunit = _group createUnit [_x, _orgpos, [],0,"form"];
-				/*
-                _newunit allowDamage false;
-                [nil, _newunit, "per", rHideObject, true] call RE; 
-                _newunit disableAI "FSM";
-				*/
                 
                 switch (_grouptype) do {
                 

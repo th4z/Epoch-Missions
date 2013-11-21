@@ -255,6 +255,8 @@ mission_kill_vehicle = {
 		if (time > _timer) exitWith {_blowup = true; true};
 		false
 	};
+
+	[_vehicle, "all"] spawn server_updateObject;
 	if (_blowup) then {
 		_vehicle setDamage 1;
 		[_vehicle, "DAYZ MISSION SYSTEM"] call vehicle_handleServerKilled;
@@ -263,7 +265,7 @@ mission_kill_vehicle = {
 
 
 mission_spawn = {
-	private ["_chance", "_position", "_mission_type", "_isNear", "_crates", "_ai_info", "_veh_pool", "_vehicle", "_vehicle_position", "_crate_position", "_type", "_text", "_timeout", "_group_0", "_group_1", "_last_index", "_index", "_missions", "_timeout2"];
+	private ["_chance", "_position", "_mission_type", "_isNear", "_crates", "_ai_info", "_veh_pool", "_vehicle", "_vehicle_position", "_crate_position", "_type", "_text", "_timeout", "_group_0", "_group_1", "_last_index", "_index", "_missions", "_timeout2", "_marker"];
 	// Spawn around buildings and 50% near roads
 	_chance = floor(random 2);
 	_position = [];
@@ -387,8 +389,18 @@ mission_spawn = {
 		};
 
 		// Start Mission
+		_marker = createMarker[(((_ai_info select 0) select 0) + "_player_marker"), _position];
+		if !(_vehicle_spawn) then {
+			_marker setMarkerColor "ColorRed";
+		} else {
+			_marker setMarkerColor "ColorBlue";
+		};
+		_marker setMarkerShape "ELLIPSE";
+		_marker setMarkerBrush "Grid";
+		_marker setMarkerSize [300,300];
+		
 		_text = "Bandits Have Been Spotted, Check your Map";
-		customMissionGo = [(((_ai_info select 0) select 0) + "_player_marker"), _position, _text, _vehicle_spawn, _vehicle];
+		customMissionGo = [_text, _vehicle_spawn, _vehicle];
 		publicVariable "customMissionGo";
 		
 		// Wait till all AI Dead or Mission Times Out
@@ -397,7 +409,7 @@ mission_spawn = {
 		_group_2 = ((_ai_info select 1) select 1);
 		_group_3 = ((_ai_info select 2) select 1);
 		
-		_timeout = time + 1800;
+		_timeout = time + mission_despawn_timer_min;
 		waitUntil{
 			sleep 30;
 			if ((count units _group_1 == 0) && (count units _group_2 == 0) && (count units _group_3 == 0)) exitWith {true};
@@ -408,8 +420,8 @@ mission_spawn = {
 		
 		// Wait till no Players within 200 metres && Mission Timeout Check for Crates
 		_isNear = true;
-		_timeout = time + 900;
-		_timeout2 = _timeout + 900;
+		_timeout = time + ((mission_despawn_timer_max - mission_despawn_timer_min)/2);
+		_timeout2 = _timeout + ((mission_despawn_timer_max - mission_despawn_timer_min)/2);
 		while {_isNear} do
 		{
 			sleep 30;
@@ -422,8 +434,7 @@ mission_spawn = {
 			};
 		};
 
-		customMissionEnd = [(((_ai_info select 0) select 0) + "_player_marker"), _text, _position];
-		publicVariable "customMissionEnd";
+		deleteMarker _marker;
 
 		diag_log ("DEBUG: Mission Code: Removing AI + Crates");
 		// Remove Crates

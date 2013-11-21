@@ -79,9 +79,15 @@ _sniperskills = call compile format ["SAR_sniper_%1_skills",_type];
 
 
 // get a random starting position that is on land
-_rndpos = [_patrol_area_name] call SHK_pos;
+_blist = [];
+{
+	_blist = _blist + [str(getpos(_x))];
+} forEach Custom_Plot_Poles;
+_rndpos = [_patrol_area_name, false, _blist] call SHK_pos;
 
-//_rndpos = [0,0];
+diag_log format ["DEBUG SARGE _patrol_area_name: %1", _patrol_area_name];
+diag_log format ["DEBUG SARGE _blist: %1", _blist];
+diag_log format ["DEBUG SARGE _rndpos: %1", _rndpos];
 
 _group = createGroup _side;
 

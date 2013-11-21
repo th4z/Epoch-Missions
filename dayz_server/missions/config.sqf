@@ -1,6 +1,11 @@
 // Number of Max Concurrent Missions
-missions_max_number = 2;
+mission_max_number = 2;
 
+mission_spawn_timer_min = 650;
+mission_spawn_timer_max = 1500;
+
+mission_despawn_timer_min = 1800;
+mission_despawn_timer_max = 3600;
 // ----- LOOT -----
 
 // Type of Crates to Spawn with Loot

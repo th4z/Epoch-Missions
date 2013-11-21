@@ -20,7 +20,6 @@
 // enable or disable dynamic grid spawning
 // -----------------------------------------------
 SAR_dynamic_spawning = true;
-//SAR_dynamic_spawning = false;
 
 // -----------------------------------------------
 // enable or disable the AI debug monitor
@@ -38,13 +37,13 @@ SAR_max_grps_soldiers = 1;
 SAR_max_grps_survivors = 1;
 
 // chance for a group to spawn (1-100)
-SAR_chance_bandits = 20;
-SAR_chance_soldiers = 20;
-SAR_chance_survivors = 20;
+SAR_chance_bandits = 75;
+SAR_chance_soldiers = 30;
+SAR_chance_survivors = 50;
 
 // maximum size of group (including Leader)
 SAR_max_grpsize_bandits = 4;
-SAR_max_grpsize_soldiers = 4;
+SAR_max_grpsize_soldiers = 5;
 SAR_max_grpsize_survivors = 4;
 
 
@@ -68,10 +67,10 @@ SAR_AI_STEAL_VEHICLE = false;
 // -----------------------------------------------
 
 // Humanity Value that gets substracted for a survivor or soldier AI kill
-SAR_surv_kill_value = 100;
+SAR_surv_kill_value = 250;
 
 // Humanity Value that gets ADDED for a bandit AI kill
-SAR_band_kill_value = 200;
+SAR_band_kill_value = 50;
 
 // the humanity value below which a player will be considered hostile
 SAR_HUMANITY_HOSTILE_LIMIT = -2500;
@@ -96,7 +95,7 @@ SAR_KILL_MSG = true;
 // -----------------------------------------------
 
 // Enable / disable AI xp system
-SAR_AI_XP_SYSTEM = false;
+SAR_AI_XP_SYSTEM = true;
 
 // xp needed to reach this level
 SAR_AI_XP_LVL_1 = 0;

@@ -1574,7 +1574,7 @@ MON_movetogunner = {
 //	<- 	_minfloors:  min floors of building (optional) if not especified  min floors is 2
 // 	->	 [_bld,_bldpos] 
 MON_GetNearestBuildings = {
-	private ["_object","_bldpos","_minfloors","_OCercanos","_distance","_blds"];
+	private ["_object","_bldpos","_minfloors","_OCercanos","_distance","_blds", "_temp", "_nearbyPole"];
 	_distance = 25;
 	_minfloors = 2;
 	
@@ -1596,7 +1596,16 @@ MON_GetNearestBuildings = {
 	
 	// _posinfo: [0,0]=no house near, [obj,0]=house near, but no roof positions, [obj,pos]=house near, with roof pos
 	//_posinfo= _object call MON_PosInfo;										
-	_OCercanos = nearestObjects [_object, ["house","building"] , _distance];
+	_OCercanos = [];
+	_temp = nearestObjects [_object, ["house","building"] , _distance];
+
+	
+	{
+		_nearbyPole = (getPos _x) nearestObject  "Plastic_Pole_EP1_DZ";
+		if (isNull _nearbyPole) then {
+			_OCercanos = _OCercanos + [_x];
+		};
+	} forEach _temp;
 	
 	{
 		_bldpos = _x call MON_BldPos; 
