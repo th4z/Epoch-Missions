@@ -85,10 +85,6 @@ _blist = [];
 } forEach Custom_Plot_Poles;
 _rndpos = [_patrol_area_name, false, _blist] call SHK_pos;
 
-diag_log format ["DEBUG SARGE _patrol_area_name: %1", _patrol_area_name];
-diag_log format ["DEBUG SARGE _blist: %1", _blist];
-diag_log format ["DEBUG SARGE _rndpos: %1", _rndpos];
-
 _group = createGroup _side;
 
 // protect group from being deleted by DayZ
