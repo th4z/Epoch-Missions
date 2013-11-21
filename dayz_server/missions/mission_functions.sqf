@@ -257,6 +257,7 @@ mission_kill_vehicle = {
 	};
 	if (_blowup) then {
 		_vehicle setDamage 1;
+		[_vehicle, "DAYZ MISSION SYSTEM"] call vehicle_handleServerKilled;
 	};
 };
 
