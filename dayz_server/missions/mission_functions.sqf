@@ -405,18 +405,6 @@ mission_spawn = {
 			false
 		};
 		
-		_last_index = count Missions;
-		_index = 0;
-		while {(_index < _last_index)} do
-		{
-			_missions = Missions select _index;
-			if ((_missions select 1) == _position) then {
-				Missions set [_index, "delete me"];
-				Missions = Missions - ["delete me"];			
-				_index = _last_index + 1;
-			};
-			_index = _index + 1;
-		};
 		
 		// Wait till no Players within 200 metres && Mission Timeout Check for Crates
 		_isNear = true;
