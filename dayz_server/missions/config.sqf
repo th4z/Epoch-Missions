@@ -4,8 +4,11 @@ mission_max_number = 2;
 mission_spawn_timer_min = 650;
 mission_spawn_timer_max = 1500;
 
+// Note Vehicles are destroyed at min timer value... 
+// Its on my todo list to code it to kill vehicles @ end of mission
 mission_despawn_timer_min = 1800;
 mission_despawn_timer_max = 3600;
+
 // ----- LOOT -----
 
 // Type of Crates to Spawn with Loot

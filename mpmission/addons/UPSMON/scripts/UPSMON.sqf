@@ -2695,7 +2695,6 @@ if (_respawn && {_respawnmax > 0} &&  {!_surrended}) then {
         
         _leader = _group createUnit [_unittype, _orgpos, [], 0, "form"];
 
-        // hide & protect unit
         
         _leaderskills = call compile format ["SAR_leader_%1_skills",_type];
         

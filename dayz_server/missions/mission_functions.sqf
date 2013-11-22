@@ -225,7 +225,7 @@ mission_spawn_vehicle = {
 	};
 
 	[_veh,[_dir,_objPosition],_vehicle,_spawnDMG,"0"] call server_publishVeh;
-	[_veh, 900] spawn mission_kill_vehicle;
+	[_veh, mission_despawn_timer_min] spawn mission_kill_vehicle;
 };
 
 
@@ -236,7 +236,7 @@ mission_kill_vehicle_group = {
 	
 	{
 		if ((_x isKindOf "LandVehicle") || (_x isKindOf "Air")) then {
-			[_x, 1800] spawn mission_kill_vehicle;		
+			[_x, mission_despawn_timer_min] spawn mission_kill_vehicle;		
 		};
 	} forEach _units;
 
@@ -244,22 +244,35 @@ mission_kill_vehicle_group = {
 
 
 mission_kill_vehicle = {
-	private ["_vehicle", "_timer", "_loot_type", "_blowup"];
+	private ["_vehicle", "_timer", "_blowup", "_exit"];
 
 	_vehicle = _this select 0;
-	_timer = time + _this select 1;
-	
+	_timer = time + (_this select 1);
+	_blowup = true;
+	_exit = false;
+
 	waitUntil{
-		sleep 1; 
-		if {{isPlayer _x && _x distance _vehicle < 30} count playableunits > 0} exitWith {_blowup = false; true};
-		if (time > _timer) exitWith {_blowup = true; true};
-		false
+		sleep 1;
+		{
+			if ((isPlayer _x) && (_x distance _vehicle <= 10)) then {
+				_blowup = false;
+				_exit = true;
+			};
+		} forEach playableUnits;
+		if (time > _timer) then {
+			_blowup = true;
+			_exit = true;
+		};
+		_exit
 	};
 
 	[_vehicle, "all"] spawn server_updateObject;
 	if (_blowup) then {
+		diag_log format ["DEBUG: Mission Code: Killing Vehicle", _vehicle];
 		_vehicle setDamage 1;
 		[_vehicle, "DAYZ MISSION SYSTEM"] call vehicle_handleServerKilled;
+	} else {
+		diag_log format ["DEBUG: Mission Code: Saving Vehicle", _vehicle];
 	};
 };
 
@@ -318,6 +331,7 @@ mission_spawn = {
 	if ((count _position) == 2) then {
 		diag_log ("DEBUG: Mission Code: Starting New Mission");
 		_chance = floor(random 1);
+		_chance = 1;
 		_crates = [];
 		_ai_info = [];
 		_vehicle = 0;
