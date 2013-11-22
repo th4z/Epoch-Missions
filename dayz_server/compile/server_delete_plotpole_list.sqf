@@ -7,7 +7,7 @@ while {true} do {
 	_index = 0;
 	while {(_index < _last_index)} do
 	{
-		_item = (Custom_Plot_Poles select _index) select 0;
+		_item = (Custom_Plot_Poles select _index);
 		if (_remove_item == _item) then {
 			deleteMarker str(getPos _remove_item);
 			Custom_Plot_Poles set [_index, "delete me"];
