@@ -56,7 +56,7 @@ if (isServer) then {
 	"PVDZE_plr_DeathB"		addPublicVariableEventHandler {(_this select 1) spawn server_deaths};
 	
 	// Custom
-	//"customPlotPolesDelete" addPublicVariableEventHandler { diag_log format ["Removed Custom Plot Pole: %1", _this]; 
+	"customPlotPolesDelete" addPublicVariableEventHandler { diag_log format ["Removed Custom Plot Pole: %1", _this]; 
 															diag_log format ["Custom Plot Pole List: %1", Custom_Plot_Poles];
 															_this select 1 spawn server_delete_plotpole_list};
 };

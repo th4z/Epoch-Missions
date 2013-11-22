@@ -62,6 +62,15 @@ Change to
 	// Mission System
 		// Mission
 	[] execVM "\z\addons\dayz_server\missions\mission_deamon.sqf";
+	
+Edit your dayz_server/init/server_functions.sqf
+Look for
+	server_deaths = 			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_playerDeaths.sqf";
+	
+Change to
+	server_deaths = 			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_playerDeaths.sqf";
+	server_add_plotpole_list = compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_add_plotpole_list.sqf";
+	server_delete_plotpole_list = compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_delete_plotpole_list.sqf";
 
 
 <h5>STEP 3 -- SARGE AI INSTALL</h5>

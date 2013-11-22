@@ -37,13 +37,13 @@ SAR_max_grps_soldiers = 1;
 SAR_max_grps_survivors = 1;
 
 // chance for a group to spawn (1-100)
-SAR_chance_bandits = 25;
-SAR_chance_soldiers = 10;
-SAR_chance_survivors = 20;
+SAR_chance_bandits = 15;
+SAR_chance_soldiers = 15;
+SAR_chance_survivors = 15;
 
 // maximum size of group (including Leader)
 SAR_max_grpsize_bandits = 4;
-SAR_max_grpsize_soldiers = 5;
+SAR_max_grpsize_soldiers = 4;
 SAR_max_grpsize_survivors = 4;
 
 
@@ -141,7 +141,7 @@ SAR_respawn_waittime = 600; // default 30 seconds
 // -----------------------------------------------
 
 // time after which DYNAMIC units and groups despawn after players have left the area/ dynamic grid
-SAR_DESPAWN_TIMEOUT = 600; // 10 minutes
+SAR_DESPAWN_TIMEOUT = 60; // 1 minutes
 
 // time after which dead AI bodies are deleted 
 SAR_DELETE_TIMEOUT = 600; // 10 minutes
