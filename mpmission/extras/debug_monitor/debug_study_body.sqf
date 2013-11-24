@@ -39,7 +39,7 @@ _headShots = _body getVariable ["headShots",0];
 _humanity = _body getVariable ["humanity",0];
  
 customCombatLogger =
-"<t size='1.5' font='Bitstream' color='#5882FA'>" + _name + "%1's Journal</t><br/><br/>
+"<t size='1.5' font='Bitstream' color='#5882FA'>" + _name + " Journal</t><br/><br/>
 <t size='1.25' font='Bitstream' align='left'>Zombies Killed: </t><t size='1.25' font='Bitstream' align='right'> + "_kills" + </t><br/>
 <t size='1.25' font='Bitstream' align='left'>Murders: </t><t size='1.25' font='Bitstream' align='right'> + "_killsH" + </t><br/>
 <t size='1.25' font='Bitstream' align='left'>Bandits Killed: </t><t size='1.25' font='Bitstream' align='right'> + "_killsB" + </t><br/>

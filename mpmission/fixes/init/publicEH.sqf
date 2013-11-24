@@ -56,9 +56,11 @@ if (isServer) then {
 	"PVDZE_plr_DeathB"		addPublicVariableEventHandler {(_this select 1) spawn server_deaths};
 	
 	// Custom
+	/*
 	"customPlotPolesDelete" addPublicVariableEventHandler { diag_log format ["Removed Custom Plot Pole: %1", _this]; 
 															diag_log format ["Custom Plot Pole List: %1", Custom_Plot_Poles];
-															_this select 1 spawn server_delete_plotpole_list};
+															(_this select 1) spawn server_delete_plotpole_list};
+	*/
 };
 
 //Client only
@@ -69,7 +71,6 @@ if (!isDedicated) then {
 	"PVDZE_plr_Morph"		addPublicVariableEventHandler {(_this select 1) call server_switchPlayer};
 	"PVDZE_obj_Fire"		addPublicVariableEventHandler {nul=(_this select 1) spawn BIS_Effects_Burn};
 	"PVDZE_plr_FriendRQ"	addPublicVariableEventHandler {cutText[(_this select 1),"PLAIN DOWN"];};
-	
 	
 	"norrnRaDrag"			addPublicVariableEventHandler {[_this select 1] execVM "\z\addons\dayz_code\medical\publicEH\animDrag.sqf"};
 	"norrnRnoAnim"			addPublicVariableEventHandler {[_this select 1] execVM "\z\addons\dayz_code\medical\publicEH\noAnim.sqf"};
