@@ -51,7 +51,7 @@ while {true} do {
 			[_info_player,
 			"extras\debug_monitor\pirates.paa",
 			"extras\debug_monitor\warning.paa",
-			-1,
+			"-1",
 			('' + (gettext (configFile >> 'CfgVehicles' >> (typeof vehicle player) >> 'displayName'))),
 			round (r_player_blood),
 			round (player getVariable['humanity', 0]),
