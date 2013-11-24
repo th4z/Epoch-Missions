@@ -27,7 +27,7 @@
 // ------------------------------------------------------------------------------------------------------------
 
 
-private ["_leadername","_type","_patrol_area_name","_grouptype","_snipers","_riflemen","_action","_side","_leader_group","_riflemenlist","_sniperlist","_rndpos","_group","_leader","_cond","_respawn","_leader_weapon_names","_leader_items","_leader_tools","_soldier_weapon_names","_soldier_items","_soldier_tools","_sniper_weapon_names","_sniper_items","_sniper_tools","_leaderskills","_riflemanskills","_sniperskills","_ups_para_list","_respawn_time","_argc","_ai_type","_blist"];
+private ["_leadername","_type","_patrol_area_name","_grouptype","_snipers","_riflemen","_action","_side","_leader_group","_riflemenlist","_sniperlist","_rndpos","_group","_leader","_cond","_respawn","_leader_weapon_names","_leader_items","_leader_tools","_soldier_weapon_names","_soldier_items","_soldier_tools","_sniper_weapon_names","_sniper_items","_sniper_tools","_leaderskills","_riflemanskills","_sniperskills","_ups_para_list","_respawn_time","_argc","_ai_type"];
 
 if(!isServer) exitWith {};
 
@@ -79,11 +79,7 @@ _sniperskills = call compile format ["SAR_sniper_%1_skills",_type];
 
 
 // get a random starting position that is on land
-_blist = [];
-{
-	_blist = _blist + [str(getpos(_x))];
-} forEach Custom_Plot_Poles;
-_rndpos = [_patrol_area_name, false, _blist] call SHK_pos;
+_rndpos = [_patrol_area_name, false, Custom_Plot_Poles] call SHK_pos;
 
 _group = createGroup _side;
 

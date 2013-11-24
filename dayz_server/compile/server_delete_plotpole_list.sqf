@@ -1,15 +1,17 @@
 private ["_last_index", "_index", "_item"];
-_remove_item = _this;
+
+_plotpole = _this;
+_plotpole_pos = getpos(_plotpole);
+_plotpole_name = ("Custom_Plot_Pole" + str(_plotpole_pos));
 
 while {true} do {
-	// Remove AI Group + Map Marker if all units are dead
 	_last_index = count Custom_Plot_Poles;
 	_index = 0;
 	while {(_index < _last_index)} do
 	{
 		_item = (Custom_Plot_Poles select _index);
-		if (_remove_item == _item) then {
-			deleteMarker str(getPos _remove_item);
+		if (_item == _plotpole_name) then {
+			deleteMarker _plotpole_name;
 			Custom_Plot_Poles set [_index, "delete me"];
 			Custom_Plot_Poles = Custom_Plot_Poles - ["delete me"];			
 			_index = _index - 1;
