@@ -1,27 +1,4 @@
-mission_cleaner = {
-	private ["_last_index", "_index", "_group"];
-	while {true} do {
-		sleep 600;
-		_last_index = count mission_ai_groups;
-		_index = 0;
-		while {(_index < _last_index)} do
-		{
-			_group = mission_ai_groups select _index;
-			if (count units (_group select 1) == 0) then {
-				deleteGroup (_group select 1);
-				missionNamespace setVariable [(_group select 0), nil];
-				mission_ai_groups set [_index, "delete me"];
-				mission_ai_groups = mission_ai_groups - ["delete me"];			
-				_index = _index - 1;
-				_last_index = _last_index - 1;
-			};
-			_index = _index + 1;
-		};
-	};
-};
-
-
-mission_check = {
+mission_nearbyPlayers = {
 	private ["_pos", "_distance", "_isNearList", "_isNear"];
 	_pos = _this select 0;
 	_distance = _this select 1;
@@ -52,7 +29,7 @@ mission_check = {
 };
 
 
-mission_veh_pool = {
+mission_vehicle_pool = {
 	private ["_veh_pool", "_vehicle", "_velimit", "_qty", "_veh_pool"];
 	_veh_pool = [];
 	{
@@ -253,12 +230,17 @@ mission_kill_vehicle = {
 
 	waitUntil{
 		sleep 1;
-		{
-			if ((isPlayer _x) && (_x distance _vehicle <= 10)) then {
-				_blowup = false;
-				_exit = true;
-			};
-		} forEach playableUnits;
+		if (alive _vehicle) then {
+			{
+				if ((isPlayer _x) && (_x distance _vehicle <= 10)) then {
+					_blowup = false;
+					_exit = true;
+				};
+			} forEach playableUnits;
+		} else {
+			_blowup = true;
+			_exit = true;
+		};
 		if (time > _timer) then {
 			_blowup = true;
 			_exit = true;
@@ -267,17 +249,20 @@ mission_kill_vehicle = {
 	};
 
 	[_vehicle, "all"] spawn server_updateObject;
+	sleep 5;
+	_vehicle_id = _vehicle getVariable ["ObjectID","0"];
 	if (_blowup) then {
-		diag_log format ["DEBUG: Mission Code: Killing Vehicle", _vehicle];
+		diag_log format ["DEBUG: Mission Code: Killing Vehicle ID", _vehicle_id];
 		_vehicle setDamage 1;
 		[_vehicle, "DAYZ MISSION SYSTEM"] call vehicle_handleServerKilled;
 	} else {
-		diag_log format ["DEBUG: Mission Code: Saving Vehicle", _vehicle];
+		diag_log format ["DEBUG: Mission Code: Saving Vehicle ID", _vehicle_id];
 	};
 };
 
 
 mission_spawn = {
+	diag_log ("DEBUG MISSIONS: Mission Spawn Started");
 	private ["_chance", "_position", "_mission_type", "_isNear", "_crates", "_ai_info", "_veh_pool", "_vehicle", "_vehicle_position", "_crate_position", "_type", "_text", "_timeout", "_group_0", "_group_1", "_last_index", "_index", "_missions", "_timeout2", "_marker"];
 	// Spawn around buildings and 50% near roads
 	_chance = floor(random 2);
@@ -319,7 +304,7 @@ mission_spawn = {
 				};
 		};
 
-		_isNear = [_position, 800] call mission_check;
+		_isNear = [_position, 800] call mission_nearbyPlayers;
 		if (!_isNear) then {
 			_x = 20;
 		} else {
@@ -341,7 +326,7 @@ mission_spawn = {
 		{
 			case "Road":{
 				if (_chance == 1) then {
-					_veh_pool = call mission_veh_pool;
+					_veh_pool = call mission_vehicle_pool;
 					if ((count _veh_pool) > 0) then {
 						waitUntil{!isNil "BIS_fnc_selectRandom"};
 						_vehicle = (_veh_pool call BIS_fnc_selectRandom) select 0;
@@ -358,7 +343,7 @@ mission_spawn = {
 					_crate_position = [_position,0,30,3,0,2000,0] call BIS_fnc_findSafePos;
 					if ((count _crate_position) == 2) then {
 						waitUntil{!isNil "BIS_fnc_selectRandom"};
-						_type = missions_crates call BIS_fnc_selectRandom;
+						_type = mission_crates call BIS_fnc_selectRandom;
 						_crates = _crates + [[_crate_position, _type, "Random"] call mission_spawn_crates];
 					};
 				};
@@ -368,7 +353,7 @@ mission_spawn = {
 
 			case "Building":{
 				if (_chance == 1) then {
-					_veh_pool = call mission_veh_pool;
+					_veh_pool = call mission_vehicle_pool;
 					if ((count _veh_pool) > 0) then {
 						waitUntil{!isNil "BIS_fnc_selectRandom"};
 						_vehicle = (_veh_pool call BIS_fnc_selectRandom) select 0;
@@ -379,13 +364,13 @@ mission_spawn = {
 				};
 				
 				//  Spawn Supplies -- Crates
-				for "_i" from 0 to missions_num_of_crates do
+				for "_i" from 0 to mission_num_of_crates do
 				{
 					waitUntil{!isNil "BIS_fnc_selectRandom"};
 					_crate_position = [_position,0,30,3,0,2000,0] call BIS_fnc_findSafePos;
 					if ((count _crate_position) == 2) then {
 						waitUntil{!isNil "BIS_fnc_selectRandom"};
-						_type = missions_crates call BIS_fnc_selectRandom;
+						_type = mission_crates call BIS_fnc_selectRandom;
 						_crates = _crates + [[_crate_position,_type,"Random"] call mission_spawn_crates];
 					};
 				};
@@ -393,7 +378,7 @@ mission_spawn = {
 				mission_ai_groups = mission_ai_groups + [(_ai_info select 0)] + [(_ai_info select 1)];
 				};
 			case "Open Area":{
-				_veh_pool = call mission_veh_pool;
+				_veh_pool = call mission_vehicle_pool;
 				
 				waitUntil{!isNil "BIS_fnc_selectRandom"};
 				_vehicle = (_veh_pool call BIS_fnc_selectRandom) select 0;
@@ -439,7 +424,7 @@ mission_spawn = {
 		while {_isNear} do
 		{
 			sleep 30;
-			_isNear = [_crate_position, 500] call mission_check;
+			_isNear = [_crate_position, 500] call mission_nearbyPlayers;
 			if ((!_isNear) && (time > _timeout)) then {
 				_isNear = false;
 			};
@@ -465,5 +450,28 @@ mission_spawn = {
 		{
 			_x setDamage 1;
 		} forEach units _group_3;
+	};
+};
+
+
+mission_cleaner = {
+	private ["_last_index", "_index", "_group"];
+	while {true} do {
+		sleep 600;
+		_last_index = count mission_ai_groups;
+		_index = 0;
+		while {(_index < _last_index)} do
+		{
+			_group = mission_ai_groups select _index;
+			if (count units (_group select 1) == 0) then {
+				deleteGroup (_group select 1);
+				missionNamespace setVariable [(_group select 0), nil];
+				mission_ai_groups set [_index, "delete me"];
+				mission_ai_groups = mission_ai_groups - ["delete me"];			
+				_index = _index - 1;
+				_last_index = _last_index - 1;
+			};
+			_index = _index + 1;
+		};
 	};
 };

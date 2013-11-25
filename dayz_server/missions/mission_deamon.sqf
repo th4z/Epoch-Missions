@@ -20,21 +20,23 @@ for "_x" from 1 to mission_max_number do {
 	_bandit_missions = _bandit_missions + [_handle];
 };	
 
+diag_log format ["DEBUG: Mission Code: Max Missions %1", (count _bandit_missions)];
 while {true} do {
 	_wait = [1500,650] call fnc_hTime;
 	//_wait = 180;
 	sleep _wait;
-	diag_log format ["DEBUG: Mission Code: Max Missions %1", (count _bandit_missions)];
 	_counter = 0;
 	{
 		_counter = _counter + 1;
 		diag_log format ["DEBUG: Mission Code: Mission %1", _counter];
 		if (scriptDone _x) then {
-			diag_log ("DEBUG: Mission Code: Mission Done");
+			diag_log ("DEBUG: Mission Code: scriptDone");
 			if ((random 10) > 2) exitWith {
 				diag_log ("DEBUG: Mission Code: Spawn");
 				_x = [] spawn mission_spawn;
 			};
+		} else { 
+			diag_log ("DEBUG: Mission Code: !scriptDone");
 		};
 	} forEach _bandit_missions;
 	diag_log ("DEBUG: Mission Code: Sleeping....");

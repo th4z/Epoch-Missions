@@ -98,7 +98,7 @@ _crate = _this select 0;
 _lootTable = _this select 1;
 
 if (_lootTable == "Random") then {
-	_lootTable = ["Military", "MilitaryIndustrial", "MilitarySpecial", "Supermarket", "Industrial", "HeliCrash_No50s", "SupplyDrop"] call BIS_fnc_selectRandom;
+	_lootTable = mission_loot_tables call BIS_fnc_selectRandom;
 };
 
 _config = 		missionConfigFile >> "CfgBuildingLoot" >> _lootTable;

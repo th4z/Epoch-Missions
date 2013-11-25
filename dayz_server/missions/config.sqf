@@ -1,6 +1,7 @@
 // Number of Max Concurrent Missions
 mission_max_number = 2;
 
+// Min / Max values for Timer, when to check to spawn a mission
 mission_spawn_timer_min = 650;
 mission_spawn_timer_max = 1500;
 
@@ -12,10 +13,12 @@ mission_despawn_timer_max = 3600;
 // ----- LOOT -----
 
 // Type of Crates to Spawn with Loot
-missions_crates = ["USVehicleBox","USVehicleBox","USLaunchersBox","USVehicleBox"];
+mission_crates = ["GuerillaCacheBox","RUVehicleBox","UNBasicWeapons_EP1","USVehicleBox"];
+
+mission_loot_tables = ["Military", "MilitaryIndustrial", "MilitarySpecial", "Supermarket", "Industrial", "HeliCrash_No50s", "SupplyDrop"];
 
 // Number of Crates to Spawn
-missions_num_of_crates = 5;
+mission_num_of_crates = 5;
 
 // ----- VEHICLES ----- 
 
