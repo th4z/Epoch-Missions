@@ -3,7 +3,7 @@ diag_log ("DEBUG: Mission Code: Start.......");
 
 #include "config.sqf"
 
-fnc_hTime 		 = compile preprocessFileLineNumbers "\z\addons\dayz_server\missions\misc\fnc_hTime.sqf"; //Random integer selector for mission wait time
+fnc_hTime = compile preprocessFileLineNumbers "\z\addons\dayz_server\missions\misc\fnc_hTime.sqf"; //Random integer selector for mission wait time
 call compile preprocessFileLineNumbers "\z\addons\dayz_server\missions\mission_functions.sqf";
 
 mission_id = 0;
@@ -25,19 +25,19 @@ while {true} do {
 	_wait = [1500,650] call fnc_hTime;
 	//_wait = 180;
 	sleep _wait;
-	_counter = 0;
-	{
-		_counter = _counter + 1;
-		diag_log format ["DEBUG: Mission Code: Mission %1", _counter];
-		if (scriptDone _x) then {
-			diag_log ("DEBUG: Mission Code: scriptDone");
-			if ((random 10) > 2) exitWith {
-				diag_log ("DEBUG: Mission Code: Spawn");
-				_x = [] spawn mission_spawn;
+	if ((diag_fps) > 10) then {
+		{
+			diag_log format ["DEBUG: Mission Code: Handle: %1", _x];
+			if (scriptDone _x) then {
+				diag_log ("DEBUG: Mission Code: Spawn Check ");
+				if ((random 10) > 2) exitWith {
+					diag_log ("DEBUG: Mission Code: Spawn");
+					_x = [] spawn mission_spawn;
+				};
+			} else { 
+				diag_log ("DEBUG: Mission Code: Still Running");
 			};
-		} else { 
-			diag_log ("DEBUG: Mission Code: !scriptDone");
-		};
-	} forEach _bandit_missions;
+		} forEach _bandit_missions;
+	};
 	diag_log ("DEBUG: Mission Code: Sleeping....");
 };

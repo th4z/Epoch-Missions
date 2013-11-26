@@ -40,10 +40,10 @@ _humanity = _body getVariable ["humanity",0];
  
 customCombatLogger =
 "<t size='1.5' font='Bitstream' color='#5882FA'>" + _name + " Journal</t><br/><br/>
-<t size='1.25' font='Bitstream' align='left'>Zombies Killed: </t><t size='1.25' font='Bitstream' align='right'> + "_kills" + </t><br/>
-<t size='1.25' font='Bitstream' align='left'>Murders: </t><t size='1.25' font='Bitstream' align='right'> + "_killsH" + </t><br/>
-<t size='1.25' font='Bitstream' align='left'>Bandits Killed: </t><t size='1.25' font='Bitstream' align='right'> + "_killsB" + </t><br/>
-<t size='1.25' font='Bitstream' align='left'>Headshots: </t><t size='1.25' font='Bitstream' align='right'> + "_headShots" + </t><br/>
-<t size='1.25' font='Bitstream' align='left'>Humanity: </t><t size='1.25' font='Bitstream' align='right'> + "_humanity" + </t><br/>";
+<t size='1.25' font='Bitstream' align='left'>Zombies Killed: </t><t size='1.25' font='Bitstream' align='right'>" + _kills + "</t><br/>
+<t size='1.25' font='Bitstream' align='left'>Murders: </t><t size='1.25' font='Bitstream' align='right'>" + _killsH + "</t><br/>
+<t size='1.25' font='Bitstream' align='left'>Bandits Killed: </t><t size='1.25' font='Bitstream' align='right'>" + _killsB + "</t><br/>
+<t size='1.25' font='Bitstream' align='left'>Headshots: </t><t size='1.25' font='Bitstream' align='right'>" + _headShots + "</t><br/>
+<t size='1.25' font='Bitstream' align='left'>Humanity: </t><t size='1.25' font='Bitstream' align='right'>" + _humanity + "</t><br/>";
 
 sleep 30;

@@ -1124,6 +1124,7 @@ while {_loop} do {
 			_npc setBehaviour "STEALTH";	
 			_npc setSpeedMode "FULL";	
 			
+			
 			//Puts a mine if near road
 			if ( _ambushType == 1 ) then {			
 				if (KRON_UPS_AI_Debug>0) then {diag_log format["KRON_UPS_AI_Debug: Group %1: Putting down a mine for ambush",_grpidx]}; 	
@@ -1158,7 +1159,8 @@ while {_loop} do {
 						waituntil {moveToCompleted _x || moveToFailed _x || !alive _x || !canmove _x || _x distance _npc <= 5};
 					};
 				} foreach units _npc;				
-			};				
+			};
+			
 
 			
 	

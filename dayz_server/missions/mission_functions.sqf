@@ -315,8 +315,7 @@ mission_spawn = {
 	// only proceed if two params otherwise BIS_fnc_findSafePos failed and may spawn in air
 	if ((count _position) == 2) then {
 		diag_log ("DEBUG: Mission Code: Starting New Mission");
-		_chance = floor(random 1);
-		_chance = 1;
+		_chance = floor(random 100);
 		_crates = [];
 		_ai_info = [];
 		_vehicle = 0;
@@ -325,7 +324,7 @@ mission_spawn = {
 		switch (_mission_type) do
 		{
 			case "Road":{
-				if (_chance == 1) then {
+				if (_chance >= 75) then {
 					_veh_pool = call mission_vehicle_pool;
 					if ((count _veh_pool) > 0) then {
 						waitUntil{!isNil "BIS_fnc_selectRandom"};
@@ -347,12 +346,14 @@ mission_spawn = {
 						_crates = _crates + [[_crate_position, _type, "Random"] call mission_spawn_crates];
 					};
 				};
-				_ai_info = [_position, 1, 5, ["ambush","patrol"]] call mission_spawn_ai;
+				//_ai_info = [_position, 1, 5, ["ambush","patrol"]] call mission_spawn_ai;
+				_ai_info = [_position, 1, 5, ["patrol"]] call mission_spawn_ai;
 				mission_ai_groups = mission_ai_groups + [(_ai_info select 0)] + [(_ai_info select 1)] + [(_ai_info select 2)];
 				};
 
+				
 			case "Building":{
-				if (_chance == 1) then {
+				if (_chance >= 75) then {
 					_veh_pool = call mission_vehicle_pool;
 					if ((count _veh_pool) > 0) then {
 						waitUntil{!isNil "BIS_fnc_selectRandom"};
@@ -374,16 +375,38 @@ mission_spawn = {
 						_crates = _crates + [[_crate_position,_type,"Random"] call mission_spawn_crates];
 					};
 				};
-				_ai_info = [_position, 1, 4, ["ambush","fortify","patrol"]] call mission_spawn_ai;
+				//_ai_info = [_position, 1, 4, ["ambush","fortify","patrol"]] call mission_spawn_ai;
+				_ai_info = [_position, 1, 4, ["fortify","patrol"]] call mission_spawn_ai;
 				mission_ai_groups = mission_ai_groups + [(_ai_info select 0)] + [(_ai_info select 1)];
 				};
-			case "Open Area":{
-				_veh_pool = call mission_vehicle_pool;
 				
-				waitUntil{!isNil "BIS_fnc_selectRandom"};
-				_vehicle = (_veh_pool call BIS_fnc_selectRandom) select 0;
-				_vehicle_position = [_position,0,50,5,0,2000,0] call BIS_fnc_findSafePos;
-				[_vehicle, _vehicle_position, false] call mission_spawn_vehicle;
+				
+			case "Open Area":{
+				if (_chance >= 75) then {
+					_veh_pool = call mission_vehicle_pool;
+					if ((count _veh_pool) > 0) then {
+						waitUntil{!isNil "BIS_fnc_selectRandom"};
+						_vehicle = (_veh_pool call BIS_fnc_selectRandom) select 0;
+						_vehicle_position = [_position,0,50,5,0,2000,0] call BIS_fnc_findSafePos;
+						[_vehicle, _vehicle_position, false] call mission_spawn_vehicle;
+						_vehicle_spawn = true;
+					};
+				};
+				
+				//  Spawn Supplies -- Crates
+				for "_i" from 0 to mission_num_of_crates do
+				{
+					waitUntil{!isNil "BIS_fnc_selectRandom"};
+					_crate_position = [_position,0,30,3,0,2000,0] call BIS_fnc_findSafePos;
+					if ((count _crate_position) == 2) then {
+						waitUntil{!isNil "BIS_fnc_selectRandom"};
+						_type = mission_crates call BIS_fnc_selectRandom;
+						_crates = _crates + [[_crate_position,_type,"Random"] call mission_spawn_crates];
+					};
+				};
+				//_ai_info = [_position, 1, 4, ["ambush","fortify","patrol"]] call mission_spawn_ai;
+				_ai_info = [_position, 1, 4, ["fortify","patrol"]] call mission_spawn_ai;
+				mission_ai_groups = mission_ai_groups + [(_ai_info select 0)] + [(_ai_info select 1)];
 			};
 		};
 
