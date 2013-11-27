@@ -170,17 +170,17 @@ mission_spawn_crates = {
 
 
 mission_spawn_vehicle = {
-	private ["_vehicle", "_position", "_spawnDMG", "_dir", "_veh", "_objPosition", "_num", "_allCfgLoots", "_iClass", "_itemTypes", "_index", "_weights", "_cntWeights", "_index", "_itemType"];
+	private ["_vehicle_class", "_position", "_spawnDMG", "_dir", "_vehicle", "_objPosition", "_num", "_allCfgLoots", "_iClass", "_itemTypes", "_index", "_weights", "_cntWeights", "_index", "_itemType"];
 
-	_vehicle = _this select 0;
+	_vehicle_class = _this select 0;
 	_position = _this select 1;
 	_spawnDMG = _this select 2;
 	
 	_dir = round(random 180);
 	
-	_veh = createVehicle [_vehicle, _position, [], 0, "CAN_COLLIDE"];
-	_veh setdir _dir;
-	_veh setpos _position;	
+	_vehicle = createVehicle [_vehicle_class, _position, [], 0, "CAN_COLLIDE"];
+	_vehicle setdir _dir;
+	_vehicle setpos _position;	
 	_objPosition = getPosATL _veh;
 
 	// Add 0-4 loots to vehicle using random cfgloots 
@@ -201,8 +201,9 @@ mission_spawn_vehicle = {
 		_veh addMagazineCargoGlobal [_itemType,1];
 	};
 
-	[_veh,[_dir,_objPosition],_vehicle,_spawnDMG,"0"] call server_publishVeh;
-	[_veh, mission_despawn_timer_min] spawn mission_kill_vehicle;
+	[_vehicle,[_dir,_objPosition],_vehicle_class,_spawnDMG,"0"] call server_publishVeh;
+	[_vehicle, mission_despawn_timer_min] spawn mission_kill_vehicle;
+	serverVehicleCounter set [count serverVehicleCounter, _vehicle_class];
 };
 
 
