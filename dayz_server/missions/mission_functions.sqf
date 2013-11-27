@@ -253,11 +253,11 @@ mission_kill_vehicle = {
 	sleep 5;
 	_vehicle_id = _vehicle getVariable ["ObjectID","0"];
 	if (_blowup) then {
-		diag_log format ["DEBUG: Mission Code: Killing Vehicle ID", _vehicle_id];
+		diag_log format ["DEBUG: Mission Code: Killing Vehicle ID: %1", _vehicle_id];
 		_vehicle setDamage 1;
 		[_vehicle, "DAYZ MISSION SYSTEM"] call vehicle_handleServerKilled;
 	} else {
-		diag_log format ["DEBUG: Mission Code: Saving Vehicle ID", _vehicle_id];
+		diag_log format ["DEBUG: Mission Code: Saving Vehicle ID: %1", _vehicle_id];
 	};
 };
 
