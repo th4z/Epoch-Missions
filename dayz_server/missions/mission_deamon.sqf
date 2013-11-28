@@ -30,10 +30,10 @@ while {true} do {
 	if ((diag_fps) > mission_fps_check) then {
 
 		// Getting Number of Running Bandit Missions
-		_mission_counter = 0;
+		_mission_counter = mission_max_number;
 		{
 			if (scriptDone _x) then {
-				_mission_counter = _mission_counter + 1;
+				_mission_counter = _mission_counter - 1;
 			};
 		} forEach _bandit_missions;
 
@@ -42,20 +42,14 @@ while {true} do {
 		while {(_index < _last_index)} do
 		{
 			_mission = (_bandit_missions select _index);
-			diag_log format ["DEBUG: Mission Code: Handle: %1", _mission];
 			if (scriptDone _mission) then {
-				diag_log ("DEBUG: Mission Code: Spawn Check ");
 				if (((random 10) > 4) || (_mission_counter < mission_min_number)) exitWith {
-					diag_log ("DEBUG: Mission Code: Spawn");
 					_handle = [] spawn mission_spawn;
 					_bandit_missions set [_index, _handle];
 					_mission_counter = _mission_counter + 1;
 				};
-			} else { 
-				diag_log ("DEBUG: Mission Code: Still Running");
 			};
 			_index = _index + 1;
 		};
 	};
-	diag_log ("DEBUG: Mission Code: Sleeping....");
 };

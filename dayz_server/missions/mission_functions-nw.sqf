@@ -172,12 +172,9 @@ mission_spawn_crates = {
 mission_spawn_vehicle = {
 	private ["_vehicle_class", "_position", "_spawnDMG", "_dir", "_vehicle", "_objPosition", "_num", "_allCfgLoots", "_iClass", "_itemTypes", "_index", "_weights", "_cntWeights", "_index", "_itemType"];
 
-	
 	_vehicle_class = _this select 0;
 	_position = _this select 1;
 	_spawnDMG = _this select 2;
-
-	diag_log format ["DEBUG: Spawn Vehicle Position: %1", _position];
 	
 	_dir = round(random 180);
 	
@@ -221,59 +218,15 @@ mission_kill_vehicle_group = {
 		};
 	} forEach _units;
 	
+	diag_log format ["DEBUG MISSION: Kill Vehicle Group: _x: %1", _vehicle];
 	if ((_vehicle isKindOf "LandVehicle") || (_vehicle isKindOf "Air")) then {
-		[_vehicle, mission_despawn_timer_min] spawn mission_kill_vehicle;		
+		[_x, mission_despawn_timer_min] spawn mission_kill_vehicle;		
 	} else {
-		diag_log format ["DEBUG: MISSIONS: Kill Vehicle Group: Unknown: _vehicle: %1", _vehicle];
+		diag_log ("Unknown Vehicle");
 	};
 };
 
-
-mission_kill_vehicle = {
-	private ["_vehicle", "_timer", "_blowup", "_exit"];
-
-	_vehicle = _this select 0;
-	_timer = time + (_this select 1);
-	_blowup = true;
-	_exit = false;
-
-	waitUntil{
-		sleep 1;
-		if (alive _vehicle) then {
-			{
-				if ((isPlayer _x) && (_x distance _vehicle <= 10)) then {
-					_blowup = false;
-					_exit = true;
-				};
-			} forEach playableUnits;
-		} else {
-			_blowup = true;
-			_exit = true;
-		};
-		if (time > _timer) then {
-			_blowup = true;
-			_exit = true;
-		};
-		_exit
-	};
-
-	[_vehicle, "all"] spawn server_updateObject;
-	sleep 5;
-	_vehicle_id = _vehicle getVariable ["ObjectID","0"];
-	if (_blowup) then {
-		diag_log format ["DEBUG: Mission Code: Killing Vehicle ID: %1", _vehicle_id];
-		_vehicle setDamage 1;
-		[_vehicle, "DAYZ MISSION SYSTEM"] call vehicle_handleServerKilled;
-	} else {
-		diag_log format ["DEBUG: Mission Code: Saving Vehicle ID: %1", _vehicle_id];
-	};
-};
-
-
-/*
 mission_vehicle_playercheck = {
-	diag_log ("TEST PLAYER CHECK ");
-	diag_log format ["DEBUG VEHICLE PLAYER CHECK: %1", _this];
 	_vehicle = _this select 0;
 	_unit = _this select 1;
 	
@@ -287,12 +240,11 @@ mission_kill_vehicle = {
 	diag_log ("DEBUG MISSIONS: Kill Vehicle Initialized");
 	_vehicle = _this select 0;
 	_timer = _this select 1;
-	diag_log format ["DEBUG: MISSIONS: Kill Vehicle: _vehicle: %1", _vehicle];
+	diag_log format ["DEBUG MISSIONS: Vehicle: %1", _vehicle];
 		
 	// Add EventHandler for Vehicle
 	diag_log ("DEBUG MISSIONS: addEvent");
-	//_vehicle addEventHandler ["GetIn", { _this call mission_vehicle_playercheck } ];
-	_veh addEventHandler ["GetIn", { diag_log ("DEBUG MISSIONS Missions TEST");} ];
+	_vehicle addEventHandler ["GetIn", {[(_this),"all"] call mission_vehicle_playercheck;}];
 	sleep _timer;
 	
 	// Prob not needed.. but just incase we will update vehicle in database
@@ -326,9 +278,7 @@ mission_kill_vehicle = {
 	// Checking if we are going to blow up Vehicle
 	diag_log ("DEBUG MISSIONS: Vehicle Blowup Check");
 	_blowup = _vehicle getVariable ["Mission Blowup", true];
-	_vehicle_id = _vehicle getVariable ["ObjectID","0"];
 	sleep 1;
-	
 	if (_blowup) then {
 		diag_log format ["DEBUG: Mission Code: Killing Vehicle ID: %1", _vehicle_id];
 		_vehicle setDamage 1;
@@ -337,7 +287,6 @@ mission_kill_vehicle = {
 		diag_log format ["DEBUG: Mission Code: Saving Vehicle ID: %1", _vehicle_id];
 	};
 };
-*/
 
 
 mission_spawn = {
