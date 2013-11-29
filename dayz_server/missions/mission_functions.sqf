@@ -184,7 +184,7 @@ mission_spawn_vehicle = {
 	_vehicle = createVehicle [_vehicle_class, _position, [], 0, "CAN_COLLIDE"];
 	_vehicle setdir _dir;
 	_vehicle setpos _position;	
-	_objPosition = getPosATL _veh;
+	_objPosition = getPosATL _vehicle;
 
 	// Add 0-4 loots to vehicle using random cfgloots 
 	_num = floor(random 4);
@@ -201,7 +201,7 @@ mission_spawn_vehicle = {
 		_index = floor(random _cntWeights);
 		_index = _weights select _index;
 		_itemType = _itemTypes select _index;
-		_veh addMagazineCargoGlobal [_itemType,1];
+		_vehicle addMagazineCargoGlobal [_itemType,1];
 	};
 
 	[_vehicle,[_dir,_objPosition],_vehicle_class,_spawnDMG,"0"] call server_publishVeh;
