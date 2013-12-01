@@ -56,7 +56,6 @@ if (isServer) then {
 	"PVDZE_plr_DeathB"		addPublicVariableEventHandler {(_this select 1) spawn server_deaths};
 	
 	// Custom
-	
 	"customPlotPolesDelete" addPublicVariableEventHandler { diag_log format ["Removed Custom Plot Pole: %1", _this]; 
 															diag_log format ["Custom Plot Pole List: %1", Custom_Plot_Poles];
 															(_this select 1) spawn server_delete_plotpole_list};
@@ -74,7 +73,7 @@ if (!isDedicated) then {
 	"norrnRaDrag"			addPublicVariableEventHandler {[_this select 1] execVM "\z\addons\dayz_code\medical\publicEH\animDrag.sqf"};
 	"norrnRnoAnim"			addPublicVariableEventHandler {[_this select 1] execVM "\z\addons\dayz_code\medical\publicEH\noAnim.sqf"};
 	// Custom
-	//"customPlayerCount"	addPublicVariableEventHandler {customPlayerCount = (_this select 1); diag_log format["Player Count: %1", (_this select 1)]};
-	//"customCombatLogger" addPublicVariableEventHandler {[_this select 1] execVM "extras\debug_monitor\debug_combat_logger.sqf"};
-	"customMissionGo" addPublicVariableEventHandler {_this select 1 execVM "extras\debug_monitor\debug_missions_go.sqf"};
+	"customPlayerCount"	addPublicVariableEventHandler {customPlayerCount = (_this select 1); diag_log format["Player Count: %1", (_this select 1)]};
+	"customCombatLogger" addPublicVariableEventHandler {(_this select 1) execVM "extras\debug_monitor\debug_monitor_combat_logger.sqf"};
+	"customMissionWarning" addPublicVariableEventHandler {_this select 1 execVM "extras\debug_monitor\debug_monitor_missions.sqf"};
 };

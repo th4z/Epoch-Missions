@@ -1,32 +1,37 @@
 /* ********************************************************************************* */
 /* ********************************************************************************* */
-// Server FPS
+// Settings
 /* ********************************************************************************* */
+
 // Mission System won't start a mission if server fps < mission_fps_check
 mission_fps_check = 10;
+// Min Number of Players before mission will spawn
+mission_player_check = 1;
+// Mission Debug Monitor
+mission_warning_debug = true;
 
 
-/* ********************************************************************************* */
-/* ********************************************************************************* */
 // Number of Missions
-/* ********************************************************************************* */
 mission_min_number = 2;
 mission_max_number = 4;
 
-/* ********************************************************************************* */
-/* ********************************************************************************* */
 // Min / Max values for Timer, when to check to spawn a mission
-/* ********************************************************************************* */
 mission_spawn_timer_min = 650;
 mission_spawn_timer_max = 1500;
 
-/* ********************************************************************************* */
-/* ********************************************************************************* */
 // Note Vehicles are destroyed at min timer value... 
-// Its on my todo list to code it to kill vehicles @ end of mission
-/* ********************************************************************************* */
-mission_despawn_timer_min = 1800;
+// Its on my todo list to code it to kill vehicles @ actual end of mission
+mission_despawn_timer_min = 2700;
 mission_despawn_timer_max = 3600;
+
+// Distance around Plotpoles + Info Boards (i.e trader cities)
+// To blacklist from spawning missions at
+mission_blacklist_range = 200;
+
+// Distance around Players
+// To blacklist from spawning missions at
+mission_blacklist_players_range = 800;
+
 
 /* ********************************************************************************* */
 /* ********************************************************************************* */

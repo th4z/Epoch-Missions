@@ -146,7 +146,7 @@ _groupvehicles setVariable ["SAR_protect",true,true];
     _veh setVariable ["Sarge",1,true];
     _veh engineon true; 
 
-    _veh addEventHandler ["HandleDamage", {_this spawn SAR_AI_VEH_HIT;_this select 2;}];  
+    _veh addEventHandler ["HandleDamage", {_this spawn SAR_AI_VEH_HIT;_this select 2;}];
 
     [_veh] joinSilent _groupvehicles;
     

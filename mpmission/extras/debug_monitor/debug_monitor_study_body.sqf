@@ -30,20 +30,20 @@ if (_deathTime < 0) then {
 cutText [format["Their name was %1, %2. There is a journal in their pocket.",_name,_temp], "PLAIN DOWN"];
  
  
-_body = _this select 3;
-_name = _body getVariable ["bodyName","unknown"];
-_kills = _body getVariable ["zombieKills",0];
-_killsH = _body getVariable ["humanKills",0];
-_killsB = _body getVariable ["banditKills",0];
-_headShots = _body getVariable ["headShots",0];
-_humanity = _body getVariable ["humanity",0];
+_kills = str(_body getVariable ["zombieKills",0]);
+_killsH = str(_body getVariable ["humanKills",0]);
+_killsB = str(_body getVariable ["banditKills",0]);
+_headShots = str(_body getVariable ["headShots",0]);
+_humanity = str(_body getVariable ["humanity",0]);
  
-customCombatLogger =
-"<t size='1.5' font='Bitstream' color='#5882FA'>" + _name + " Journal</t><br/><br/>
-<t size='1.25' font='Bitstream' align='left'>Zombies Killed: </t><t size='1.25' font='Bitstream' align='right'>" + _kills + "</t><br/>
-<t size='1.25' font='Bitstream' align='left'>Murders: </t><t size='1.25' font='Bitstream' align='right'>" + _killsH + "</t><br/>
-<t size='1.25' font='Bitstream' align='left'>Bandits Killed: </t><t size='1.25' font='Bitstream' align='right'>" + _killsB + "</t><br/>
-<t size='1.25' font='Bitstream' align='left'>Headshots: </t><t size='1.25' font='Bitstream' align='right'>" + _headShots + "</t><br/>
-<t size='1.25' font='Bitstream' align='left'>Humanity: </t><t size='1.25' font='Bitstream' align='right'>" + _humanity + "</t><br/>";
+customStudyBody =
+"<br/><br/><t size='1.25' font='Bitstream' color='#5882FA'>" + _name + " Journal</t><br/><br/>
+<t size='1' font='Bitstream' align='left'>Zombies Killed: </t><t size='1.25' font='Bitstream' align='right'>" + _kills + "</t><br/>
+<t size='1' font='Bitstream' align='left'>Murders: </t><t size='1.25' font='Bitstream' align='right'>" + _killsH + "</t><br/>
+<t size='1' font='Bitstream' align='left'>Bandits Killed: </t><t size='1.25' font='Bitstream' align='right'>" + _killsB + "</t><br/>
+<t size='1' font='Bitstream' align='left'>Headshots: </t><t size='1.25' font='Bitstream' align='right'>" + _headShots + "</t><br/>
+<t size='1' font='Bitstream' align='left'>Humanity: </t><t size='1.25' font='Bitstream' align='right'>" + _humanity + "</t><br/>";
 
-sleep 30;
+sleep 15;
+
+customStudyBody = "";

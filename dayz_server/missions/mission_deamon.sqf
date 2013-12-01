@@ -15,19 +15,20 @@ _bandit_missions = [];
 for "_x" from 1 to mission_max_number do {
 	_handle = [] spawn mission_spawn;
 	_bandit_missions = _bandit_missions + [_handle];
+	sleep 30; // Be kinder to Server + Spread Out Spawning Multiple Missions + wait for player debug monitor mission timeout
 };	
 _last_index = count _bandit_missions;		
 
 // Start Mission Variable Cleaner (i.e expired map markers etc, ai groups)
 [] spawn mission_cleaner;
 
-diag_log format ["DEBUG: Mission Code: Max Missions %1", (count _bandit_missions)];
 // Main Loop for Spawning Missions
 while {true} do {
 	_wait = [mission_spawn_timer_max, mission_spawn_timer_min] call fnc_hTime;
 	//_wait = 180;
+	
 	sleep _wait;
-	if ((diag_fps) > mission_fps_check) then {
+	if (((diag_fps) > mission_fps_check) && (mission_player_check >= (count playableUnits)))  then {
 
 		// Getting Number of Running Bandit Missions
 		_mission_counter = mission_max_number;
@@ -47,6 +48,7 @@ while {true} do {
 					_handle = [] spawn mission_spawn;
 					_bandit_missions set [_index, _handle];
 					_mission_counter = _mission_counter + 1;
+					sleep 30; // Be kinder to Server + Spread Out Spawning Multiple Missions + wait for player debug monitor mission timeout
 				};
 			};
 			_index = _index + 1;

@@ -81,6 +81,8 @@ while {alive _ai} do {
                 if (!(someAmmo _ai) || {_reloadmag})  then {
                     _ai removeMagazines (_magazintypes select 0);
                     _ai addMagazine (_magazintypes select 0);
+					_ai addMagazine (_magazintypes select 0);
+					_ai addMagazine (_magazintypes select 0);
                     if (SAR_EXTREME_DEBUG) then {diag_log format["SAR_EXTREME_DEBUG: Infantry reloaded a magazine (%1) for a rifle (%2).",(_magazintypes select 0),_x];};
                 };
             };
@@ -99,6 +101,7 @@ while {alive _ai} do {
                 if (!(someAmmo _ai) || {_reloadmag})  then {
                     _ai removeMagazines (_magazintypes select 0);
                     _ai addMagazine (_magazintypes select 0);
+					_ai addMagazine (_magazintypes select 0);
                     if (SAR_EXTREME_DEBUG) then {diag_log "SAR_EXTREME_DEBUG: Infantry reloaded a magazine for a pistol.";};
                 };
             };

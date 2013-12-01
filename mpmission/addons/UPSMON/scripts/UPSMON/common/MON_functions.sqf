@@ -1972,7 +1972,7 @@ MON_doCreateMine = {
 	if (!alive _soldier || !canmove _soldier) exitwith{};
 	_dir = getdir _soldier;	
 	_position = [position _soldier,_dir, 0.5] call MON_GetPos2D;	
-	_mine = createMine ["MineMine", _position , [], 0];	
+	//_mine = createMine ["MineMine", _position , [], 0];	
 
 	//Prepare mine
 	_soldier playMoveNow "AinvPknlMstpSlayWrflDnon_medic";
@@ -1980,59 +1980,7 @@ MON_doCreateMine = {
 	
 	//Return to formation
 	_soldier domove position ( leader _soldier );
-	
-	// Add Trigers
-	/*
-	diag_log ("Adding Triggers for Mine");
-	_trigger1 = createTrigger ["EmptyDetector", _position];
-	_trigger1 setTriggerActivation ["WEST", "PRESENT", true];
-	_trigger1 setTriggerArea [1,1,0,false];
-	_trigger1 setTriggerStatements ["this", "format[""[%1,%2,%3] spawn MON_Mine_Detonate"",_position, _mine, _trigger1]", ""];
-	_trigger1 setTriggerTimeout [0, 0.5, 1, true];
-
-	_trigger2 = createTrigger ["EmptyDetector", _position];
-	_trigger2 setTriggerActivation ["EAST", "PRESENT", true];
-	_trigger2 setTriggerArea [1,1,0,false];
-	//_trigger2 setTriggerStatements ["this", format["[%1,%2,%3] spawn MON_Mine_Detonate",_position, _mine, _trigger2], ""];
-	_trigger2 setTriggerTimeout [0, 0.5, 1, true];
-
-	_trigger3 = createTrigger ["EmptyDetector", _position];
-	_trigger3 setTriggerActivation ["GUER", "PRESENT", true];
-	_trigger3 setTriggerArea [1,1,0,false];
-	//_trigger3 setTriggerStatements ["this", format["[%1,%2,%3] spawn MON_Mine_Detonate",_position, _mine, _trigger3], ""];
-	_trigger3 setTriggerTimeout [0, 0.5, 1, true];
-	*/
-	
-	//format["[%1,%2,%3] spawn MON_Mine_Detonate",_position, _mine, _trigger1];
 };
-
-
-MON_Mine_Detonate = {
-	private ["_position","_mine","_trigger"];
-	_position = _this select 0;
-	_mine     = _this select 1;
-	_trigger  = _this select 2;
-	
-	_shelltype = "Grenade"; //SMALL
-	//_shelltype = "M_R73_AA"; // LARGE
-	//_shelltype = "R_Hydra_HE"; // LARGE
-	//_shelltype = "R_57mm_HE"; // LARGE
-	//_shelltype = "M_Sidewinder_AA"; //LARGE
-	//_shelltype = "Sh_105_HE"; //EXTRA-LARGE
-	//_shelltype = "R_S8T_AT"; // LARGE
-	//_shelltype = "M_AT5_AT"; //MEDIUM
-	//_shelltype = "M_Hellfire_AT"; //MEDIUM
-	//_shelltype = "M_Ch29_AT"; //SUPERSIZED
-	//_shelltype = "Bo_GBU12_LGB"; //SUPERSIZED
-
-	diag_log ("DEBUG MISSION: MINE DETONATE");
-	_shelltype createVehicle (position _x);
-	sleep 2;
-	deleteVehicle _mine;
-	deleteVehicle _tigger;
-
-};
-
 
 //Function to surrender AI soldier
 //Par�meters: [_npc]

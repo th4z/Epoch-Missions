@@ -1,9 +1,31 @@
-mission_nearbyPlayers = {
-	private ["_pos", "_distance", "_isNearList", "_isNear"];
-	_pos = _this select 0;
-	_distance = _this select 1;
+mission_cleaner = {
+	private ["_last_index", "_index", "_group"];
+	while {true} do {
+		sleep 600;
+		_last_index = count mission_ai_groups;
+		_index = 0;
+		while {(_index < _last_index)} do
+		{
+			_group = mission_ai_groups select _index;
+			if (count units (_group select 1) == 0) then {
+				deleteGroup (_group select 1);
+				missionNamespace setVariable [(_group select 0), nil];
+				mission_ai_groups set [_index, "delete me"];
+				mission_ai_groups = mission_ai_groups - ["delete me"];			
+				_index = _index - 1;
+				_last_index = _last_index - 1;
+			};
+			_index = _index + 1;
+		};
+	};
+};
 
-	_isNearList = _pos nearEntities ["CAManBase", _distance];
+
+mission_nearbyPlayers = {
+	private ["_pos", "_isNearList", "_isNear"];
+	_pos = _this select 0;
+
+	_isNearList = _pos nearEntities ["CAManBase", mission_blacklist_players_range];
 	_isNear = false;
 	
 	// Check for Players & Ignore SARGE AI
@@ -16,7 +38,7 @@ mission_nearbyPlayers = {
 	};
 
 	if !(_isNear) then {
-		_isNearList = _pos nearEntities [["LandVehicle", "Air"], _distance];
+		_isNearList = _pos nearEntities [["LandVehicle", "Air"], mission_blacklist_players_range];
 		{
 			{
 				if (isPlayer _x) then {
@@ -24,6 +46,19 @@ mission_nearbyPlayers = {
 				};
 			} forEach (crew _x);
 		} forEach _isNearList;
+	};
+	_isNear
+};
+
+mission_nearbyBlackspot = {
+	private ["_position", "_isNear"];
+	_position = _this select 0;
+	_isNear = false;
+	
+	_nearby = nearestObjects [_position, ["Plastic_Pole_EP1_DZ", "Info_Board_EP1"], mission_blacklist_range];
+	
+	if ((count _nearby) > 0) then {
+		_isNear = true;
 	};
 	_isNear
 };
@@ -203,8 +238,8 @@ mission_spawn_vehicle = {
 		_itemType = _itemTypes select _index;
 		_vehicle addMagazineCargoGlobal [_itemType,1];
 	};
-
-	[_vehicle,[_dir,_objPosition],_vehicle_class,_spawnDMG,"0"] call server_publishVeh;
+	diag_log format ["DEBUG MISSION: Vehicle: _objPosition: %1", _objPosition];
+	[_vehicle, [_dir, _objPosition], _vehicle_class, _spawnDMG, "0"] call server_publishVeh;
 	[_vehicle, mission_despawn_timer_min] spawn mission_kill_vehicle;
 	serverVehicleCounter set [count serverVehicleCounter, _vehicle_class];
 };
@@ -348,42 +383,46 @@ mission_spawn = {
 	_position = [];
 	_mission_type = "";
 	_chance = floor(random 2);
+	_isNear = false;
+	
+	// Try 10 Times to Find a Mission Spot
 	for "_x" from 1 to 10 do {
 		switch (_chance) do
 		{
 			case 0:
 				{
-				_mission_type = "Road";
+					_mission_type = "Road";
+					
+					waitUntil{!isNil "BIS_fnc_selectRandom"};
+					_position = RoadList call BIS_fnc_selectRandom;
+					_position = _position modelToWorld [0,0,0];
 				
-				waitUntil{!isNil "BIS_fnc_selectRandom"};
-				_position = RoadList call BIS_fnc_selectRandom;
-				_position = _position modelToWorld [0,0,0];
-			
-				waitUntil{!isNil "BIS_fnc_findSafePos"};
-				_position = [_position,0,100,5,0,2000,0] call BIS_fnc_findSafePos;
+					waitUntil{!isNil "BIS_fnc_findSafePos"};
+					_position = [_position,0,100,5,0,2000,0] call BIS_fnc_findSafePos;
 				};
 			case 1:
 				{
-				_mission_type = "Building";		
-				
-				waitUntil{!isNil "BIS_fnc_selectRandom"};
-				_position = BuildingList call BIS_fnc_selectRandom;
-				_position = _position modelToWorld [0,0,0];
-				
-				waitUntil{!isNil "BIS_fnc_findSafePos"};
-				_position = [_position,0,100,5,0,2000,0] call BIS_fnc_findSafePos;
+					_mission_type = "Building";		
+					
+					waitUntil{!isNil "BIS_fnc_selectRandom"};
+					_position = BuildingList call BIS_fnc_selectRandom;
+					_position = _position modelToWorld [0,0,0];
+					
+					waitUntil{!isNil "BIS_fnc_findSafePos"};
+					_position = [_position,0,100,5,0,2000,0] call BIS_fnc_findSafePos;
 				};
 			case 2:
 				{
-				_mission_type = "Open Area";	
-				
-				waitUntil{!isNil "BIS_fnc_findSafePos"};
-				_position = [getMarkerPos "center",0,5500,100,0,20,0] call BIS_fnc_findSafePos;
+					_mission_type = "Open Area";	
+					
+					waitUntil{!isNil "BIS_fnc_findSafePos"};
+					_position = [getMarkerPos "center",0,5500,100,0,20,0] call BIS_fnc_findSafePos;
 				};
 		};
 
-		_isNear = [_position, 800] call mission_nearbyPlayers;
-		if (!_isNear) then {
+		_isNearPlayer = [_position] call mission_nearbyPlayers;
+		_isNearBlackspot = [_position] call mission_nearbyBlackspot;
+		if ((!_isNear) && (!_isNearBlackspot)) then {
 			_x = 20;
 		} else {
 			_position = [];
@@ -424,7 +463,6 @@ mission_spawn = {
 						_crates = _crates + [[_crate_position, _type, "Random"] call mission_spawn_crates];
 					};
 				};
-				//_ai_info = [_position, 1, 5, ["ambush","patrol"]] call mission_spawn_ai;
 				_ai_info = [_position, 1, 5, ["patrol"]] call mission_spawn_ai;
 				mission_ai_groups = mission_ai_groups + [(_ai_info select 0)] + [(_ai_info select 1)] + [(_ai_info select 2)];
 				};
@@ -453,8 +491,7 @@ mission_spawn = {
 						_crates = _crates + [[_crate_position,_type,"Random"] call mission_spawn_crates];
 					};
 				};
-				//_ai_info = [_position, 1, 4, ["ambush","fortify","patrol"]] call mission_spawn_ai;
-				_ai_info = [_position, 1, 4, ["fortify","patrol"]] call mission_spawn_ai;
+				_ai_info = [_position, 1, 4, ["fortify","fortify","patrol"]] call mission_spawn_ai;
 				mission_ai_groups = mission_ai_groups + [(_ai_info select 0)] + [(_ai_info select 1)];
 				};
 				
@@ -482,26 +519,14 @@ mission_spawn = {
 						_crates = _crates + [[_crate_position,_type,"Random"] call mission_spawn_crates];
 					};
 				};
-				//_ai_info = [_position, 1, 4, ["ambush","fortify","patrol"]] call mission_spawn_ai;
-				_ai_info = [_position, 1, 4, ["fortify","patrol"]] call mission_spawn_ai;
+				_ai_info = [_position, 1, 4, ["patrol","fortify","patrol"]] call mission_spawn_ai;
 				mission_ai_groups = mission_ai_groups + [(_ai_info select 0)] + [(_ai_info select 1)];
 			};
 		};
 
-		// Start Mission
-		_marker = createMarker[(((_ai_info select 0) select 0) + "_player_marker"), _position];
-		if (_vehicle_spawn) then {
-			_marker setMarkerColor "ColorBlue";
-		} else {
-			_marker setMarkerColor "ColorRed";
-		};
-		_marker setMarkerShape "ELLIPSE";
-		_marker setMarkerBrush "Grid";
-		_marker setMarkerSize [300,300];
-		
-		_text = "Bandits Have Been Spotted, Check your Map";
-		customMissionGo = [_text, _vehicle_spawn, _vehicle];
-		publicVariable "customMissionGo";
+		_marker_name = (((_ai_info select 0) select 0) + "_player_marker");
+		customMissionWarning = ["start", mission_warning_debug, _marker_name, _position, _vehicle_spawn, _vehicle, _text];
+		publicVariable "customMissionWarning";
 		
 		// Wait till all AI Dead or Mission Times Out
 
@@ -534,6 +559,8 @@ mission_spawn = {
 			};
 		};
 
+		customMissionWarning = ["end", mission_warning_debug, _marker_name];
+		publicVariable "customMissionWarning";
 		deleteMarker _marker;
 
 		diag_log ("DEBUG: Mission Code: Removing AI + Crates");
@@ -551,28 +578,5 @@ mission_spawn = {
 		{
 			_x setDamage 1;
 		} forEach units _group_3;
-	};
-};
-
-
-mission_cleaner = {
-	private ["_last_index", "_index", "_group"];
-	while {true} do {
-		sleep 600;
-		_last_index = count mission_ai_groups;
-		_index = 0;
-		while {(_index < _last_index)} do
-		{
-			_group = mission_ai_groups select _index;
-			if (count units (_group select 1) == 0) then {
-				deleteGroup (_group select 1);
-				missionNamespace setVariable [(_group select 0), nil];
-				mission_ai_groups set [_index, "delete me"];
-				mission_ai_groups = mission_ai_groups - ["delete me"];			
-				_index = _index - 1;
-				_last_index = _last_index - 1;
-			};
-			_index = _index + 1;
-		};
 	};
 };
