@@ -1,3 +1,14 @@
+mission_timer = {
+	private["_time","_val","_return","_rand","_bool","_tar"];
+	_low_value = _this select 0;
+	_high_value = _this select 1;
+
+	_rand = round(random (_high_value - _low_value));
+	_return = _low_value + _rand;
+	
+	_return;
+};
+
 mission_cleaner = {
 	private ["_last_index", "_index", "_group"];
 	while {true} do {

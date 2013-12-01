@@ -3,7 +3,6 @@ diag_log ("DEBUG: Mission Code: Start.......");
 
 #include "config.sqf"
 
-fnc_hTime = compile preprocessFileLineNumbers "\z\addons\dayz_server\missions\misc\fnc_hTime.sqf"; //Random integer selector for mission wait time
 call compile preprocessFileLineNumbers "\z\addons\dayz_server\missions\mission_functions.sqf";
 
 mission_id = 0;
@@ -24,7 +23,7 @@ _last_index = count _bandit_missions;
 
 // Main Loop for Spawning Missions
 while {true} do {
-	_wait = [mission_spawn_timer_max, mission_spawn_timer_min] call fnc_hTime;
+	_wait = [mission_spawn_timer_min, mission_spawn_timer_max] call mission_timer;
 	//_wait = 180;
 	
 	sleep _wait;
