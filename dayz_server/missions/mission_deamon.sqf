@@ -28,7 +28,7 @@ while {true} do {
 	//_wait = 180;
 	
 	sleep _wait;
-	if (((diag_fps) > mission_fps_check) && (mission_player_check >= (count playableUnits)))  then {
+	if (((diag_fps) > mission_fps_check) && (mission_player_check <= (count playableUnits)))  then {
 
 		// Getting Number of Running Bandit Missions
 		_mission_counter = mission_max_number;
