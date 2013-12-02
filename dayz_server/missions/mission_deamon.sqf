@@ -1,4 +1,4 @@
-private ["_bandit_missions", "_null", "_wait", "_handle"];
+private ["_bandit_missions","_wait","_handle","_mission_counter","_mission","_index","_last_index"];
 diag_log ("DEBUG: Mission Code: Start.......");
 
 #include "config.sqf"
@@ -7,14 +7,14 @@ call compile preprocessFileLineNumbers "\z\addons\dayz_server\missions\mission_f
 
 mission_id = 0;
 mission_ai_groups = [];
-sleep 300;
+sleep 60;
 
 // Initialize mission array
 _bandit_missions = [];
 for "_x" from 1 to mission_max_number do {
 	_handle = [] spawn mission_spawn;
 	_bandit_missions = _bandit_missions + [_handle];
-	sleep 30; // Be kinder to Server + Spread Out Spawning Multiple Missions + wait for player debug monitor mission timeout
+	sleep 300; // Be kinder to Server + Spread Out Spawning Multiple Missions + wait for player debug monitor mission timeout
 };	
 _last_index = count _bandit_missions;		
 

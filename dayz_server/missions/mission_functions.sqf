@@ -1,5 +1,5 @@
 mission_timer = {
-	private["_time","_val","_return","_rand","_bool","_tar"];
+	private["_low_value","_high_value","_rand","_return"];
 	_low_value = _this select 0;
 	_high_value = _this select 1;
 
@@ -8,6 +8,7 @@ mission_timer = {
 	
 	_return;
 };
+
 
 mission_cleaner = {
 	private ["_last_index", "_index", "_group"];
@@ -62,7 +63,7 @@ mission_nearbyPlayers = {
 };
 
 mission_nearbyBlackspot = {
-	private ["_position", "_isNear"];
+	private ["_position", "_isNear", "_nearby"];
 	_position = _this select 0;
 	_isNear = false;
 	
@@ -94,11 +95,7 @@ mission_vehicle_pool = {
 
 
 mission_spawn_ai = {
-	// Spawn SARGE AI
-	// 		Create Dynamic SARGE MARKER
-	
-	private ["_position", "_snipers", "_soldiers", "_ai_setting"];
-	
+	private ["_position","_snipers","_soldiers","_ai_setting","_marker2","_group2","_id1","_id2","_id3","_group1","_group3","_marker1","_marker3","_chance"];
 	
 	_position = _this select 0;
 	_snipers = _this select 1;
@@ -276,7 +273,7 @@ mission_kill_vehicle_group = {
 
 
 mission_kill_vehicle = {
-	private ["_vehicle", "_timer", "_blowup", "_exit"];
+	private ["_vehicle","_timer","_blowup","_exit","_vehicle_id"];
 
 	_vehicle = _this select 0;
 	_timer = time + (_this select 1);
@@ -387,14 +384,13 @@ mission_kill_vehicle = {
 
 
 mission_spawn = {
-	private ["_chance", "_position", "_mission_type", "_isNear", "_crates", "_ai_info", "_veh_pool", "_vehicle", "_vehicle_position", "_crate_position", "_type", "_text", "_timeout", "_group_0", "_group_1", "_last_index", "_index", "_missions", "_timeout2", "_marker"];
+	private ["_chance","_position","_mission_type","_isNear","_crates","_ai_info","_veh_pool","_vehicle","_vehicle_position","_crate_position","_type","_timeout","_group_1","_timeout2","_marker","_isNearPlayer","_isNearBlackspot","_vehicle_spawn","_marker_name","_group_2","_group_3"];
 	diag_log ("DEBUG: Mission Code: Starting New Mission");
 
 	// Spawn around buildings and 50% near roads
 	_position = [];
 	_mission_type = "";
 	_chance = floor(random 2);
-	_isNear = false;
 	
 	// Try 10 Times to Find a Mission Spot
 	for "_x" from 1 to 10 do {
@@ -433,7 +429,7 @@ mission_spawn = {
 
 		_isNearPlayer = [_position] call mission_nearbyPlayers;
 		_isNearBlackspot = [_position] call mission_nearbyBlackspot;
-		if ((!_isNear) && (!_isNearBlackspot)) then {
+		if ((!_isNearPlayer) && (!_isNearBlackspot)) then {
 			_x = 20;
 		} else {
 			_position = [];
@@ -536,7 +532,18 @@ mission_spawn = {
 		};
 
 		_marker_name = (((_ai_info select 0) select 0) + "_player_marker");
-		customMissionWarning = ["start", mission_warning_debug, _marker_name, _position, _vehicle_spawn, _vehicle, _text];
+		_marker = createMarkerLocal [_marker_name, _position];
+		if (_vehicle_spawn) then {
+			_marker setMarkerColor "ColorBlue";
+		} else {
+			_marker setMarkerColor "ColorRed";
+		};
+		_marker setMarkerColor "ColorRed";
+		_marker setMarkerShape "ELLIPSE";
+		_marker setMarkerBrush "Grid";
+		_marker setMarkerSize [300,300];
+
+		customMissionWarning = [mission_warning_debug, _marker_name, _position, _vehicle_spawn, _vehicle];
 		publicVariable "customMissionWarning";
 		
 		// Wait till all AI Dead or Mission Times Out
@@ -570,9 +577,7 @@ mission_spawn = {
 			};
 		};
 
-		customMissionWarning = ["end", mission_warning_debug, _marker_name];
-		publicVariable "customMissionWarning";
-		deleteMarker _marker;
+		deleteMarker _marker_name;
 
 		diag_log ("DEBUG: Mission Code: Removing AI + Crates");
 		// Remove Crates
