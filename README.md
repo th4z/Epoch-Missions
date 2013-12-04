@@ -124,6 +124,8 @@ Please note the Bandits + Banit Missions AI are still the same team + work toget
 
 Sarge AI now will spawn in vehicle turrets (should work with most of epoch vehicles). Send bug reports if u notice one not working or have errors
 
+Expermential Vehicle Fix for Epoch. Original Fix didnt run on vehicles bought after server startup or spawned at missions.
+
 
 =============
 <h5>List of Planned Changes</h5>
