@@ -17,7 +17,7 @@ mission_buildings_pos = [];
 	mission_buildings_pos = mission_buildings_pos + [_type, [_type] call mission_find_buildings];
 } forEach mission_buildings;
 */
-sleep 30;
+sleep 300;
 
 // Initialize mission array
 _mission_array = [];
