@@ -236,10 +236,15 @@ _groupvehicles setVariable ["SAR_protect",true,true];
             _this assignAsDriver _veh;
         
         } else {
-            //move in vehicle
-            _this moveInCargo _veh;
-            _this assignAsCargo _veh;
-            
+			_free_gunner_seats = (_veh emptyPositions "Gunner");
+			if (_free_gunner_seats > 0) then {
+				_this moveInTurret [_veh, [(_free_gunner_seats - 1)]];  // Works with standard gun epoch vehicles, untested with all of them
+				_this assignAsGunner _veh;
+			} else {
+				// move in vehicle
+				_this moveInCargo _veh;
+				_this assignAsCargo _veh;
+			};
         };
 
 
@@ -272,9 +277,15 @@ _groupvehicles setVariable ["SAR_protect",true,true];
         _this addMPEventHandler ["MPHit", {Null = _this spawn SAR_AI_hit;}];     
         [_this] joinSilent _groupvehicles;
 
-        // move in vehicle
-        _this moveInCargo _veh;
-        _this assignAsCargo _veh;
+		_free_gunner_seats = (_veh emptyPositions "Gunner");
+		if (_free_gunner_seats > 0) then {
+			_this moveInTurret [_veh, [(_free_gunner_seats - 1)]];  // Works with standard gun epoch vehicles, untested with all of them
+			_this assignAsGunner _veh;
+		} else {
+			// move in vehicle
+			_this moveInCargo _veh;
+			_this assignAsCargo _veh;
+		};
         
         
         // set skills 

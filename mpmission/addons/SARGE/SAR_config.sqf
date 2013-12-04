@@ -261,6 +261,11 @@ SAR_leader_band_list = ["TK_INS_Warlord_EP1_DZ"];
 SAR_sniper_band_list = ["TK_INS_Soldier_EP1_DZ"];
 SAR_soldier_band_list = ["TK_INS_Soldier_EP1_DZ"]; 
 
+// bandit AI Missions
+SAR_leader_bandit_mission_list = ["TK_INS_Warlord_EP1_DZ"];
+SAR_sniper_bandit_mission_list = ["TK_INS_Soldier_EP1_DZ"];
+SAR_soldier_bandit_mission_list = ["TK_INS_Soldier_EP1_DZ"]; 
+
 // survivor AI
 SAR_leader_surv_list = ["RU_Policeman_DZ"]; 
 SAR_sniper_surv_list = ["RU_Policeman_DZ"]; 
@@ -359,6 +364,58 @@ SAR_soldier_band_skills = [
 ];
 // Sniper
 SAR_sniper_band_skills = [
+
+    ["aimingAccuracy",0.70, 0.10], // skilltype, <min value>, <random value added to min>;
+    ["aimingShake",   0.80, 0.10],
+    ["aimingSpeed",   0.70, 0.20],
+    ["spotDistance",  0.90, 0.10],
+    ["spotTime",      0.55, 0.20],
+    ["endurance",     0.70, 0.20],
+    ["courage",       0.70, 0.20],
+    ["reloadSpeed",   0.70, 0.20],
+    ["commanding",    0.50, 0.20],
+    ["general",       0.60, 0.20]
+
+];
+
+
+
+//
+// bandit AI
+//
+
+// Leader
+SAR_leader_bandit_mission_skills = [
+
+    ["aimingAccuracy",0.35, 0.10], // skilltype, <min value>, <random value added to min>;
+    ["aimingShake",   0.35, 0.10],
+    ["aimingSpeed",   0.60, 0.20],
+    ["spotDistance",  0.40, 0.30],
+    ["spotTime",      0.45, 0.20],
+    ["endurance",     0.40, 0.20],
+    ["courage",       0.50, 0.20],
+    ["reloadSpeed",   0.60, 0.20],
+    ["commanding",    0.50, 0.20],
+    ["general",       0.50, 0.20]
+
+];
+// Rifleman
+SAR_soldier_bandit_mission_skills = [
+
+    ["aimingAccuracy",0.15, 0.10], // skilltype, <min value>, <random value added to min>;
+    ["aimingShake",   0.15, 0.10],
+    ["aimingSpeed",   0.60, 0.20],
+    ["spotDistance",  0.40, 0.20],
+    ["spotTime",      0.40, 0.20],
+    ["endurance",     0.40, 0.20],
+    ["courage",       0.40, 0.20],
+    ["reloadSpeed",   0.40, 0.20],
+    ["commanding",    0.40, 0.20],
+    ["general",       0.40, 0.20]
+
+];
+// Sniper
+SAR_sniper_bandit_mission_skills = [
 
     ["aimingAccuracy",0.70, 0.10], // skilltype, <min value>, <random value added to min>;
     ["aimingShake",   0.80, 0.10],

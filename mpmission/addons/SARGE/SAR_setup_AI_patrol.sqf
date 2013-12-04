@@ -79,6 +79,7 @@ _leader_group = call compile format ["SAR_leader_%1_list",_type] call SAR_fnc_se
 _riflemenlist = call compile format ["SAR_soldier_%1_list",_type];
 _sniperlist = call compile format ["SAR_sniper_%1_list",_type];
 
+
 _leaderskills = call compile format ["SAR_leader_%1_skills",_type];
 _riflemanskills = call compile format ["SAR_soldier_%1_skills",_type];
 _sniperskills = call compile format ["SAR_sniper_%1_skills",_type];
