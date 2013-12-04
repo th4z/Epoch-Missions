@@ -119,7 +119,7 @@ _key call server_hiveWrite;
 	publicVariable "PVDZE_veh_Init";
 	
 	diag_log ("PUBLISH: " + str(_activatingPlayer) + " Bought " + (_class) + " with ID " + str(_uid));
-	if !(isNil "SAR_AI_VEH_EPOCH_FIX") {
+	if !(isNil "SAR_AI_VEH_EPOCH_FIX") then {
 		if (SAR_AI_VEH_EPOCH_FIX) then {
 			[_object] call SAR_AI_VEH_FIX;
 		};

@@ -47,7 +47,7 @@ if (_spawnDMG) then {
 		_fuel = (random(DynamicVehicleFuelHigh-DynamicVehicleFuelLow)+DynamicVehicleFuelLow) / 100;
 
 	};
-	if !(isNil "SAR_AI_VEH_EPOCH_FIX") {
+	if !(isNil "SAR_AI_VEH_EPOCH_FIX") then {
 		if (SAR_AI_VEH_EPOCH_FIX) then {
 			[_object] call SAR_AI_VEH_FIX;
 		};
