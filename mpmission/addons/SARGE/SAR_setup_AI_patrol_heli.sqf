@@ -65,8 +65,14 @@ if (_argc >1) then {
             _type="band";
             _ai_type = "AI Bandit";            
             _initstring = "[this] spawn SAR_AI_trace_veh;this setIdentity 'id_SAR_band';[this] spawn SAR_AI_reammo;";
-            
         };
+		case 4: // bandits missions
+		{
+			_side = SAR_AI_unfriendly_side;
+			_type = "bandit_mission";
+            _ai_type = "AI Bandit";            
+            _initstring = "[this] spawn SAR_AI_trace_veh;this setIdentity 'id_SAR_band';[this] spawn SAR_AI_reammo;";
+		};
     };
 
     _leader_group = call compile format ["SAR_leader_%1_list",_type] call SAR_fnc_selectRandom;
@@ -259,7 +265,4 @@ _ups_para_list spawn SAR_AI_UPSMON;
 
 processInitCommands;
 
-if(SAR_EXTREME_DEBUG) then {
-    diag_log format["SAR_EXTREME_DEBUG: AI Heli patrol (%2) spawned in: %1.",_patrol_area_name,_groupheli];
-};
 _groupheli

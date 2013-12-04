@@ -114,7 +114,6 @@ if (SAR_HITKILL_DEBUG) then {
 if(isPlayer _aikiller) then {
     
     if (_aikilled_group_side == SAR_AI_friendly_side) then {
-        if(SAR_DEBUG)then{diag_log format["SAR_DEBUG: Adjusting humanity for survivor or soldier kill by %2 for %1",_aikiller,SAR_surv_kill_value];};
         _humanity = _aikiller getVariable ["humanity",0];
         _humanity = _humanity - SAR_surv_kill_value;
         _aikiller setVariable["humanity", _humanity,true];
@@ -138,7 +137,6 @@ if(isPlayer _aikiller) then {
 
     };
     if (_aikilled_group_side == SAR_AI_unfriendly_side) then {
-        if(SAR_DEBUG)then{diag_log format["SAR_DEBUG: Adjusting humanity for bandit kill by %2 for %1",_aikiller,SAR_band_kill_value];};
         _humanity = _aikiller getVariable ["humanity",0];
         _humanity = _humanity + SAR_band_kill_value;
         _aikiller setVariable["humanity", _humanity,true];

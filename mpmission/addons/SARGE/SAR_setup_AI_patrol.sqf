@@ -66,6 +66,12 @@ switch (_grouptype) do
         _type = "band";
         _ai_type = "AI Bandit";
     };
+    case 4: // bandits missions
+    {
+        _side = SAR_AI_unfriendly_side;
+        _type = "bandit_mission";
+        _ai_type = "AI Bandit";
+    };
 };
 
 _leader_group = call compile format ["SAR_leader_%1_list",_type] call SAR_fnc_selectRandom;
@@ -132,11 +138,6 @@ _leader setVariable ["SAR_AI_experience",0,false];
 _leader setspeedmode "FULL";
 _leader setBehaviour "AWARE"; 
 
-
-if(SAR_DEBUG) then {
-    // activate AI debug
-    [_leader] spawn SAR_AI_debug;
-};
 
 // SARGE - do i need this name on the clientside ???
 
@@ -267,7 +268,4 @@ switch (_action) do {
     
 processInitCommands;
 
-if(SAR_EXTREME_DEBUG) then {
-    diag_log format["SAR_EXTREME_DEBUG: Infantry group (%3) spawned in: %1 with action: %2",_patrol_area_name,_action,_group];
-};
 _group;

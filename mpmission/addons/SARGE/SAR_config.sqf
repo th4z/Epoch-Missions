@@ -21,11 +21,6 @@
 // -----------------------------------------------
 SAR_dynamic_spawning = true;
 
-// -----------------------------------------------
-// enable or disable the AI debug monitor
-// -----------------------------------------------
-
-SAR_DEBUGMONITOR= false;
 
 // -----------------------------------------------
 // default values for dynamic grid spawning
@@ -46,11 +41,6 @@ SAR_max_grpsize_bandits = 4;
 SAR_max_grpsize_soldiers = 4;
 SAR_max_grpsize_survivors = 4;
 
-
-// -----------------------------------------------
-// run fix for the issue that bandits cant travel in a vehicle with survivors EXPERIMENTAL, might not work 100% 
-// -----------------------------------------------
-SAR_FIX_VEHICLE_ISSUE = false;
 
 // -----------------------------------------------
 // modify AI behaviour
@@ -171,12 +161,6 @@ SAR_REAMMO_INTERVAL = 30;
 
 // Show AI hits and kills by players in the rpt
 SAR_HITKILL_DEBUG = false;
-
-// Shows extra debug info in .rpt
-SAR_DEBUG = false;
-
-// careful with setting this, this shows a LOT, including the grid properties and definitions for every spawn and despawn event
-SAR_EXTREME_DEBUG = false;
 
 //
 // SET THIS TO 0 to hide the group markers on the map and see the UPSMON group debug messages
@@ -724,6 +708,100 @@ SAR_band_sniper_items = [
 ];
 
 SAR_band_sniper_tools = [
+["ItemWatch",75],
+["ItemKnife",60],
+["ItemCompass",50],
+["NVGoggles",50],
+["Binocular",10],
+["Binocular_Vector",5]
+];
+
+
+// ---------------------------------------------------------------------------------------------------------------------
+// AI Mission Loadouts
+// ---------------------------------------------------------------------------------------------------------------------//
+
+//
+// bandits @ missions
+//
+
+// potential weapon list for leaders
+
+SAR_bandit_mission_leader_weapon_list = [
+"AKS_GOLD",
+"AKS_74_UN_kobra",
+"AKS_74_pso",
+"AK_107_pso"
+];
+
+SAR_bandit_mission_leader_pistol_list = [];   
+
+// potential item list for leaders -> Item / Chance 1 - 100
+
+SAR_bandit_mission_leader_items = [
+["ItemBandage",75],
+["ItemWaterbottle",50],
+["ItemSeaBassCooked",50],
+["ItemGoldBar",10],
+["ItemGoldBar10oz",1]
+];
+
+SAR_bandit_mission_leader_tools =  [
+["ItemMap",75],
+["NVGoggles",75],
+["ItemKnife",60],
+["ItemRadio",30]
+];
+
+//potential weapon list for riflemen
+
+SAR_bandit_mission_rifleman_weapon_list = [
+"AK_74",
+"AK_47_M",
+"AK_47_S",
+"AKS_74",
+"AKS_74_U",
+"AKS_74_kobra",
+"AK_107_kobra",
+"RPK_74",
+"Sa58V_RCO_EP1"
+];
+
+SAR_bandit_mission_rifleman_pistol_list = [];    
+
+// potential item list for riflemen
+
+SAR_bandit_mission_rifleman_items = [
+["ItemBandage",75],
+["ItemWaterbottle",50],
+["FoodmuttonCooked",50]
+];
+
+SAR_bandit_mission_rifleman_tools = [
+["ItemWatch",75],
+["ItemKnife",60],
+["ItemMatchbox_DZE",50]
+];
+
+//potential weapon list for snipers
+
+SAR_bandit_mission_sniper_weapon_list = [
+"SVD",
+"SVD_CAMO",
+"SVD_des_EP1"
+];
+
+SAR_bandit_mission_sniper_pistol_list = [];   
+
+// potential item list for snipers
+
+SAR_bandit_mission_sniper_items = [
+["ItemBandage",75],
+["ItemWaterbottle",50],
+["FoodchickenCooked",50]
+];
+
+SAR_bandit_mission_sniper_tools = [
 ["ItemWatch",75],
 ["ItemKnife",60],
 ["ItemCompass",50],

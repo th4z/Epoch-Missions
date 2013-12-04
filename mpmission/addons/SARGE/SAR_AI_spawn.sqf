@@ -40,13 +40,6 @@ _player = "";
 	};
 } foreach _playerlist;
 
-if (SAR_DEBUG) then {diag_log format["SAR_DEBUG: Triggered by (might be wrong): %1", _player];};
-
-if (SAR_EXTREME_DEBUG) then {
-    diag_log "SAR EXTREME DEBUG: Content of the Monitor before adding spawned groups.";
-    call SAR_DEBUG_mon;
-};
-
 if (SAR_dynamic_group_respawn) then {
     _respawn = true;
 };
@@ -117,10 +110,3 @@ for "_i" from (count _grps_surv) to ((_max_grps select 2) - 1) do
         };
     };
 };
-
-// DEBUG
-if (SAR_EXTREME_DEBUG) then {
-    diag_log "SAR EXTREME DEBUG: Content of the Monitor after adding spawned groups.";
-    call SAR_DEBUG_mon;
-};
-

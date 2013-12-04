@@ -18,7 +18,7 @@
 
 private ["_worldname","_startx","_starty","_gridsize_x","_gridsize_y","_gridwidth","_markername","_triggername","_trig_act_stmnt","_trig_deact_stmnt","_trig_cond","_check","_script_handler","_legendname"];
 
-SAR_version = "1.5.0";
+SAR_version = "1.5.2 -- (Torndeco Modified Epoch Version)";
 SAR_environment = "dedicated Server";
 
 // establish PvEH on all clients
@@ -56,7 +56,6 @@ SAR_AI_killed               = compile preprocessFileLineNumbers "addons\SARGE\SA
 SAR_AI_UPSMON               = compile preprocessFileLineNumbers "addons\UPSMON\scripts\upsmon.sqf";
 SAR_AI_VEH_HIT              = compile preprocessFileLineNumbers "addons\SARGE\SAR_ai_vehicle_hit.sqf";
 SAR_AI_GROUP_MONITOR        = compile preprocessFileLineNumbers "addons\SARGE\SAR_group_monitor.sqf";
-SAR_AI_VEH_FIX              = compile preprocessFileLineNumbers "addons\SARGE\SAR_vehicle_fix.sqf";
 
 
 // Public Eventhandlers
@@ -77,8 +76,6 @@ SAR_AI_VEH_FIX              = compile preprocessFileLineNumbers "addons\SARGE\SA
 
 publicvariable "SAR_surv_kill_value";
 publicvariable "SAR_band_kill_value";
-publicvariable "SAR_DEBUG";
-publicvariable "SAR_EXTREME_DEBUG";
 publicvariable "SAR_DETECT_HOSTILE";
 publicvariable "SAR_DETECT_INTERVAL";
 publicvariable "SAR_HUMANITY_HOSTILE_LIMIT";
@@ -187,11 +184,7 @@ if (SAR_dynamic_spawning) then {
             _legendname = format["SAR_area_legend_%1_%2",_ii,_i];
             
             _this = createMarker[_markername,[_startx + (_ii * _gridwidth * 2),_starty + (_i * _gridwidth * 2)]];
-            if(SAR_DEBUG || {SAR_EXTREME_DEBUG}) then {
-                _this setMarkerAlpha 1;
-            } else {
-                _this setMarkerAlpha 0;
-            };
+			_this setMarkerAlpha 0;
             _this setMarkerShape "RECTANGLE";
             _this setMarkerType "Flag";
             _this setMarkerBrush "BORDER";
@@ -200,11 +193,7 @@ if (SAR_dynamic_spawning) then {
             Call Compile Format ["SAR_area_%1_%2 = _this",_ii,_i]; 
 
             _this = createMarker[_legendname,[_startx + (_ii * _gridwidth * 2) + (_gridwidth - (_gridwidth/2)),_starty + (_i * _gridwidth * 2) - (_gridwidth - (_gridwidth/10))]];
-            if(SAR_DEBUG || {SAR_EXTREME_DEBUG}) then {
-                _this setMarkerAlpha 1;
-            } else {
-                _this setMarkerAlpha 0;
-            };
+			_this setMarkerAlpha 0;
             
 
             _this setMarkerShape "ICON";
@@ -227,8 +216,8 @@ if (SAR_dynamic_spawning) then {
             
             Call Compile Format ["SAR_trig_%1_%2 = _this",_ii,_i]; 
 
-            _trig_act_stmnt = format["if (SAR_DEBUG) then {diag_log 'SAR DEBUG: trigger on in %1';};[thislist,'%1'] spawn SAR_AI_spawn;",_triggername];
-            _trig_deact_stmnt = format["if (SAR_DEBUG) then {diag_log 'SAR DEBUG: trigger off in %1';};[thislist,thisTrigger,'%1'] spawn SAR_AI_despawn;",_triggername];
+            _trig_act_stmnt = format["[thislist,'%1'] spawn SAR_AI_spawn;",_triggername];
+            _trig_deact_stmnt = format["[thislist,thisTrigger,'%1'] spawn SAR_AI_despawn;",_triggername];
             
             _trig_cond = "{isPlayer _x} count thisList > 0;";
             
@@ -301,15 +290,5 @@ diag_log format["SAR_AI: Dynamic and static spawning finished"];
 //
 // initialize the fix for sharing vehicles between survivors and bandits
 //
-
-if(SAR_FIX_VEHICLE_ISSUE) then {
-
-    diag_log "SAR_AI: applying vehicle fix ...";
-
-    _script_handler = [] spawn SAR_AI_VEH_FIX;
-    waitUntil {scriptDone _script_handler};
-    
-    diag_log "SAR_AI: ... vehicle fix applied";
-};
 
 //[] call SAR_commentator;

@@ -42,11 +42,7 @@ while {alive _ai} do {
 			if !(_x getVariable["canbuild", false]) then {
 				
 				If (_humanity < _humanitylimit && {_player_rating > -10000}) then {
-
-					if(SAR_EXTREME_DEBUG) then {
-						diag_log format["SAR EXTREME DEBUG: reducing rating (trace_from_vehicle) for player: %1", _x];
-					};
-					
+				
 					//define global variable
 					adjustrating = [_x,(0 - (10000+_player_rating))];
 				

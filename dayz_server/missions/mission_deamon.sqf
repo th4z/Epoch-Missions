@@ -1,25 +1,38 @@
-private ["_bandit_missions","_wait","_handle","_mission_counter","_mission","_index","_last_index"];
+private ["_mission_array","_wait","_handle","_mission_counter","_mission","_index","_last_index"];
 diag_log ("DEBUG: Mission Code: Start.......");
 
 #include "config.sqf"
 
 call compile preprocessFileLineNumbers "\z\addons\dayz_server\missions\mission_functions.sqf";
+call compile preprocessFileLineNumbers "\z\addons\dayz_server\missions\missions\standard.sqf";
 
-mission_id = 0;
+_mission_unique_id = 0;
 mission_ai_groups = [];
-sleep 60;
+
+// Initialize Building Array
+/*
+mission_buildings_pos = [];
+{
+	_type = (_x select 0);
+	mission_buildings_pos = mission_buildings_pos + [_type, [_type] call mission_find_buildings];
+} forEach mission_buildings;
+*/
+sleep 30;
 
 // Initialize mission array
-_bandit_missions = [];
+_mission_array = [];
 for "_x" from 1 to mission_max_number do {
-	_handle = [] spawn mission_spawn;
-	_bandit_missions = _bandit_missions + [_handle];
-	sleep 300; // Be kinder to Server + Spread Out Spawning Multiple Missions + wait for player debug monitor mission timeout
+	_mission_unique_id = _mission_unique_id + 1;
+	_handle = [str(_mission_unique_id)] spawn mission_spawn;
+	_mission_array = _mission_array + [_handle];
+	sleep 60; // Be kinder to Server + Spread Out Spawning Multiple Missions + wait for player debug monitor mission timeout
 };	
-_last_index = count _bandit_missions;		
+_last_index = count _mission_array;		
+
 
 // Start Mission Variable Cleaner (i.e expired map markers etc, ai groups)
 [] spawn mission_cleaner;
+
 
 // Main Loop for Spawning Missions
 while {true} do {
@@ -35,19 +48,22 @@ while {true} do {
 			if (scriptDone _x) then {
 				_mission_counter = _mission_counter - 1;
 			};
-		} forEach _bandit_missions;
+		} forEach _mission_array;
 
 		// Spawning Bandit Missions
 		_index = 0;
 		while {(_index < _last_index)} do
 		{
-			_mission = (_bandit_missions select _index);
+			_mission = (_mission_array select _index);
 			if (scriptDone _mission) then {
-				if (((random 10) > 4) || (_mission_counter < mission_min_number)) exitWith {
-					_handle = [] spawn mission_spawn;
-					_bandit_missions set [_index, _handle];
+				if (((random 10) > 6) || (_mission_counter < mission_min_number)) exitWith {
+
+					_mission_unique_id = _mission_unique_id + 1;
+					_handle = [str(_mission_unique_id)] spawn mission_spawn;
+
+					_mission_array set [_index, _handle];
 					_mission_counter = _mission_counter + 1;
-					sleep 30; // Be kinder to Server + Spread Out Spawning Multiple Missions + wait for player debug monitor mission timeout
+					sleep 60; // Be kinder to Server + Spread Out Spawning Multiple Missions + wait for player debug monitor mission timeout
 				};
 			};
 			_index = _index + 1;

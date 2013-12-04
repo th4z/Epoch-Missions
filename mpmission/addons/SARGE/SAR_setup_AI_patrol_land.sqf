@@ -65,8 +65,14 @@ if (_argc >1) then {
             _type = "band";
             _ai_type = "AI Bandit";                        
             _initstring = "[this] spawn SAR_AI_trace_veh;this setIdentity 'id_SAR_band';[this] spawn SAR_AI_reammo;";
-            
         };
+		case 4: // bandits missions
+		{
+			_side = SAR_AI_unfriendly_side;
+			_type = "bandit_mission";
+            _ai_type = "AI Bandit";            
+            _initstring = "[this] spawn SAR_AI_trace_veh;this setIdentity 'id_SAR_band';[this] spawn SAR_AI_reammo;";
+		};
     };
 
     _leader_group = call compile format ["SAR_leader_%1_list",_type] call SAR_fnc_selectRandom;
@@ -155,12 +161,6 @@ _groupvehicles setVariable ["SAR_protect",true,true];
     
     // vehicle is defined to carry the group leader
     if((_veh_setup select 0) == 1) then {
-
-        if(SAR_DEBUG) then {
-            // activate AI debug
-            [_veh] spawn SAR_AI_debug;
-        };
-
 
         _leader = _groupvehicles createunit [_leader_group, [(_rndpos select 0) + 10, _rndpos select 1, 0], [], 0.5, "NONE"];
         
@@ -315,7 +315,4 @@ _ups_para_list spawn SAR_AI_UPSMON;
     
 processInitCommands;
 
-if(SAR_DEBUG) then {
-    diag_log format["SAR_DEBUG: Land vehicle group (%2), side %3 spawned in %1 in a %4, side %5.",_patrol_area_name,_groupvehicles, _side, typeOf _veh, side _veh];
-};
 _groupvehicles

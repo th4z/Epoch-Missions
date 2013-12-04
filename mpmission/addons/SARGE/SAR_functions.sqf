@@ -123,147 +123,6 @@ SAR_break_circle = {
 
 };
 
-SAR_AI_debug = {
-//
-//      Parameters:
-//
-//              _obj = the object that gets a sphere update
-//              _col = the color that the sphere gets [1,1,1]
-
-    private ["_obj","_sp_fightmode","_sp_combatmode","_fightmode","_combatmode","_obj_text_string","_behaviour","_sp_behaviour"];
-    
-    if (!isServer) exitWith {}; // only run this on the server
-
-    _obj = _this select 0;
-    
-    _sp_fightmode = createvehicle ["Sign_sphere25cm_EP1",getPos _obj,[],0,"NONE"];
-    _obj_text_string = format["#(argb,8,8,3)color(%1,%2,%3,%4,ca)",0,0,0,1];
-    [nil,nil,rSETOBJECTTEXTURE,_sp_fightmode,0,_obj_text_string] call RE;                
-    
-    sleep 0.5;
-    
-    _sp_fightmode allowDamage false;
-    _sp_fightmode attachTo [_obj,[0,0,3]];
-
-    
-    _sp_combatmode = createvehicle ["Sign_sphere25cm_EP1",getPos _obj,[],0,"NONE"];
-    _obj_text_string = format["#(argb,8,8,3)color(%1,%2,%3,%4,ca)",0,0,0,1];
-    [nil,nil,rSETOBJECTTEXTURE,_sp_combatmode,0,_obj_text_string] call RE;  
-    
-    sleep 0.5;
-    
-    _sp_combatmode allowDamage false;
-    _sp_combatmode attachTo [_obj,[0,0,4]];
-
-
-    _sp_behaviour = createvehicle ["Sign_sphere25cm_EP1",getPos _obj,[],0,"NONE"];
-    _obj_text_string = format["#(argb,8,8,3)color(%1,%2,%3,%4,ca)",0,0,0,1];
-    [nil,nil,rSETOBJECTTEXTURE,_sp_behaviour,0,_obj_text_string] call RE;  
-    
-    sleep 0.5;
-    
-    _sp_behaviour allowDamage false;
-    _sp_behaviour attachTo [_obj,[0,0,5]];
-    
-    
-    
-    
-    while {alive _obj} do {
-
-        _fightmode = _obj getVariable ["SAR_fightmode","not defined"];
-        
-        switch (_fightmode) do 
-        {
-            case "walk":
-            {
-                _obj_text_string = format["#(argb,8,8,3)color(%1,%2,%3,%4,ca)",0,1,0,1];
-
-            };
-            
-            case "fight":
-            {
-                _obj_text_string = format["#(argb,8,8,3)color(%1,%2,%3,%4,ca)",1,0,0,1];
-
-            };
-            case "not defined":
-            {
-                _obj_text_string = format["#(argb,8,8,3)color(%1,%2,%3,%4,ca)",0,0,0,1];
-
-            };
-            
-            
-        };
-        
-        [nil,nil,rSETOBJECTTEXTURE,_sp_fightmode,0,_obj_text_string] call RE;
-        sleep .5;
-        
-        _combatmode = combatMode _obj;
-        
-        switch (_combatmode) do
-        {
-            case "RED":
-            {
-                _obj_text_string = format["#(argb,8,8,3)color(%1,%2,%3,%4,ca)",1,0,0,1];
-            };
-            case "YELLOW":
-            {
-                _obj_text_string = format["#(argb,8,8,3)color(%1,%2,%3,%4,ca)",1,1,0,1];
-            };
-            case "WHITE":
-            {
-                _obj_text_string = format["#(argb,8,8,3)color(%1,%2,%3,%4,ca)",1,1,1,1];
-            };
-            case "GREEN":
-            {
-                _obj_text_string = format["#(argb,8,8,3)color(%1,%2,%3,%4,ca)",0,1,0,1];
-            };
-            case "BLUE":
-            {
-                _obj_text_string = format["#(argb,8,8,3)color(%1,%2,%3,%4,ca)",0,0,1,1];
-            };
-            
-        };
-        
-        [nil,nil,rSETOBJECTTEXTURE,_sp_combatmode,0,_obj_text_string] call RE;
-
-        _behaviour = behaviour _obj;
-        
-        switch (_behaviour) do
-        {
-            case "COMBAT":
-            {
-                _obj_text_string = format["#(argb,8,8,3)color(%1,%2,%3,%4,ca)",1,0,0,1];
-            };
-            case "AWARE":
-            {
-                _obj_text_string = format["#(argb,8,8,3)color(%1,%2,%3,%4,ca)",1,1,0,1];
-            };
-            case "SAFE":
-            {
-                _obj_text_string = format["#(argb,8,8,3)color(%1,%2,%3,%4,ca)",1,1,1,1];
-            };
-            case "CARELESS":
-            {
-                _obj_text_string = format["#(argb,8,8,3)color(%1,%2,%3,%4,ca)",0,1,0,1];
-            };
-            case "STEALTH":
-            {
-                _obj_text_string = format["#(argb,8,8,3)color(%1,%2,%3,%4,ca)",0,0,1,1];
-            };
-            
-        };
-        
-        [nil,nil,rSETOBJECTTEXTURE,_sp_behaviour,0,_obj_text_string] call RE;
-        
-        sleep 2;
-    };
-
-    deleteVehicle _sp_fightmode;
-    deleteVehicle _sp_combatmode;
-    deleteVehicle _sp_behaviour;
-    
-};
-
 
 SAR_move_to_circle_pos = {
 //
@@ -441,74 +300,6 @@ SAR_isKindOf_weapon = {
 
 };
 
-SAR_veh_side_debug = {
-//
-// parameters: 
-//              _vehicle = the vehicle we want to debug
-//
-
-    private["_vehicle","_sphere","_side","_sphere_red","_sphere_alpha","_sphere_green","_sphere_blue","_obj_text_string"];
-
-    _vehicle = _this select 0;
-    _sphere = _vehicle getVariable ["SAR_sphere_side_id",objNull];
-    
-    while {true} do {
-    
-        _side = side _vehicle;
-        
-        switch (_side) do 
-        {
-            case sideEnemy:
-            {
-                _sphere_red = 1;
-                _sphere_green= 1;
-                _sphere_blue=0;
-            };
-            case west:
-            {
-                _sphere_red = 0;
-                _sphere_green= 0;
-                _sphere_blue=1;
-            };
-            case east:
-            {
-                _sphere_red = 1;
-                _sphere_green= 0;
-                _sphere_blue=0;
-            };
-            case civilian:
-            {
-                _sphere_red = 1;
-                _sphere_green= 1;
-                _sphere_blue=1;
-            };
-            case resistance:
-            {
-                _sphere_red = 0;
-                _sphere_green= 1;
-                _sphere_blue=0;
-            };
-            default
-            {
-                _sphere_red = 0;
-                _sphere_green= 0;
-                _sphere_blue=0;
-            };
-            
-            
-        };
-
-        _sphere_alpha = 1;
-        
-        _obj_text_string = format["#(argb,8,8,3)color(%1,%2,%3,%4,ca)",_sphere_red,_sphere_green,_sphere_blue,_sphere_alpha];
-        
-        [nil,nil,rSETOBJECTTEXTURE,_sphere,0,_obj_text_string] call RE;
-
-        sleep 5;
-        
-    };
-
-};
 
 SAR_AI_veh_trig_on_static = {
 //
@@ -518,26 +309,14 @@ SAR_AI_veh_trig_on_static = {
     private ["_unit_list","_unitlist","_trigger","_triggername","_player_joined","_player_left","_trig_unitlist","_units_leaving","_player_rating","_clientmachine","_sphere_alpha","_sphere_red","_sphere_green","_sphere_blue","_obj_text_string","_vehicle","_sphere"];
 
     if(!isServer) exitWith {};
-    
-    if(SAR_EXTREME_DEBUG) then {
-        diag_log "SAR_EXTREME_DEBUG: Vehicle FIX:";
-        diag_log "SAR_EXTREME_DEBUG: Vehicle FIX: -- Trigger activated, Script started ...";
-        diag_log "SAR_EXTREME_DEBUG: Vehicle FIX:";
-    };    
-    
+       
     _unit_list = _this select 0;
     _trigger = _this select 1;
     _triggername = _this select 2;
     _unitlist=[];
     
     _vehicle = _trigger getVariable ["SAR_trig_veh",objNull];
-    _sphere = _vehicle getVariable ["SAR_sphere_id",objNull];
-            
-    if(SAR_EXTREME_DEBUG) then {
-                
-        diag_log format["SAR_EXTREME_DEBUG: Vehicle FIX: Trigger: %1 at vehicle: %3, location %2 was activated or deactivated!",_triggername,getpos _trigger,typeof _vehicle];
-    };
-    
+    _sphere = _vehicle getVariable ["SAR_sphere_id",objNull];  
     
     // remove non players from the trigger unitlist
     {
@@ -546,7 +325,6 @@ SAR_AI_veh_trig_on_static = {
         };
     } foreach _unit_list;
     
-    //if(SAR_EXTREME_DEBUG) then {[_unitlist] call SAR_debug_array;};
     
     // get the units stored in the trigger variable
     _trig_unitlist = _trigger getVariable["unitlist",[]];
@@ -555,27 +333,9 @@ SAR_AI_veh_trig_on_static = {
     // check if a unit left or joined the trigger
     // joined
     if(count _unitlist > count _trig_unitlist) then {
-
-        if(SAR_EXTREME_DEBUG) then {diag_log format["SAR_EXTREME_DEBUG: Vehicle FIX: someone entered the vehicle area of a %1",typeof _vehicle];};
         
         //figure out the player that joined
         _player_joined = _unitlist select ((count _unitlist) -1);
-        
-        if(SAR_EXTREME_DEBUG) then {
-        
-            diag_log format["SAR_EXTREME_DEBUG: Vehicle FIX: Player entered trigger area, name is: %1",_player_joined];
-
-            _sphere_alpha = 1;
-            _sphere_red = 1;
-            _sphere_green= 0;
-            _sphere_blue=0;
-            
-            _obj_text_string = format["#(argb,8,8,3)color(%1,%2,%3,%4,ca)",_sphere_red,_sphere_green,_sphere_blue,_sphere_alpha];
-            
-            [nil,nil,rSETOBJECTTEXTURE,_sphere,0,_obj_text_string] call RE;
-            
-            
-        };
     
         // if player has negative addrating, store it on player and set to 0
         _player_rating = rating _player_joined;
@@ -603,37 +363,14 @@ SAR_AI_veh_trig_on_static = {
         // add joining player to the trigger list
         _trig_unitlist set [count _trig_unitlist, _player_joined];
         _trigger setVariable ["unitlist",_trig_unitlist,true];
-        
-        if(SAR_EXTREME_DEBUG) then {
-            diag_log "SAR_EXTREME_DEBUG: Vehicle FIX:";
-            diag_log "SAR_EXTREME_DEBUG: Vehicle FIX: Logic for trigger activation finished";
-            diag_log "SAR_EXTREME_DEBUG: Vehicle FIX:";
-        }; 
     
     } else { //  a player left the trigger area
-
-        if(SAR_EXTREME_DEBUG) then {diag_log "SAR_EXTREME_DEBUG: Vehicle FIX: someone left the vehicle area";}; 
         
         // figure out which unit left by comparing _unitlist with _trig_unitlist
         _units_leaving =  _trig_unitlist - _unitlist;
         
         _player_left = _units_leaving select 0;
         
-        if(SAR_EXTREME_DEBUG) then {
-
-            diag_log format["SAR_EXTREME_DEBUG: Vehicle FIX: Player left, name is: %1",_player_left];
-            
-            _sphere_alpha = 1;
-            _sphere_red = 0;
-            _sphere_green= 1;
-            _sphere_blue=0;
-            
-            _obj_text_string = format["#(argb,8,8,3)color(%1,%2,%3,%4,ca)",_sphere_red,_sphere_green,_sphere_blue,_sphere_alpha];
-            
-            [nil,nil,rSETOBJECTTEXTURE,_sphere,0,_obj_text_string] call RE;
-            
-        };
-
         // remove the leaving unit from the trigger list by overwriting it with the real triggerlist contents
         if (count _unitlist == 0) then {
             _trigger setVariable ["unitlist",[],true]; 
@@ -661,23 +398,7 @@ SAR_AI_veh_trig_on_static = {
             _clientmachine publicVariableClient "adjustrating";
             
         };
-        
-        if(SAR_EXTREME_DEBUG) then {
-            diag_log "SAR_EXTREME_DEBUG: Vehicle FIX:";
-            diag_log "SAR_EXTREME_DEBUG: Vehicle FIX: Logic for trigger deactivation finished";
-            diag_log "SAR_EXTREME_DEBUG: Vehicle FIX:";
-        };
-        
-
-    };
-    
-    if(SAR_EXTREME_DEBUG) then {
-        diag_log "SAR_EXTREME_DEBUG: Vehicle FIX:";
-        diag_log "SAR_EXTREME_DEBUG: Vehicle FIX: -- end of vehicle fix logic.";
-        diag_log "SAR_EXTREME_DEBUG: Vehicle FIX:";
-        
-        };    
-    
+    };  
 };
 
 SAR_AI_veh_trig_off = {
@@ -703,68 +424,7 @@ SAR_AI_is_unfriendly_group = {
 
     _bandits_in_trigger;
 };
-
-SAR_debug_array = {
-
-    private ["_array","_foreachIndex","_name"];
-    
-    _array = _this select 0;
-    _name = _this select 1;
-
-    diag_log " ";    
-    diag_log format["SAR_DEBUG: Array contents of %1 --------",_name];
-    diag_log " ";
-    
-    {
-    
-        diag_log format["        %1. entry:  %2",_foreachIndex,_x];
-    
-    } foreach _array;
-    
-    diag_log " ";
-    diag_log "SAR_DEBUG: Array contents ----------- end   ----------";
-    diag_log " ";    
-};
-    
-SAR_log = {
-
-    private ["_loglevel","_values","_descs","_logstring","_resultstring","_forEachIndex","_percstring","_finalstring","_resultstring"];
-    
-    _loglevel = _this select 0;
-    _descs = _this select 1;
-    _values = _this select 2;
-
-    
-    switch (_loglevel) do {
-    
-        case 0:
-        {
-            _logstring = "SAR_DEBUG: ";
-        };
-        case 1:
-        {
-            _logstring = "SAR_EXTREME_DEBUG: ";
-        };
-    };
-    
-    {
-        _logstring = _logstring + _descs select _forEachIndex;
-
-        if(_forEachIndex < (count _values) - 1) then {_logstring = _logstring + "|";};        
-        
-        _resultstring = _resultstring + _values select _forEachIndex;
-        
-        _percstring = _percstring + "%" + str(_forEachIndex + 1) + " ";
-     
-        if(_forEachIndex < (count _values) - 1) then {_resultstring = _resultstring + ",";};
-    
-    } foreach _values;
-
-    _finalstring = "diag_log format[" + _logstring + _percstring +"," + _resultstring + "];";
-    
-    Call Compile Format ["%1",_finalstring];
-};
-    
+   
 
 KRON_StrToArray = {
 	private ["_in","_arr","_out"];
@@ -1027,16 +687,6 @@ SAR_AI_mon_read = {
     } foreach _typearray;
 
     _resultarray;    
-};
-
-SAR_DEBUG_mon = {
-
-    diag_log "--------------------Start of AI monitor values -------------------------";
-    {
-        diag_log format["SAR EXTREME DEBUG: %1",_x];
-    }foreach SAR_AI_monitor;
-    
-    diag_log "--------------------End of AI monitor values   -------------------------";
 };
 
 

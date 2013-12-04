@@ -34,12 +34,8 @@ while {alive _ai} do {
         if(vehicle _ai == _ai) then { // AI is not in a vehicle, so we trace Zeds
 
             if (_x isKindof "zZombie_Base") then {
-        
                 if(rating _x > -10000) then {
                     _x addrating -10000;
-                    if(SAR_EXTREME_DEBUG) then {
-                        diag_log "SAR EXTREME DEBUG: Zombie rated down";
-                    };
                 };
             };
         };
@@ -48,9 +44,6 @@ while {alive _ai} do {
             _humanity= _x getVariable ["humanity",0];
 			if !(_x getVariable["canbuild", false]) then {
 				If (_humanity < _humanitylimit && {rating _x > -10000}) then {
-					if(SAR_EXTREME_DEBUG) then {
-						diag_log format["SAR EXTREME DEBUG: reducing rating (trace_entities) for player: %1", _x];
-					};
 					_x addrating -10000;
 				};
 			};

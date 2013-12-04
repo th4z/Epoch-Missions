@@ -51,14 +51,12 @@ while {alive _ai} do {
         
             if(_vehicle ammo _weap_obj < 11) then {
                 _vehicle setVehicleAmmo 1;
-                if (SAR_EXTREME_DEBUG) then {diag_log "SAR EXTREME DEBUG: Vehicle got new ammo";};
             };
             
         };
         
         if(fuel _vehicle < 0.2) then {
             _vehicle setFuel 1;
-            if (SAR_EXTREME_DEBUG) then {diag_log "SAR_EXTREME_DEBUG: Vehicle refueled";};
         };
 
     } else { // NPC not in a vehicle
@@ -83,7 +81,6 @@ while {alive _ai} do {
                     _ai addMagazine (_magazintypes select 0);
 					_ai addMagazine (_magazintypes select 0);
 					_ai addMagazine (_magazintypes select 0);
-                    if (SAR_EXTREME_DEBUG) then {diag_log format["SAR_EXTREME_DEBUG: Infantry reloaded a magazine (%1) for a rifle (%2).",(_magazintypes select 0),_x];};
                 };
             };
 
@@ -102,7 +99,6 @@ while {alive _ai} do {
                     _ai removeMagazines (_magazintypes select 0);
                     _ai addMagazine (_magazintypes select 0);
 					_ai addMagazine (_magazintypes select 0);
-                    if (SAR_EXTREME_DEBUG) then {diag_log "SAR_EXTREME_DEBUG: Infantry reloaded a magazine for a pistol.";};
                 };
             };
             
