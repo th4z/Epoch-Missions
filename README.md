@@ -31,7 +31,9 @@ Add
 So it looks like
 ```
   if (isServer) then {
-	  Custom_Plot_Poles = [];
+	Custom_Plot_Poles = [];
+	SAR_AI_VEH_EPOCH_FIX = false; // Expermential  (Original SARGE FIX, didnt run on vehicles bought at traders or spawned after server start)
+	SAR_AI_VEH_FIX = call compile preprocessFileLineNumbers "addons\SARGE\SAR_vehicle_fix_epoch.sqf";
 ```
 
 At the very bottom add 
@@ -121,6 +123,8 @@ New Sarge Group  "Bandit Missions", this will allow server admins to make missio
 Please note the Bandits + Banit Missions AI are still the same team + work together, get the same humanity gain for shoting
 
 Sarge AI now will spawn in vehicle turrets (should work with most of epoch vehicles). Send bug reports if u notice one not working or have errors
+
+Expermential Vehicle Fix for Epoch. Original Fix didnt run on vehicles bought after server startup or spawned at missions.
 
 
 =============
