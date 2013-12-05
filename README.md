@@ -33,7 +33,7 @@ So it looks like
   if (isServer) then {
 	Custom_Plot_Poles = [];
 	SAR_AI_VEH_EPOCH_FIX = false; // Expermential  (Original SARGE FIX, didnt run on vehicles bought at traders or spawned after server start)
-	SAR_AI_VEH_FIX = call compile preprocessFileLineNumbers "addons\SARGE\SAR_vehicle_fix_epoch.sqf";
+	SAR_AI_VEH_FIX = compile preprocessFileLineNumbers "addons\SARGE\SAR_vehicle_fix_epoch.sqf";
 ```
 
 At the very bottom add 
