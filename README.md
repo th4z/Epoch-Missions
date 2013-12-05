@@ -123,7 +123,7 @@ Well techincal Optional, its a main feature of this mission system.
 If u have it disabled, or have alter your own debug monitor u can remove all the files located @
 
 ```
-  dayz_server/extras/debug_monitor
+  mpmission/extras/debug_monitor
 ```
 
 =============
