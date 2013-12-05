@@ -7,10 +7,10 @@ SARGE AI code by  <a href="https://github.com/Swiss-Sarge/SAR_AI-1.5.0">Swiss-Sa
 
 =============
 <h5>Pre-Install Instructions </h5>
-<h6>Step 1</h6>
+
 If u already have Sarge Installed on your Server.
-Edit your mpmission/init.sqf
-Remove the following lines
+
+Edit your mpmission/init.sqf & remove the following lines
 
 ```
 call compile preprocessFileLineNumbers "addons\UPSMON\scripts\Init_UPSMON.sqf";
