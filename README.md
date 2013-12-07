@@ -6,7 +6,20 @@ Original code by <a href="https://github.com/lazyink/DayZ-Missions">Lazyink</a>,
 SARGE AI code by  <a href="https://github.com/Swiss-Sarge/SAR_AI-1.5.0">Swiss-Sarge</a>
 
 =============
+<h5>Pre-Install Instructions </h5>
 
+If u already have Sarge Installed on your Server.
+
+Edit your mpmission/init.sqf & remove the following lines
+
+```
+call compile preprocessFileLineNumbers "addons\UPSMON\scripts\Init_UPSMON.sqf";
+ 
+call compile preprocessFileLineNumbers "addons\SHK_pos\shk_pos_init.sqf";
+ 
+[] execVM "addons\SARGE\SAR_AI_init.sqf";
+
+```
 
 =============
 <h5>Install Instructions </h5>
@@ -127,7 +140,7 @@ Well techincal Optional, its a main feature of this mission system.
 If u have it disabled, or have alter your own debug monitor u can remove all the files located @
 
 ```
-  dayz_server/extras/debug_monitor
+  mpmission/extras/debug_monitor
 ```
 
 =============
