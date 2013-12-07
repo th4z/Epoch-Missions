@@ -144,6 +144,8 @@ _groupvehicles setVariable ["SAR_protect",true,true];
     // create the vehicle
 	_position = [_rndpos select 0, _rndpos select 1, 0];
     _veh = createVehicle [_x, _position, [], 0, "NONE"];
+	clearWeaponCargoGlobal  _veh;
+	clearMagazineCargoGlobal  _veh;
 	_dir = round(random 180);
 	_veh setpos _position;
 	_objPosition = getPosATL _veh;

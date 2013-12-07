@@ -123,6 +123,8 @@ _groupheli setVariable ["SAR_protect",true,true];
 _vehicle = (SAR_heli_type call SAR_fnc_selectRandom);
 _position = [(_rndpos select 0) + 10, _rndpos select 1, 80];
 _heli = createVehicle [_vehicle, _position, [], 0, "FLY"];
+clearWeaponCargoGlobal  _heli;
+clearMagazineCargoGlobal  _heli;
 _dir = round(random 180);
 _heli setpos _position;
 _objPosition = getPosATL _heli;

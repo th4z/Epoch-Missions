@@ -192,6 +192,8 @@ mission_spawn_vehicle = {
     _dir = round(random 180);
     
     _vehicle = createVehicle [_vehicle_class, _position, [], 0, "CAN_COLLIDE"];
+	clearWeaponCargoGlobal  _vehicle;
+	clearMagazineCargoGlobal  _vehicle;
     _vehicle setdir _dir;
     _vehicle setpos _position;	
     _objPosition = getPosATL _vehicle;
