@@ -60,7 +60,7 @@ crate_add_loot = {
 		};
 		case "cfglootweapon":
 		{
-			_itemTypes = [] + ((getArray (missionConfigFile >> "cfgLoot" >> _iItem)) select 0);
+			_itemTypes = [] + ((getArray (configFile >> "cfgLoot" >> _iItem)) select 0);
 			_index = dayz_CLBase find _iItem;
 			_weights = dayz_CLChances select _index;
 			_cntWeights = count _weights;
@@ -84,6 +84,7 @@ crate_add_loot = {
 			};
 			
 		};
+
 		case "weapon":
 		{
 			_amount = round(random 3);
@@ -133,11 +134,11 @@ _weights =		dayz_CBLChances select _index;
 _cntWeights = count _weights;
 
 
-_num = 10;
+_num = 7;
 _amount = round(random 8);
 
 
-for "_x" from 1 to _num do {
+for "_x" from 1 to (_num + _amount) do {
 	//create loot
 	sleep 1;
 	_index = floor(random _cntWeights);

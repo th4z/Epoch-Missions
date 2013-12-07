@@ -58,6 +58,32 @@ crate_add_loot = {
 			
 			_crate addBackpackCargoGlobal [_iItem,1];
 		};
+		case "cfglootweapon":
+		{
+			_itemTypes = [] + ((getArray (missionConfigFile >> "cfgLoot" >> _iItem)) select 0);
+			_index = dayz_CLBase find _iItem;
+			_weights = dayz_CLChances select _index;
+			_cntWeights = count _weights;
+				
+			_index = floor(random _cntWeights);
+			_index = _weights select _index;
+			_iItem = _itemTypes select _index;
+
+			if (_iItem == "Chainsaw") then {
+				_iItem = ["ChainSaw","ChainSawB","ChainSawG","ChainSawP","ChainSawR"] call BIS_fnc_selectRandom;
+			};
+
+			//Item is a weapon, add it and a random quantity of magazines
+			_crate addWeaponCargoGlobal [_iItem,1];
+			_mags = [] + getArray (configFile >> "cfgWeapons" >> _iItem >> "magazines");
+			if ((count _mags) > 0) then
+			{
+				if (_mags select 0 == "Quiver") then { _mags set [0, "WoodenArrow"] }; // Prevent spawning a Quiver
+				if (_mags select 0 == "20Rnd_556x45_Stanag") then { _mags set [0, "30Rnd_556x45_Stanag"] };
+				_crate addMagazineCargoGlobal [(_mags select 0), (round(random 2))];
+			};
+			
+		};
 		
 		case "weapon":
 		{
@@ -108,7 +134,7 @@ _weights =		dayz_CBLChances select _index;
 _cntWeights = count _weights;
 
 
-_num = 10;
+_num = 7;
 _amount = round(random 8);
 
 
