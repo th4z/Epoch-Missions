@@ -129,42 +129,15 @@ if (SAR_dynamic_spawning) then {
     //
     // get grid configuration for the different maps
     //
-
-    switch (_worldname) do {
-        case "chernarus":
-        {
-            #include "map_config\SAR_cfg_grid_chernarus.sqf"
-        };
-        case "tavi":
-        {
-            #include "map_config\SAR_cfg_grid_tavi.sqf"
-        };
-        case "namalsk":
-        {
-            #include "map_config\SAR_cfg_grid_namalsk.sqf"
-        };
-        case "lingor":
-        {
-            #include "map_config\SAR_cfg_grid_lingor.sqf"
-        };
-        case "mbg_celle2":
-        {
-            #include "map_config\SAR_cfg_grid_mbg_celle2.sqf"
-        };
-        case "takistan":
-        {
-            #include "map_config\SAR_cfg_grid_takistan.sqf"
-        };
-        case "fallujah":
-        {
-            #include "map_config\SAR_cfg_grid_fallujah.sqf"
-        };
-        case "panthera2":
-        {
-            #include "map_config\SAR_cfg_grid_panthera.sqf"
-        };
-
-    };
+	if (_worldname in ["chernarus", "tavi", "namalsk", "lingor", "mbg_celle2", "takistan", "fallujah", "panthera"]) then {
+		//_temp_array =  call compile format ["\z\addons\dayz_server\addons\SARGE\map_config\SAR_cfg_grid_%1.sqf", _worldname];
+		_temp_array =  call compile preprocessFileLineNumbers format ["\z\addons\dayz_server\addons\SARGE\map_config\SAR_cfg_grid_%1.sqf", _worldname];
+		_startx = _temp_array select 0;
+		_starty = _temp_array select 1;
+		_gridsize_x = _temp_array select 2;
+		_gridsize_y = _temp_array select 3;
+		_gridwidth = _temp_array select 4;
+	};
 
     //
     // Generate marker & trigger grid & activate it
@@ -249,41 +222,9 @@ if (SAR_dynamic_spawning) then {
 
 diag_log format["SAR_AI: Dynamic and static spawning Started"];
 
-switch (_worldname) do {
-    case "chernarus":
-    {
-        #include "map_config\SAR_cfg_grps_chernarus.sqf"
-    };
-    case "tavi":
-    {
-        #include "map_config\SAR_cfg_grps_tavi.sqf"
-    };
-    case "namalsk":
-    {
-        #include "map_config\SAR_cfg_grps_namalsk.sqf"
-    };
-    case "lingor":
-    {
-        #include "map_config\SAR_cfg_grps_lingor.sqf"
-    };
-    case "mbg_celle2":
-    {
-        #include "map_config\SAR_cfg_grps_mbg_celle2.sqf"
-    };
-    case "takistan":
-    {
-        #include "map_config\SAR_cfg_grps_takistan.sqf"
-    };
-    case "fallujah":
-    {
-        #include "map_config\SAR_cfg_grps_fallujah.sqf"
-    };
-    case "panthera2":
-    {
-        #include "map_config\SAR_cfg_grps_panthera.sqf"
-    };
-    
-};
+	if (_worldname in ["chernarus", "tavi", "namalsk", "lingor", "mbg_celle2", "takistan", "fallujah", "panthera"]) then {
+		call compile preprocessFileLineNumbers format ["\z\addons\dayz_server\addons\SARGE\map_config\SAR_cfg_grps_%1.sqf", _worldname];
+	};
 
 diag_log format["SAR_AI: Dynamic and static spawning finished"];
 

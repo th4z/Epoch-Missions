@@ -5,7 +5,7 @@ if (isServer) then {
 	
 	// Mission System
 		// Mission
-	[] execVM "\z\addons\dayz_server\missions\mission_deamon.sqf";
+	[] execVM "\z\addons\dayz_server\addons\Missions\mission_deamon.sqf";
 };
 
 if (!isDedicated) then {

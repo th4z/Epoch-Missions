@@ -80,6 +80,23 @@ dayz_spaceInterrupt = {
 };
 ```
 
+<h6>Step 4</h6>
+Edit your dayz_server/compile/server_playerSetup.sqf
+
+Look for @ End of file
+
+```
+PVDZE_plr_Login = nil;
+PVDZE_plr_Login2 = nil;
+```
+
+Change to 
+```
+call mission_sync_markers;
+
+PVDZE_plr_Login = nil;
+PVDZE_plr_Login2 = nil;
+```
 
 =============
 <h5>Optional Steps</h5>
@@ -124,7 +141,9 @@ Please note the Bandits + Banit Missions AI are still the same team + work toget
 
 Sarge AI now will spawn in vehicle turrets (should work with most of epoch vehicles). Send bug reports if u notice one not working or have errors
 
-Expermential Vehicle Fix for Epoch. Original Fix didnt run on vehicles bought after server startup or spawned at missions.
+Expermential Vehicle Fix for Epoch. Original Fix didnt run on vehicles bought from traders or spawned at missions.
+
+Moved SARGE map_config files over to dayz_server
 
 
 =============

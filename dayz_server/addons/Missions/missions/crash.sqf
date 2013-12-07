@@ -1,12 +1,13 @@
 mission_spawn_crash = {
     private ["_vehicle","_vehicle_position","_position","_vehicle_spawn","_veh_pool","_type","_crates","_crate_position","_ai_info","_isNear","_chance","_mission_type","_marker_name","_marker","_group_1","_group_2","_group_3","_timeout","_timeout2"];
-	
-	_position = _this select 0;
-	_mission_type = _this select 1;
+
+	_mission_id = _this select 0;	
+	_position = _this select 1;
 	
 	_chance = floor(random 100);
 	_crates = [];
 	_ai_info = [];
+	_ai_patrols = [];
 	_vehicle = 0;
 	_vehicle_spawn = false;
 
@@ -24,35 +25,64 @@ mission_spawn_crash = {
 			_crates = _crates + [[_crate_position,_type,"Random"] call mission_spawn_crates];
 		};
 	};
-	_ai_info = [_position, 1, 4, ["patrol","fortify","patrol"]] call mission_spawn_ai;
-	mission_ai_groups = mission_ai_groups + [(_ai_info select 0)] + [(_ai_info select 1)] + [(_ai_info select 2)];
 
+	// SPAWN AI
+	// Inital Group 200 metre range, 1 sniper, 4 riflemen
+	_group_1 = [(_mission_id + "-AIGroup1"), "SAR_AI", _position, 200, 1, 4, _ai_patrols];
+	
+	// Second Group 80 metre range, 1 sniper, 4 riflemen
+	_group_2 = [(_mission_id + "-AIGroup2"), "SAR_AI", _position, 80, 1, 4, _ai_patrols];
+	
+	// Third Group 80 metre range, 1 sniper, 4 riflemen
+	_group_3 = [(_mission_id + "-AIGroup3"), "SAR_AI_HELI", _position, 650, 1, 4, _ai_patrols];
+	
+	// Fourth Group
+	_group_4 = objNull;
+	_chance = (random 10);
+	switch (true) do {
+        
+        case (_chance <= 2):
+        {
+			_group_4 = [(_mission_id + "-AIGroup4"), "SAR_AI_HELI", _position, 650, 1, 4, _ai_patrols];
+			[_group4] call mission_kill_vehicle_group;
+        };
+        
+        case (_chance <= 4):
+        {
+			_group_4 = [(_mission_id + "-AIGroup4"), "SAR_AI_HELI", _position, 300, 1, 4, _ai_patrols];
+            [_group4] call mission_kill_vehicle_group;
+        };
+        
+        case (_chance <= 7):
+        {
+			_group_4 = [(_mission_id + "-AIGroup4"), "SAR_AI_LAND", _position, 300, 1, 4, _ai_patrols];
+            [_group4] call mission_kill_vehicle_group;
+        };
+        
+        default
+        {
+			_group_4 = [(_mission_id + "-AIGroup4"), "SAR_AI", _position, 200, 1, 4, _ai_patrols];
+        };
+    };
+	mission_ai_groups = mission_ai_groups + [_group_1] + [_group_2] + [_group_3] + [_group_4];
 
-	_marker_name = (((_ai_info select 0) select 0) + "_player_marker");
-	_marker = createMarkerLocal [_marker_name, _position];
-	if (_vehicle_spawn) then {
-		_marker setMarkerColor "ColorBlue";
-	} else {
-		_marker setMarkerColor "ColorRed";
-	};
-	_marker setMarkerColor "ColorRed";
+	// Player Markers
+	_marker_name = (_mission_id + "_player_marker");
+	_marker = createMarker [_marker_name, _position];
+	_marker setMarkerColor "ColorBlack";
 	_marker setMarkerShape "ELLIPSE";
 	_marker setMarkerBrush "Grid";
 	_marker setMarkerSize [300,300];
 
-	customMissionWarning = ["Crash", mission_warning_debug, _marker_name, _position, _vehicle_spawn, _vehicle];
+	customMissionWarning = ["CrashCJ", mission_warning_debug, _marker_name, _position, _vehicle_spawn, _vehicle];
 	publicVariable "customMissionWarning";
 
 	// Wait till all AI Dead or Mission Times Out
 
-	_group_1 = ((_ai_info select 0) select 1);
-	_group_2 = ((_ai_info select 1) select 1);
-	_group_3 = ((_ai_info select 2) select 1);
-
 	_timeout = time + mission_despawn_timer_min;
 	waitUntil{
 		sleep 30;
-		if ((count units _group_1 == 0) && (count units _group_2 == 0) && (count units _group_3 == 0)) exitWith {true};
+		if ((count units _group_1 == 0) && (count units _group_2 == 0) && (count units _group_3 == 0) && (count units _group_4 == 0)) exitWith {true};
 		if (time > _timeout) exitWith {true};
 		false
 	};
@@ -91,4 +121,7 @@ mission_spawn_crash = {
 	{
 		_x setDamage 1;
 	} forEach units _group_3;
+	{
+		_x setDamage 1;
+	} forEach units _group_4;
 };

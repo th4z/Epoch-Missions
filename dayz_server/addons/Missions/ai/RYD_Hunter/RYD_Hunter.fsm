@@ -1,0 +1,997 @@
+/*%FSM<COMPILE "F:\BI Tools\FSM Editor Personal Edition\scriptedFSM.cfg, RYD_Hunter">*/
+/*%FSM<HEAD>*/
+/*
+item0[] = {"Init",0,250,-369.227020,-1098.165894,-279.227020,-1048.165649,0.000000,"Init"};
+item1[] = {"_",-1,250,-313.369843,-864.330322,-313.369843,-861.827393,0.000000,""};
+item2[] = {"exit",1,250,-525.830933,-1097.323364,-435.830872,-1047.323608,0.000000,"exit"};
+item3[] = {"pause",4,218,-368.192413,-997.622742,-278.192413,-947.622742,0.000000,"pause"};
+item4[] = {"alive_check",2,250,-368.454529,-894.814697,-278.454529,-844.814697,0.000000,"alive check"};
+item5[] = {"not_alive",4,218,-526.403259,-895.076904,-436.403168,-845.076904,1.000000,"not alive"};
+item6[] = {"alive",4,218,-368.105652,-791.723572,-278.105652,-741.723572,0.000000,"alive"};
+item7[] = {"visible_targets",2,250,-368.367828,-676.500427,-278.367828,-626.500427,0.000000,"visible targets" \n "check"};
+item8[] = {"no_visible__targ",4,218,191.979446,-508.152740,281.979431,-458.152740,1.000000,"no visible" \n " targets"};
+item9[] = {"visible_targets",4,218,-861.986572,-544.254150,-771.986511,-494.254211,0.000000,"visible targets"};
+item10[] = {"on_trail_check",2,250,197.299042,-378.619324,287.299011,-328.619324,0.000000,"on trail check"};
+item11[] = {"no_trail",4,218,388.820129,-380.217682,478.820068,-330.217682,1.000000,"no trail"};
+item12[] = {"_",8,218,194.425797,-214.514496,284.425720,-164.514511,0.000000,""};
+item13[] = {"default_trail",3,250,388.094727,-214.490082,478.094727,-164.490067,0.000000,"default trail"};
+item14[] = {"current_step_done",2,250,195.379639,-76.201721,285.379639,-26.201729,0.000000,"current step" \n "done check"};
+item15[] = {"not_done",4,218,642.829041,-75.373169,732.829041,-25.373199,1.000000,"not done"};
+item16[] = {"_",8,218,199.971603,66.580414,289.971558,116.580406,0.000000,""};
+item17[] = {"stopwatch",2,250,643.057251,-999.596863,733.057373,-949.596863,0.000000,"stopwatch"};
+item18[] = {"new_step",2,250,198.230347,205.072723,288.230347,255.072723,0.000000,"new step"};
+item19[] = {"situation",2,4346,-1189.167358,-540.194702,-1099.167480,-490.194672,0.000000,"situation"};
+item20[] = {"far_enough",4,218,-1189.132690,-315.523346,-1099.132690,-265.523346,2.000000,"far enough"};
+item21[] = {"is_lost",4,218,196.213531,317.994751,286.213501,367.994751,1.000000,"is lost"};
+item22[] = {"lost_point__chec",2,250,192.092606,438.080902,282.092590,488.080902,0.000000,"lost point " \n "check"};
+item23[] = {"no_lost_point",4,218,383.395386,441.407562,473.395447,491.407562,1.000000,"no lost point"};
+item24[] = {"new_lost_point",2,250,385.318420,584.613403,475.318481,634.613403,0.000000,"new lost point"};
+item25[] = {"_",8,218,190.311340,583.136230,280.311340,633.136230,0.000000,""};
+item26[] = {"_",8,218,39.654465,320.359802,129.654434,370.359802,0.000000,""};
+item27[] = {"set_loiter_step",2,250,190.311340,725.666992,280.311340,775.666992,0.000000,"set loiter step"};
+item28[] = {"not_lost",2,250,39.445358,727.000244,129.445328,777.000244,0.000000,"not lost"};
+item29[] = {"not_too_close",4,218,38.895493,841.481079,128.895432,891.481079,1.000000,"not too close"};
+item30[] = {"",7,210,967.805603,858.492310,975.805603,866.492310,0.000000,""};
+item31[] = {"_",8,218,190.438553,838.637817,280.438538,888.637817,0.000000,""};
+item32[] = {"readiness_check",2,250,39.638962,936.790039,129.638962,986.790039,0.000000,"readiness check"};
+item33[] = {"",7,210,967.344788,-978.305054,975.344910,-970.305054,0.000000,""};
+item34[] = {"is_ready",4,218,38.801743,1042.895264,128.801743,1092.895020,1.000000,"is ready"};
+item35[] = {"_",8,218,927.062439,935.411133,1017.062317,985.411133,0.000000,""};
+item36[] = {"bad_way_check",2,250,38.636337,1156.556885,128.636337,1206.556885,0.000000,"bad way check"};
+item37[] = {"is_bad_way",4,218,38.599472,1291.632080,128.599442,1341.632080,0.000000,"is bad way"};
+item38[] = {"",7,210,968.239197,1177.778320,976.239197,1185.778564,0.000000,""};
+item39[] = {"push",2,250,927.898010,1291.156250,1017.898010,1341.156250,0.000000,"push"};
+item40[] = {"water_check",4,218,383.942200,726.030396,473.942261,776.030396,2.000000,"water check"};
+item41[] = {"_",8,218,-1188.528931,-1255.275635,-1098.529053,-1205.275513,0.000000,""};
+item42[] = {"",7,210,684.292419,-1233.324097,692.292419,-1225.324097,0.000000,""};
+item43[] = {"action_choose",2,250,-1187.736816,-200.456573,-1097.736816,-150.456589,0.000000,"action choose"};
+item44[] = {"run_hide",4,218,-1742.668457,-79.800323,-1652.668457,-29.800343,4.000000,"run-hide"};
+item45[] = {"ambuscade",4,218,-1365.378174,-82.676476,-1275.378174,-32.676525,3.000000,"ambuscade"};
+item46[] = {"Sneak",4,218,-1011.230530,-80.335571,-921.230774,-30.335583,2.000000,"Sneak"};
+item47[] = {"charge",4,218,-599.723755,-63.840389,-509.723755,-13.840389,1.000000,"charge"};
+item48[] = {"",7,210,-2145.998779,-179.687714,-2137.998779,-171.687714,0.000000,""};
+item49[] = {"",7,210,-2144.757080,-1233.660400,-2136.757080,-1225.660400,0.000000,""};
+item50[] = {"exec_RunHide",2,250,-1743.292725,57.495922,-1653.292725,107.495934,0.000000,"exec RunHide"};
+item51[] = {"exec_Ambuscade",2,250,-1365.021606,44.154469,-1275.021606,94.154480,0.000000,"exec Ambuscade"};
+item52[] = {"exec_Sneak",2,250,-1011.581299,37.504814,-921.581543,87.504822,0.000000,"exec Sneak"};
+item53[] = {"exec_Charge",2,250,-599.999878,39.201366,-509.999878,89.201385,0.000000,"exec Charge"};
+item54[] = {"",7,210,-1143.737671,422.342499,-1135.737671,430.342499,0.000000,""};
+item55[] = {"",7,210,-2147.062744,423.754059,-2139.062744,431.754059,0.000000,""};
+item56[] = {"prey_is__close",4,218,-1486.220581,-540.808105,-1396.220581,-490.808105,0.000000,"prey is " \n "close"};
+item57[] = {"perform_strike",2,250,-1485.130737,-894.670166,-1395.130737,-844.670166,0.000000,"perform strike"};
+version=1;
+class LayoutItems
+{
+	class Item1
+	{
+		class ItemInfo
+		{
+			FontFace="Arial";
+			FontHeight=10;
+			lStyle=1;
+		};
+	};
+};
+link0[] = {0,3};
+link1[] = {3,4};
+link2[] = {4,5};
+link3[] = {4,6};
+link4[] = {5,2};
+link5[] = {6,7};
+link6[] = {7,8};
+link7[] = {7,9};
+link8[] = {8,10};
+link9[] = {9,19};
+link10[] = {10,11};
+link11[] = {10,12};
+link12[] = {11,13};
+link13[] = {12,14};
+link14[] = {13,12};
+link15[] = {14,15};
+link16[] = {14,16};
+link17[] = {15,17};
+link18[] = {16,18};
+link19[] = {17,3};
+link20[] = {18,21};
+link21[] = {18,26};
+link22[] = {19,20};
+link23[] = {19,41};
+link24[] = {19,56};
+link25[] = {20,43};
+link26[] = {21,22};
+link27[] = {22,23};
+link28[] = {22,25};
+link29[] = {23,24};
+link30[] = {24,25};
+link31[] = {25,27};
+link32[] = {26,28};
+link33[] = {27,29};
+link34[] = {27,31};
+link35[] = {27,40};
+link36[] = {28,29};
+link37[] = {28,31};
+link38[] = {29,32};
+link39[] = {30,33};
+link40[] = {31,30};
+link41[] = {32,34};
+link42[] = {32,35};
+link43[] = {33,17};
+link44[] = {34,36};
+link45[] = {35,30};
+link46[] = {36,37};
+link47[] = {36,38};
+link48[] = {37,39};
+link49[] = {38,35};
+link50[] = {39,38};
+link51[] = {40,27};
+link52[] = {41,42};
+link53[] = {42,17};
+link54[] = {43,44};
+link55[] = {43,45};
+link56[] = {43,46};
+link57[] = {43,47};
+link58[] = {43,48};
+link59[] = {44,50};
+link60[] = {45,51};
+link61[] = {46,52};
+link62[] = {47,53};
+link63[] = {48,49};
+link64[] = {49,41};
+link65[] = {50,54};
+link66[] = {51,54};
+link67[] = {52,54};
+link68[] = {53,54};
+link69[] = {54,55};
+link70[] = {55,48};
+link71[] = {56,57};
+link72[] = {57,41};
+globals[] = {0.000000,0,0,0,0,640,480,1,69,6316128,1,-1917.082031,13.779541,234.018570,-1352.353882,1121,921,1};
+window[] = {2,-1,-1,-1,-1,907,150,1590,150,3,1139};
+*//*%FSM</HEAD>*/
+class FSM
+{
+  fsmName = "RYD_Hunter";
+  class States
+  {
+    /*%FSM<STATE "Init">*/
+    class Init
+    {
+      name = "Init";
+      init = /*%FSM<STATEINIT""">*/"	_hunter = _this select 0;" \n
+       "	_smell = _this select 1;" \n
+       "	_seeing = _this select 2;" \n
+       "	_hunted = _this select 3;" \n
+       "	_loiter = _this select 4;" \n
+       "	_mpl = _this select 5;" \n
+       "	" \n
+       "	_hunter allowFleeing 0;" \n
+       "	_hunter addRating -1000000;" \n
+       "	_hunter disableAI ""FSM"";" \n
+       "	_hunter disableAI ""TARGET"";" \n
+       "	_hunter disableAI ""AUTOTARGET"";" \n
+       "" \n
+       "	_currA = -1;" \n
+       "" \n
+       "_time = time;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "pause">*/
+        class pause
+        {
+          priority = 0.000000;
+          to="alive_check";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_time + 0.5 < time"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "exit">*/
+    class exit
+    {
+      name = "exit";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "alive_check">*/
+    class alive_check
+    {
+      name = "alive_check";
+      init = /*%FSM<STATEINIT""">*/"_alive = not (isNull _hunter);" \n
+       "" \n
+       "if (_alive) then" \n
+       "	{" \n
+       "	_alive = alive _hunter" \n
+       "	};" \n
+       "" \n
+       "//diag_log format [""time: %1"",time];" \n
+       ""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "not_alive">*/
+        class not_alive
+        {
+          priority = 1.000000;
+          to="exit";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"not _alive"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "alive">*/
+        class alive
+        {
+          priority = 0.000000;
+          to="visible_targets";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_alive"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "visible_targets">*/
+    class visible_targets
+    {
+      name = "visible_targets";
+      init = /*%FSM<STATEINIT""">*/"_visible = [_hunter,_seeing,_hunted] call RYD_H_WhatSee;" \n
+       "" \n
+       "_ct = count _visible;" \n
+       "" \n
+       "//diag_log format [""vis: %1"",_ct];" \n
+       ""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "no_visible__targ">*/
+        class no_visible__targ
+        {
+          priority = 1.000000;
+          to="on_trail_check";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"(_ct == 0)"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "visible_targets">*/
+        class visible_targets
+        {
+          priority = 0.000000;
+          to="situation";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"(_ct > 0)"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "on_trail_check">*/
+    class on_trail_check
+    {
+      name = "on_trail_check";
+      init = /*%FSM<STATEINIT""">*/"_lost = false;" \n
+       "_currentFoot = RYD_Hunter_FSM_handle getFSMVariable (""RYD_H_CurrentFoot"" + (str _hunter));" \n
+       "if (isNil ""_currentFoot"") then {_currentFoot = """"};" \n
+       "" \n
+       "" \n
+       "//diag_log ""on trail check"";"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "no_trail">*/
+        class no_trail
+        {
+          priority = 1.000000;
+          to="default_trail";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"not ((typeName _currentFoot) == ""ARRAY"")"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="current_step_done";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "default_trail">*/
+    class default_trail
+    {
+      name = "default_trail";
+      init = /*%FSM<STATEINIT""">*/"_currentFoot = [(getPosATL _hunter),-1];" \n
+       "" \n
+       ""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="current_step_done";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "current_step_done">*/
+    class current_step_done
+    {
+      name = "current_step_done";
+      init = /*%FSM<STATEINIT""">*/"_stepDone = ((((_currentFoot select 0) distance _hunter) <= 5) or (unitReady _hunter));" \n
+       "" \n
+       ""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "not_done">*/
+        class not_done
+        {
+          priority = 1.000000;
+          to="stopwatch";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"not _stepDone"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="new_step";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "stopwatch">*/
+    class stopwatch
+    {
+      name = "stopwatch";
+      init = /*%FSM<STATEINIT""">*/"_time = time;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "pause">*/
+        class pause
+        {
+          priority = 0.000000;
+          to="alive_check";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_time + 0.5 < time"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "new_step">*/
+    class new_step
+    {
+      name = "new_step";
+      init = /*%FSM<STATEINIT""">*/"_currentFoot = [_hunter,_smell,_hunted] call RYD_H_NewFoot;" \n
+       "_foot = _currentFoot select 0;" \n
+       "" \n
+       "//diag_log format [""new step: %1 step: %2"",time,_foot];"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "is_lost">*/
+        class is_lost
+        {
+          priority = 1.000000;
+          to="lost_point__chec";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"((_hunter distance _foot) < 1)"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="not_lost";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/"RYD_Hunter_FSM_handle setFSMVariable [(""RYD_H_isLost"") + (str _hunter),[]];"/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "situation">*/
+    class situation
+    {
+      name = "situation";
+      init = /*%FSM<STATEINIT""">*/"_visible = [_visible,_hunter] call RYD_H_DistOrd;" \n
+       "_closest = _visible select 0;" \n
+       "" \n
+       "RYD_Hunter_FSM_handle setFSMVariable [""RYD_H_LastKnownPos"" + (str _hunter),[[(getPosATL _closest),0,10] call RYD_H_RandomAroundMM,time]];" \n
+       "" \n
+       "_knA = _closest knowsAbout _hunter;" \n
+       "			" \n
+       "_isFlanked = [(getPosATL _hunter),(getPosATL _closest),(getDir _closest)] call RYD_H_isFlanking;" \n
+       "_isAwared = (_knA > 2);" \n
+       "_isTgt = (({((assignedTarget _x) == _hunter)} count _visible) > 0);" \n
+       "_speed = abs (speed _closest);" \n
+       "_dst = _hunter distance _closest;" \n
+       "_isCharging = RYD_Hunter_FSM_handle getFSMVariable (""RYD_H_isCharging"" + (str _hunter));" \n
+       "if (isNil ""_isCharging"") then {_isCharging = false};" \n
+       "_isRunning = RYD_Hunter_FSM_handle getFSMVariable (""RYD_H_isRunning"" + (str _hunter));" \n
+       "if (isNil ""_isRunning"") then {_isRunning = false};" \n
+       "_isAmbuscade = RYD_Hunter_FSM_handle getFSMVariable (""RYD_H_isAmbuscade"" + (str _hunter));" \n
+       "if (isNil ""_isAmbuscade"") then {_isAmbuscade = false};" \n
+       "_isSneaking = RYD_Hunter_FSM_handle getFSMVariable (""RYD_H_isSneaking"" + (str _hunter));" \n
+       "if (isNil ""_isSneaking"") then {_isSneaking = false};" \n
+       "" \n
+       "//diag_log format [""Flanked: %1 Awared: %2 Tgt: %3 Speed: %4 dst: %5 charging: %6 Running: %7 Ambush: %8 Sneaking: %9"",_isFlanked,_isAwared,_isTgt,_speed,_dst,_isCharging,_isRunning,_isAmbuscade,_isSneaking];		" \n
+       "//diag_log format [""situation: %1"",time];" \n
+       "" \n
+       ""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "far_enough">*/
+        class far_enough
+        {
+          priority = 2.000000;
+          to="action_choose";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"(_dst >= 3)" \n
+           ""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "prey_is__close">*/
+        class prey_is__close
+        {
+          priority = 0.000000;
+          to="perform_strike";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"((_dst < 3) and not (_currA == 3))"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="stopwatch";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "lost_point__chec">*/
+    class lost_point__chec
+    {
+      name = "lost_point__chec";
+      init = /*%FSM<STATEINIT""">*/"_lostPos = RYD_Hunter_FSM_handle getFSMVariable (""RYD_H_isLost"" + (str _hunter));" \n
+       "if (isNil ""_lostPos"") then {_lostPos = []};" \n
+       "_cnt = 0;" \n
+       "" \n
+       "" \n
+       "//diag_log format [""lost point check: %1"",time];"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "no_lost_point">*/
+        class no_lost_point
+        {
+          priority = 1.000000;
+          to="new_lost_point";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"(((count _lostPos) == 0) or (_loiter == 0) or ((random 1) > 0.99))"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="set_loiter_step";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/"_rds = _loiter;" \n
+           "if (_loiter == 0) then {_rds = 200};" \n
+           "				"/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "new_lost_point">*/
+    class new_lost_point
+    {
+      name = "new_lost_point";
+      init = /*%FSM<STATEINIT""">*/"RYD_Hunter_FSM_handle setFSMVariable [""RYD_H_isLost"" + (str _hunter),(getPosATL _hunter)];" \n
+       "_lostPos = RYD_Hunter_FSM_handle getFSMVariable (""RYD_H_isLost"" + (str _hunter));" \n
+       "" \n
+       "//diag_log format [""new lost point: %1"",time];"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="set_loiter_step";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/"_rds = _loiter;" \n
+           "if (_loiter == 0) then {_rds = 200};" \n
+           "				"/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "set_loiter_step">*/
+    class set_loiter_step
+    {
+      name = "set_loiter_step";
+      init = /*%FSM<STATEINIT""">*/"_foot = [_lostPos,20,_rds] call RYD_H_RandomAroundMM;" \n
+       "" \n
+       "" \n
+       "" \n
+       "//diag_log format [""set loiter step: %1"",time];" \n
+       ""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "water_check">*/
+        class water_check
+        {
+          priority = 2.000000;
+          to="set_loiter_step";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"((surfaceIsWater [_foot select 0,_foot select 1]) and (_cnt < 100))"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/"_cnt = _cnt + 1;"/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "not_too_close">*/
+        class not_too_close
+        {
+          priority = 1.000000;
+          to="readiness_check";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"((_hunter distance _foot) > 5)"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="stopwatch";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "not_lost">*/
+    class not_lost
+    {
+      name = "not_lost";
+      init = /*%FSM<STATEINIT""">*/"//diag_log format [""not lost: %1"",time];"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "not_too_close">*/
+        class not_too_close
+        {
+          priority = 1.000000;
+          to="readiness_check";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"((_hunter distance _foot) > 5)"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="stopwatch";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "readiness_check">*/
+    class readiness_check
+    {
+      name = "readiness_check";
+      init = /*%FSM<STATEINIT""">*/"_isReady = (unitReady _hunter);" \n
+       "" \n
+       "//diag_log format [""readiness check: %1"",time];" \n
+       ""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "is_ready">*/
+        class is_ready
+        {
+          priority = 1.000000;
+          to="bad_way_check";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_isReady"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="stopwatch";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "bad_way_check">*/
+    class bad_way_check
+    {
+      name = "bad_way_check";
+      init = /*%FSM<STATEINIT""">*/"_isBadWay = [_foot,(getPosATL _hunter),(getDir _hunter)] call RYD_H_isFlanking;" \n
+       "" \n
+       "" \n
+       "//diag_log format [""bad way check: %1"",time];"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="stopwatch";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "is_bad_way">*/
+        class is_bad_way
+        {
+          priority = 0.000000;
+          to="push";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"((_isBadWay) or ((speed _hunter) < 0.1))"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "push">*/
+    class push
+    {
+      name = "push";
+      init = /*%FSM<STATEINIT""">*/"_hunter stop false;" \n
+       "_hunter doWatch _foot;" \n
+       "_hunter doMove _foot;" \n
+       "_hunter forceSpeed -1;" \n
+       "_hunter setunitPos ""UP"";" \n
+       "_hunter setBehaviour ""COMBAT"";" \n
+       "" \n
+       "//diag_log format [""hunter: %1 foot: %2"",_hunter, _foot];" \n
+       "" \n
+       ""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="stopwatch";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "action_choose">*/
+    class action_choose
+    {
+      name = "action_choose";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "run_hide">*/
+        class run_hide
+        {
+          priority = 4.000000;
+          to="exec_RunHide";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"(((not (_isFlanked) and (_isAwared)) or (_isTgt)) and not (((_isCharging) and (_dst <= 25)) or (_isRunning)))"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/"if not (_currA == 0) then" \n
+           "	{" \n
+           "	_currA = 0;" \n
+           "	_handle = RYD_Hunter_FSM_handle getFSMVariable (""RYD_H_CurrentActionHandle"" + (str _hunter));" \n
+           "	if not (isNil ""_handle"") then " \n
+           "		{" \n
+           "		terminate _handle;" \n
+           "		_sectors = RYD_Hunter_FSM_handle getFSMVariable (""RYD_H_Sectors"" + (str _hunter));" \n
+           "		if (isNil ""_sectors"") then {_sectors = []};" \n
+           "" \n
+           "			{" \n
+           "			deleteLocation _x" \n
+           "			}" \n
+           "		foreach _sectors" \n
+           "		};" \n
+           "	};"/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "ambuscade">*/
+        class ambuscade
+        {
+          priority = 3.000000;
+          to="exec_Ambuscade";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"(not ((_isFlanked) or (_dst < 25) or (_isAmbuscade) or ((_isRunning) and (_isAwared))))"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/"if not (_currA == 1) then" \n
+           "	{" \n
+           "	_currA = 1;" \n
+           "	_handle = RYD_Hunter_FSM_handle getFSMVariable (""RYD_H_CurrentActionHandle"" + (str _hunter));" \n
+           "	if not (isNil ""_handle"") then " \n
+           "		{" \n
+           "		terminate _handle;" \n
+           "		_sectors = RYD_Hunter_FSM_handle getFSMVariable (""RYD_H_Sectors"" + (str _hunter));" \n
+           "		if (isNil ""_sectors"") then {_sectors = []};" \n
+           "" \n
+           "			{" \n
+           "			deleteLocation _x" \n
+           "			}" \n
+           "		foreach _sectors" \n
+           "		};" \n
+           "	};"/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Sneak">*/
+        class Sneak
+        {
+          priority = 2.000000;
+          to="exec_Sneak";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"((_isFlanked) and not (((_isCharging) and (_dst <= 25)) or (_isSneaking) or (_isRunning)) and (_dst < 100) and (_speed < 0.5))"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/"if not (_currA == 2) then" \n
+           "	{" \n
+           "	_currA = 2;" \n
+           "	_handle = RYD_Hunter_FSM_handle getFSMVariable (""RYD_H_CurrentActionHandle"" + (str _hunter));" \n
+           "	if not (isNil ""_handle"") then " \n
+           "		{" \n
+           "		terminate _handle;" \n
+           "		_sectors = RYD_Hunter_FSM_handle getFSMVariable (""RYD_H_Sectors"" + (str _hunter));" \n
+           "		if (isNil ""_sectors"") then {_sectors = []};" \n
+           "" \n
+           "			{" \n
+           "			deleteLocation _x" \n
+           "			}" \n
+           "		foreach _sectors" \n
+           "		};" \n
+           "	};"/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "charge">*/
+        class charge
+        {
+          priority = 1.000000;
+          to="exec_Charge";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"(not ((_isCharging) or ((_isRunning) and (_dst > 25))) and ((_dst <= 25) or (((_dst >= 100) or (_speed >= 0.5)) and (_isFlanked))))"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/"if not (_currA == 3) then" \n
+           "	{" \n
+           "	_currA = 3;" \n
+           "	_handle = RYD_Hunter_FSM_handle getFSMVariable (""RYD_H_CurrentActionHandle"" + (str _hunter));" \n
+           "	if not (isNil ""_handle"") then " \n
+           "		{" \n
+           "		terminate _handle;" \n
+           "		_sectors = RYD_Hunter_FSM_handle getFSMVariable (""RYD_H_Sectors"" + (str _hunter));" \n
+           "		if (isNil ""_sectors"") then {_sectors = []};" \n
+           "" \n
+           "			{" \n
+           "			deleteLocation _x" \n
+           "			}" \n
+           "		foreach _sectors" \n
+           "		};" \n
+           "	};"/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="stopwatch";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "exec_RunHide">*/
+    class exec_RunHide
+    {
+      name = "exec_RunHide";
+      init = /*%FSM<STATEINIT""">*/"RYD_Hunter_FSM_handle setFSMVariable [""RYD_H_isRunning"" + (str _hunter),true];" \n
+       "RYD_Hunter_FSM_handle setFSMVariable [""RYD_H_isSneaking"" + (str _hunter),false];" \n
+       "RYD_Hunter_FSM_handle setFSMVariable [""RYD_H_isAmbuscade"" + (str _hunter),false];" \n
+       "RYD_Hunter_FSM_handle setFSMVariable [""RYD_H_isCharging"" + (str _hunter),false];" \n
+       "" \n
+       "" \n
+       "_handle = [_hunter,_closest] spawn RYD_H_RunHide;" \n
+       "RYD_Hunter_FSM_handle setFSMVariable [""RYD_H_CurrentActionHandle"" + (str _hunter),_handle];" \n
+       "" \n
+       "//diag_log format [""hide: %1"",time];" \n
+       "//diag_log ""----------------------------RUN START"";"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="stopwatch";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "exec_Ambuscade">*/
+    class exec_Ambuscade
+    {
+      name = "exec_Ambuscade";
+      init = /*%FSM<STATEINIT""">*/"RYD_Hunter_FSM_handle setFSMVariable [""RYD_H_isRunning"" + (str _hunter),false];" \n
+       "RYD_Hunter_FSM_handle setFSMVariable [""RYD_H_isSneaking"" + (str _hunter),false];" \n
+       "RYD_Hunter_FSM_handle setFSMVariable [""RYD_H_isAmbuscade"" + (str _hunter),true];" \n
+       "RYD_Hunter_FSM_handle setFSMVariable [""RYD_H_isCharging"" + (str _hunter),false];" \n
+       "" \n
+       "_handle = [_hunter,_closest] spawn RYD_H_Ambuscade;" \n
+       "RYD_Hunter_FSM_handle setFSMVariable [""RYD_H_CurrentActionHandle"" + (str _hunter),_handle];" \n
+       "" \n
+       "//diag_log format [""ambuscade: %1"",time];"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="stopwatch";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "exec_Sneak">*/
+    class exec_Sneak
+    {
+      name = "exec_Sneak";
+      init = /*%FSM<STATEINIT""">*/"RYD_Hunter_FSM_handle setFSMVariable [""RYD_H_isRunning"" + (str _hunter),false];" \n
+       "RYD_Hunter_FSM_handle setFSMVariable [""RYD_H_isSneaking"" + (str _hunter),true];" \n
+       "RYD_Hunter_FSM_handle setFSMVariable [""RYD_H_isAmbuscade"" + (str _hunter),false];" \n
+       "RYD_Hunter_FSM_handle setFSMVariable [""RYD_H_isCharging"" + (str _hunter),false];" \n
+       "" \n
+       "_handle = [_hunter,_closest] spawn RYD_H_Sneak;" \n
+       "RYD_Hunter_FSM_handle setFSMVariable [""RYD_H_CurrentActionHandle"" + (str _hunter),_handle];" \n
+       "" \n
+       "//diag_log format [""sneak: %1"",time];"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="stopwatch";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "exec_Charge">*/
+    class exec_Charge
+    {
+      name = "exec_Charge";
+      init = /*%FSM<STATEINIT""">*/"RYD_Hunter_FSM_handle setFSMVariable [""RYD_H_isRunning"" + (str _hunter),false];" \n
+       "RYD_Hunter_FSM_handle setFSMVariable [""RYD_H_isSneaking"" + (str _hunter),false];" \n
+       "RYD_Hunter_FSM_handle setFSMVariable [""RYD_H_isAmbuscade"" + (str _hunter),false];" \n
+       "RYD_Hunter_FSM_handle setFSMVariable [""RYD_H_isCharging"" + (str _hunter),true];" \n
+       "" \n
+       "_handle = [_hunter,_closest,_mpl] spawn RYD_H_Charge;" \n
+       "RYD_Hunter_FSM_handle setFSMVariable [""RYD_H_CurrentActionHandle"" + (str _hunter),_handle];" \n
+       "" \n
+       "//diag_log format [""charge: %1"",time];"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="stopwatch";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "perform_strike">*/
+    class perform_strike
+    {
+      name = "perform_strike";
+      init = /*%FSM<STATEINIT""">*/"[_hunter,_hunted,_mpl] spawn RYD_H_Strike;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="stopwatch";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+  };
+  initState="Init";
+  finalStates[] =
+  {
+    "exit",
+  };
+};
+/*%FSM</COMPILE>*/

@@ -1,3 +1,47 @@
+mission_add_marker = {
+	_marker_name = _this select 0;
+	_position = _this select 1;
+	_color = _this select 2;
+	if ((count _this) > 3) then {
+		mission_markers = mission_markers + [[_marker_name, _position, _color]];
+	};
+	
+	_marker = createMarker [_marker_name, _position];
+	_marker setMarkerColor _color;
+	_marker setMarkerShape "ELLIPSE";
+	_marker setMarkerBrush "Grid";
+	_marker setMarkerSize [300,300];
+};
+
+mission_delete_marker = {
+	_marker_name = _this select 0;
+	
+	deletemarker _marker_name;
+	if ((count _this) > 1) then {
+		_last_index = count mission_markers;
+		_index = 0;
+		while {(_index < _last_index)} do
+		{
+			_marker = mission_markers select _index;
+			if ((_marker select 0) == _marker_name) then {
+				mission_markers set [_index, "delete me"];
+				mission_markers = mission_markers - ["delete me"];
+				_index = _last_index;  // Map Markers Names are unique
+			};
+			_index = _index + 1;
+		};
+	};
+};
+
+mission_sync_markers = {
+	diag_log format ["DEBUG: SYNC Adding _x: %1", mission_markers];
+	{
+		diag_log format ["DEBUG: Adding _x: %1", _x];
+		[_x select 0] call mission_delete_marker;
+		_x call mission_add_marker;
+	} forEach mission_markers;
+};
+
 mission_find_buildings = {
 	private["type", "_list"];
 	_type = _this select 0;
@@ -15,31 +59,6 @@ mission_timer = {
     _return = _low_value + _rand;
     
     _return;
-};
-
-
-mission_cleaner = {
-	// Dont really need this, but will leave it incase of broken mission script...
-	// Or if i add a mission script that ends with AI still running about
-    private ["_last_index", "_index", "_group"];
-    while {true} do {
-        sleep 600;
-        _last_index = count mission_ai_groups;
-        _index = 0;
-        while {(_index < _last_index)} do
-        {
-            _group = mission_ai_groups select _index;
-            if (count units (_group select 1) == 0) then {
-                deleteGroup (_group select 1);
-                missionNamespace setVariable [(_group select 0), nil];
-                mission_ai_groups set [_index, "delete me"];
-                mission_ai_groups = mission_ai_groups - ["delete me"];			
-                _index = _index - 1;
-                _last_index = _last_index - 1;
-            };
-            _index = _index + 1;
-        };
-    };
 };
 
 
@@ -107,103 +126,41 @@ mission_vehicle_pool = {
 mission_spawn_ai = {
     private ["_position","_snipers","_soldiers","_ai_setting","_marker2","_group2","_id1","_id2","_id3","_group1","_group3","_marker1","_marker3","_chance"];
     
-	_unique_id = _this select 0;
-    _position = _this select 1;
-    _snipers = _this select 2;
-    _soldiers = _this select 3;
-    _ai_setting = (_this select 4) call BIS_fnc_selectRandom;
-    
-    _id1  = _unique_id + "-a";
-    _id2 = _unique_id + "-b";
-    _id3 = _unique_id + "-c";
-	
-    _group1 = 0;
-    _group2 = 0;
-    _group3 = 0;
+	_marker_name = "SAR_mission_" + (_this select 0);
+	_type = _this select 1;
+    _position = _this select 2;
+	_range = _this select 3;
+    _snipers = _this select 4;
+    _soldiers = _this select 5;
+    _ai_setting = (_this select 6) call BIS_fnc_selectRandom;
+	_group = objNull;
 
-    _marker1 = 0;
-    _marker2 = 0;
-    _marker3 = 0;
-    
-    _marker1 = createMarker [("SAR_mission_" + str(_id1)), _position];
-    _marker1 setMarkerShape "RECTANGLE";
-    _marker1 setMarkeralpha 0;
-    _marker1 setMarkerType "Flag";
-    _marker1 setMarkerBrush "Solid";
-    _marker1 setMarkerSize [200,200];
-    missionNamespace setVariable ["SAR_mission_" + str(_id1), _marker1];  
-    _group1 = [missionNameSpace getVariable ("SAR_mission_" + str(_id1)), 4, _snipers, _soldiers, _ai_setting, false] call SAR_AI;
-    
-    _chance = (random 10);	
-    switch (true) do {
-        
-        case (_chance <= 2):
-        {
-            // AI HELI 20% Chance  650 range
-            _marker2 = createMarker [("SAR_mission_" + str(_id2)), _position];
-            _marker2 setMarkerShape "RECTANGLE";
-            _marker2 setMarkeralpha 0;
-            _marker2 setMarkerType "Flag";
-            _marker2 setMarkerBrush "Solid";
-            _marker2 setMarkerSize [650,650];
-            missionNamespace setVariable ["SAR_mission_" + str(_id2), _marker2];
-            _group2 = [missionNameSpace getVariable ("SAR_mission_" + str(_id2)), 4, false] call SAR_AI_heli;
-        };
-        
-        case (_chance <= 4):
-        {
-            // AI HELI 20% Chance 300 range
-            _marker2 = createMarker [("SAR_mission_" + str(_id2)), _position];
-            _marker2 setMarkerShape "RECTANGLE";
-            _marker2 setMarkeralpha 0;
-            _marker2 setMarkerType "Flag";
-            _marker2 setMarkerBrush "Solid";
-            _marker2 setMarkerSize [300,300];
-            missionNamespace setVariable ["SAR_mission_" + str(_id2), _marker2];
-            _group2 = [missionNameSpace getVariable ("SAR_mission_" + str(_id2)), 4, false] call SAR_AI_heli;
-            [_group2] call mission_kill_vehicle_group;
-        };
-        
-        case (_chance <= 7):
-        {
-            // AI Land Vehicles 30% Chance  300 range
-            _marker2 = createMarker [("SAR_mission_" + str(_id2)), _position];
-            _marker2 setMarkerShape "RECTANGLE";
-            _marker2 setMarkeralpha 0;
-            _marker2 setMarkerType "Flag";
-            _marker2 setMarkerBrush "Solid";
-            _marker2 setMarkerSize [300,300];
-            missionNamespace setVariable ["SAR_mission_" + str(_id2), _marker2];
-            _group2 = [missionNameSpace getVariable ("SAR_mission_" + str(_id2)), 4, [(mission_patrol_land_vehicles call BIS_fnc_selectRandom)], [[1,1,1]], false] call SAR_AI_land;
-            [_group2] call mission_kill_vehicle_group;
-        };
-        
-        default
-        {
-            // Extra AI Foot Patrol 30% Chance
-            _marker2 = createMarker [("SAR_mission_" + str(_id2)), _position];
-            _marker2 setMarkerShape "RECTANGLE";
-            _marker2 setMarkeralpha 0;
-            _marker2 setMarkerType "Flag";
-            _marker2 setMarkerBrush "Solid";
-            _marker2 setMarkerSize [200,200];
-            missionNamespace setVariable ["SAR_mission_" + str(_id2), _marker2];  
-            _group2 = [missionNameSpace getVariable ("SAR_mission_" + str(_id2)), 4, _snipers, _soldiers, _ai_setting, false] call SAR_AI;
-        };
-    };
-    
-    // Second Group of AI Soldiers
-    _marker3 = createMarker [("SAR_mission_" + str(_id3)), _position];
-    _marker3 setMarkerShape "RECTANGLE";
-    _marker3 setMarkeralpha 0;
-    _marker3 setMarkerType "Flag";
-    _marker3 setMarkerBrush "Solid";
-    _marker3 setMarkerSize [80,80];
-    missionNamespace setVariable ["SAR_mission_" + str(_id3), _marker3];
-    _group3 = [missionNameSpace getVariable ("SAR_mission_" + str(_id3)), 4, _snipers, _soldiers, _ai_setting, false] call SAR_AI;
-    
-    [[("SAR_mission_" + str(_id1)), _group1],[("SAR_mission_" + str(_id2)), _group2],[("SAR_mission_" + str(_id3)), _group3]];
+	
+    _marker = createMarker [_marker_name, _position];
+    _marker setMarkerShape "RECTANGLE";
+    _marker setMarkeralpha 0;
+    _marker setMarkerType "Flag";
+    _marker setMarkerBrush "Solid";
+    _marker setMarkerSize [_range, _range];
+    missionNamespace setVariable [_marker_name, _marker];  
+	
+	switch (_type) do {
+		case ("SAR_AI") :
+		{
+			_group = [missionNameSpace getVariable _marker_name, 4, _snipers, _soldiers, _ai_setting, false] call SAR_AI;
+		};
+		case ("SAR_AI_HELI"):
+		{
+			_group = [missionNameSpace getVariable _marker_name, 4, false] call SAR_AI_heli;
+		};
+		case ("SAR_AI_LAND"):
+		{
+			_group = [missionNameSpace getVariable _marker_name, 4, [(mission_patrol_land_vehicles call BIS_fnc_selectRandom)], [[1,1,1]], false] call SAR_AI_land;
+		};
+	};
+	[_marker_name, _group]
 };
+	
 
 
 mission_spawn_crates = {
@@ -216,7 +173,7 @@ mission_spawn_crates = {
     _crate = createVehicle [_type, _position, [], 0, "CAN_COLLIDE"];
     clearWeaponCargoGlobal _crate;
     clearMagazineCargoGlobal _crate;
-    [_crate, _loot_type] execVM "\z\addons\dayz_server\missions\misc\fillBoxes.sqf";
+    [_crate, _loot_type] execVM "\z\addons\dayz_server\addons\missions\misc\fillBoxes.sqf";
     _crate setVariable ["Sarge", 1, true];  // Stop Server Cleanup Killing Box
     _crate
 };
@@ -367,6 +324,13 @@ mission_spawn = {
                 waitUntil{!isNil "BIS_fnc_findSafePos"};
                 _position = [getMarkerPos "center",0,5500,100,0,20,0] call BIS_fnc_findSafePos;
             };
+            case 3:
+            {
+                _mission_type = "Crash Site";	
+                
+                waitUntil{!isNil "BIS_fnc_findSafePos"};
+                _position = [getMarkerPos "center",0,5500,100,0,20,0] call BIS_fnc_findSafePos;
+            };
         };
         
         _isNearPlayer = [_position] call mission_nearbyPlayers;
@@ -381,7 +345,18 @@ mission_spawn = {
     // only proceed if two params otherwise BIS_fnc_findSafePos failed and may spawn in air
     if ((count _position) == 2) then {
         diag_log ("DEBUG: Mission Code: Position Good");
-        [_mission_id, _position, _mission_type] call mission_spawn_standard;
+		switch (_mission_type) do 
+		{
+			case "Crash Site":
+			{
+				[_mission_id, _position] call mission_spawn_crash;
+			};
+			
+			default
+			{
+				[_mission_id, _position, _mission_type] call mission_spawn_standard;
+			};
+		};
     } else {
         diag_log ("DEBUG: Mission Code: BIS fnc findsafepos failed giving up on mission");
     };

@@ -1,13 +1,14 @@
-private ["_mission_array","_wait","_handle","_mission_counter","_mission","_index","_last_index"];
+private ["_mission_array","_wait","_handle","_mission_counter","_mission","_index","_last_index","_mission_unique_id"];
 diag_log ("DEBUG: Mission Code: Start.......");
 
 #include "config.sqf"
 
-call compile preprocessFileLineNumbers "\z\addons\dayz_server\missions\mission_functions.sqf";
-call compile preprocessFileLineNumbers "\z\addons\dayz_server\missions\missions\standard.sqf";
+call compile preprocessFileLineNumbers "\z\addons\dayz_server\addons\Missions\mission_functions.sqf";
+call compile preprocessFileLineNumbers "\z\addons\dayz_server\addons\Missions\missions\standard.sqf";
 
 _mission_unique_id = 0;
 mission_ai_groups = [];
+mission_markers = [];
 
 // Initialize Building Array
 /*
@@ -31,7 +32,7 @@ _last_index = count _mission_array;
 
 
 // Start Mission Variable Cleaner (i.e expired map markers etc, ai groups)
-[] spawn mission_cleaner;
+//[] spawn mission_cleaner;
 
 
 // Main Loop for Spawning Missions

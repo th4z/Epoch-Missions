@@ -12,7 +12,7 @@
 //  SHK_pos 
 //  
 // ---------------------------------------------------------------------------------------------------------
-//   grid cfg file for Takistan
+//   grid cfg file for Fallujah
 //   last modified: 5.3.2013
 // ---------------------------------------------------------------------------------------------------------
 
@@ -30,3 +30,5 @@ _gridsize_y=6;
 
 // distance from the center of one square of the grid to the border of that square. so overall size of a square in the grid is 2x gridwidth / 2x gridwidth
 _gridwidth = 1000;
+
+[_startx,_starty,_gridsize_x,_gridsize_y,_gridwidth]

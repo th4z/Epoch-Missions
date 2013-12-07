@@ -1,5 +1,5 @@
 private ["_activatingPlayer","_isOK","_object","_worldspace","_location","_dir","_class","_uid","_key","_keySelected","_characterID","_donotusekey"];
-
+//PVDZE_veh_Publish2 = [_veh,[_dir,_location],_part_out,false,_keySelected,_activatingPlayer];
 _object = 		_this select 0;
 _worldspace = 	_this select 1;
 _class = 		_this select 2;
@@ -113,6 +113,7 @@ _key call server_hiveWrite;
 	PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_object];
 
 	_object call fnc_veh_ResetEH;
+	[_object, _class] call fnc_veh_Ammo;
 	
 	// for non JIP users this should make sure everyone has eventhandlers for vehicles.
 	PVDZE_veh_Init = _object;

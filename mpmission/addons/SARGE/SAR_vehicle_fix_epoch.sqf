@@ -19,7 +19,7 @@
 private ["_loop","_chk_count","_gridwidth","_markername","_triggername","_trig_act_stmnt","_trig_deact_stmnt","_trig_cond","_pos","_tmp","_sphere_alpha","_sphere_red","_sphere_green","_sphere_blue","_obj_text_string"];
 
 if (!isServer) exitWith {}; // only run this on the server
-	
+
 _x = _this select 0;
 
 if (isNil "SAR_VEH_COUNTER") then {

@@ -3,9 +3,7 @@ _warning = false;
 
 customMission = "";
 customMissionImage = "";
-customCombatLogger = "";
 customStudyBody = "";
-
 debugMonitor = true;
 
 while {true} do {
@@ -44,7 +42,7 @@ while {true} do {
 			<t size='1' font='Bitstream' align='left' color='#FFBF00'>"+ (localize "STR_custom_serverrestart") + ": </t><t size='1' font='Bitstream' align='right'>%9h %10min</t><br/>
 			<t size='1' font='Bitstream' align='left' color='#FFBF00'>"+ (localize "STR_custom_playersalive") + ": </t><t size='1' font='Bitstream' align='right'>%4</t><br/>
 			<t size='1' font='Bitstream' align='left' color='#FFBF00'>FPS: </t><t size='1' font='Bitstream' align='right'>%11</t><br/>"
-			+ customMission + customCombatLogger + customStudyBody +
+			+ customMission + customStudyBody +
 			"<t size='1'font='Bitstream'align='center' color='#104E8B' >"+ (localize "STR_custom_f5toggle") + "</t><br/>
 			<t size='1'font='Bitstream'align='center' color='#104E8B' >"+ (localize "STR_custom_f10toggle") + "</t><br/>";
 
