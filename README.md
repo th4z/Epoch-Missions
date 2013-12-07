@@ -66,6 +66,7 @@ Add to the very end of file
 To enable the F10 button for debug monitor
 There is a custom dayz_spaceInterrupt.sqf in mpmission/extras/debug_monitor
 
+=============
 If u have a custom compiles.sqf
 Edit your custom compiles.sqf
 Look for 
@@ -78,21 +79,22 @@ Change it to
 ```
 dayz_spaceInterrupt =			compile preprocessFileLineNumbers "extras\debug_monitor\dayz_spaceInterrupt.sqf";
 ```
-
-OR edit your mpmission/init.sqf
+=============
+Or edit your mpmission/init.sqf
 Look for
-'''
+
+```
 "filmic" setToneMappingParams [0.153, 0.357, 0.231, 0.1573, 0.011, 3.750, 6, 4]; setToneMapping "Filmic";
-'''
+```
 
 Change it to
 
-'''
+```
 "filmic" setToneMappingParams [0.153, 0.357, 0.231, 0.1573, 0.011, 3.750, 6, 4]; setToneMapping "Filmic";
 
 dayz_spaceInterrupt = compile preprocessFileLineNumbers "fixes\actions\dayz_spaceInterrupt.sqf";
-'''
-
+```
+=============
 <h6>Step 4</h6>
 Edit your dayz_server/compile/server_playerSetup.sqf
 
