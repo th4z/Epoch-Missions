@@ -10,14 +10,15 @@ mission_spawn_standard = {
 	_ai_patrols = [];
 	_vehicle = 0;
 	_vehicle_spawn = false;
-
+	_max_crates = objNull;
+	
 	switch (_mission_type) do
 	{
-		case "Road":{
-			if (_chance >= 40) then {
+		case "Road":
+		{
+			if (_chance >= 50) then {
 				_veh_pool = call mission_vehicle_pool;
 				if ((count _veh_pool) > 0) then {
-					waitUntil{!isNil "BIS_fnc_selectRandom"};
 					_vehicle = (_veh_pool call BIS_fnc_selectRandom) select 0;
 					_vehicle_position = [_position,0,50,5,0,2000,0] call BIS_fnc_findSafePos;
 					[_vehicle, _vehicle_position, false] call mission_spawn_vehicle;
@@ -26,24 +27,28 @@ mission_spawn_standard = {
 			};
 
 			//  Spawn Supplies -- Crates
-			for "_i" from 0 to mission_num_of_crates do
+			if (!_vehicle_spawn) then {
+				_max_crates = mission_num_of_crates
+			} else {
+				_max_crates = mission_num_of_crates_plus_vehicle;
+			};
+			for "_i" from 0 to _max_crates do
 			{
-				waitUntil{!isNil "BIS_fnc_selectRandom"};
 				_crate_position = [_position,0,30,3,0,2000,0] call BIS_fnc_findSafePos;
 				if ((count _crate_position) == 2) then {
-					waitUntil{!isNil "BIS_fnc_selectRandom"};
+					
 					_type = mission_crates call BIS_fnc_selectRandom;
 					_crates = _crates + [[_crate_position, _type, "Random"] call mission_spawn_crates];
 				};
 			};
-			_ai_patrols = ["patrol"];
-			};
+			_ai_patrols = ["patrol","fortify","patrol"];
+		};
 
-		case "Building":{
-			if (_chance >= 40) then {
+		case "Building":
+		{
+			if (_chance >= 50) then {
 				_veh_pool = call mission_vehicle_pool;
 				if ((count _veh_pool) > 0) then {
-					waitUntil{!isNil "BIS_fnc_selectRandom"};
 					_vehicle = (_veh_pool call BIS_fnc_selectRandom) select 0;
 					_vehicle_position = [_position,0,50,5,0,2000,0] call BIS_fnc_findSafePos;
 					[_vehicle, _vehicle_position, false] call mission_spawn_vehicle;
@@ -52,24 +57,28 @@ mission_spawn_standard = {
 			};
 			
 			//  Spawn Supplies -- Crates
-			for "_i" from 0 to mission_num_of_crates do
+			if (!_vehicle_spawn) then {
+				_max_crates = mission_num_of_crates
+			} else {
+				_max_crates = mission_num_of_crates_plus_vehicle;
+			};
+			for "_i" from 0 to _max_crates do
 			{
-				waitUntil{!isNil "BIS_fnc_selectRandom"};
+				
 				_crate_position = [_position,0,30,3,0,2000,0] call BIS_fnc_findSafePos;
 				if ((count _crate_position) == 2) then {
-					waitUntil{!isNil "BIS_fnc_selectRandom"};
 					_type = mission_crates call BIS_fnc_selectRandom;
 					_crates = _crates + [[_crate_position,_type,"Random"] call mission_spawn_crates];
 				};
 			};
 			_ai_patrols = ["fortify","fortify","patrol"];
-			};
+		};
 			
-		case "Open Area":{
-			if (_chance >= 40) then {
+		case "Open Area":
+		{
+			if (_chance >= 80) then {
 				_veh_pool = call mission_vehicle_pool;
 				if ((count _veh_pool) > 0) then {
-					waitUntil{!isNil "BIS_fnc_selectRandom"};
 					_vehicle = (_veh_pool call BIS_fnc_selectRandom) select 0;
 					_vehicle_position = [_position,0,50,5,0,2000,0] call BIS_fnc_findSafePos;
 					[_vehicle, _vehicle_position, false] call mission_spawn_vehicle;
@@ -78,12 +87,15 @@ mission_spawn_standard = {
 			};
 			
 			//  Spawn Supplies -- Crates
-			for "_i" from 0 to mission_num_of_crates do
+			if (!_vehicle_spawn) then {
+				_max_crates = mission_num_of_crates
+			} else {
+				_max_crates = mission_num_of_crates_plus_vehicle;
+			};
+			for "_i" from 0 to _max_crates do
 			{
-				waitUntil{!isNil "BIS_fnc_selectRandom"};
 				_crate_position = [_position,0,30,3,0,2000,0] call BIS_fnc_findSafePos;
 				if ((count _crate_position) == 2) then {
-					waitUntil{!isNil "BIS_fnc_selectRandom"};
 					_type = mission_crates call BIS_fnc_selectRandom;
 					_crates = _crates + [[_crate_position,_type,"Random"] call mission_spawn_crates];
 				};
@@ -138,7 +150,7 @@ mission_spawn_standard = {
     };
 
 	
-	// PLAYER MARKERS
+	// Player Markers
 	_marker_name = (_mission_id + "_player_marker");
 	if (_vehicle_spawn) then {
 		[_marker_name, _position, "ColorBlue", true] call mission_add_marker;
@@ -146,7 +158,7 @@ mission_spawn_standard = {
 		[_marker_name, _position, "ColorRed", true] call mission_add_marker;
 	};
 	
-	customMissionWarning = ["Standard", mission_warning_debug, _marker_name, _position, _vehicle_spawn, _vehicle];
+	customMissionWarning = [_mission_type, mission_warning_debug, _marker_name, _position, _vehicle_spawn, _vehicle];
 	publicVariable "customMissionWarning";
 
 	// Wait till all AI Dead or Mission Times Out
@@ -188,10 +200,15 @@ mission_spawn_standard = {
 	{
 		_x setDamage 1;
 	} forEach units _group_1;
+	deletemarker (_group_1_info select 0);
+	
 	{
 		_x setDamage 1;
 	} forEach units _group_2;
+	deletemarker (_group_2_info select 0);
+	
 	{
 		_x setDamage 1;
 	} forEach units _group_3;
+	deletemarker (_group_3_info select 0);
 };

@@ -1,14 +1,23 @@
 private ["_mission_array","_wait","_handle","_mission_counter","_mission","_index","_last_index","_mission_unique_id"];
 diag_log ("DEBUG: Mission Code: Start.......");
 
+waitUntil{!isNil "BIS_fnc_findSafePos"};
+waitUntil{!isNil "BIS_fnc_selectRandom"};
+
 #include "config.sqf"
+
+mission_ai_groups = [];
+mission_markers = [];
 
 call compile preprocessFileLineNumbers "\z\addons\dayz_server\addons\Missions\mission_functions.sqf";
 call compile preprocessFileLineNumbers "\z\addons\dayz_server\addons\Missions\missions\standard.sqf";
+call compile preprocessFileLineNumbers "\z\addons\dayz_server\addons\Missions\missions\crash.sqf";
 
-_mission_unique_id = 0;
-mission_ai_groups = [];
-mission_markers = [];
+if (mission_hunter) then {
+	call compile preprocessFile "Predator_fnc.sqf";	
+	call compile preprocessFile "Predator_aux_fnc.sqf";
+};
+
 
 // Initialize Building Array
 /*
@@ -18,10 +27,11 @@ mission_buildings_pos = [];
 	mission_buildings_pos = mission_buildings_pos + [_type, [_type] call mission_find_buildings];
 } forEach mission_buildings;
 */
-sleep 300;
+sleep 60;
 
 // Initialize mission array
 _mission_array = [];
+_mission_unique_id = 0;
 for "_x" from 1 to mission_max_number do {
 	_mission_unique_id = _mission_unique_id + 1;
 	_handle = [str(_mission_unique_id)] spawn mission_spawn;
@@ -29,10 +39,6 @@ for "_x" from 1 to mission_max_number do {
 	sleep 60; // Be kinder to Server + Spread Out Spawning Multiple Missions + wait for player debug monitor mission timeout
 };	
 _last_index = count _mission_array;		
-
-
-// Start Mission Variable Cleaner (i.e expired map markers etc, ai groups)
-//[] spawn mission_cleaner;
 
 
 // Main Loop for Spawning Missions

@@ -1,3 +1,9 @@
+mission_add_hunter = {
+
+	//RYD_Hunter_FSM_handle = [hunter1,mission_hunter_smell,mission_hunter_eyes,(units (group hunted1)),200,1] execFSM "\z\addons\dayz_server\addons\Missions\ai\RYD_Hunter\RYD_Hunter.fsm";
+	//RYD_Hunter_FSM_handle ["_hunted", (units (group hunted1))];
+};
+
 mission_add_marker = {
 	_marker_name = _this select 0;
 	_position = _this select 1;
@@ -34,9 +40,7 @@ mission_delete_marker = {
 };
 
 mission_sync_markers = {
-	diag_log format ["DEBUG: SYNC Adding _x: %1", mission_markers];
 	{
-		diag_log format ["DEBUG: Adding _x: %1", _x];
 		[_x select 0] call mission_delete_marker;
 		_x call mission_add_marker;
 	} forEach mission_markers;
@@ -192,8 +196,8 @@ mission_spawn_vehicle = {
     _dir = round(random 180);
     
     _vehicle = createVehicle [_vehicle_class, _position, [], 0, "CAN_COLLIDE"];
-	clearWeaponCargoGlobal  _vehicle;
-	clearMagazineCargoGlobal  _vehicle;
+	clearWeaponCargoGlobal _vehicle;
+	clearMagazineCargoGlobal _vehicle;
     _vehicle setdir _dir;
     _vehicle setpos _position;	
     _objPosition = getPosATL _vehicle;
@@ -291,57 +295,60 @@ mission_spawn = {
     // Spawn around buildings and 50% near roads
     _position = [];
     _mission_type = "";
-    _chance = floor(random 2);
+    _chance = floor(random 100);
     
     // Try 10 Times to Find a Mission Spot
-    for "_x" from 1 to 10 do {
-        switch (_chance) do
+	_x = 1;
+	while {(_x <= 20)} do {
+        switch (true) do
         {
-            case 0:
+            case (_chance <= 25):
             {
                 _mission_type = "Road";
-                
-                waitUntil{!isNil "BIS_fnc_selectRandom"};
                 _position = RoadList call BIS_fnc_selectRandom;
                 _position = _position modelToWorld [0,0,0];
-                
-                waitUntil{!isNil "BIS_fnc_findSafePos"};
                 _position = [_position,0,100,5,0,2000,0] call BIS_fnc_findSafePos;
             };
-            case 1:
+            case (_chance <= 60):
             {
                 _mission_type = "Building";		
-                
-                waitUntil{!isNil "BIS_fnc_selectRandom"};
                 _position = BuildingList call BIS_fnc_selectRandom;
                 _position = _position modelToWorld [0,0,0];
-                
-                waitUntil{!isNil "BIS_fnc_findSafePos"};
                 _position = [_position,0,100,5,0,2000,0] call BIS_fnc_findSafePos;
             };
-            case 2:
+            case (_chance <= 80):
             {
                 _mission_type = "Open Area";	
-                
-                waitUntil{!isNil "BIS_fnc_findSafePos"};
-                _position = [getMarkerPos "center",0,5500,100,0,20,0] call BIS_fnc_findSafePos;
+                _position = [getMarkerPos "center",0,5500,100,0,2000,0] call BIS_fnc_findSafePos;
             };
-            case 3:
+            case (_chance <= 100):
             {
-                _mission_type = "Crash Site";	
-                
-                waitUntil{!isNil "BIS_fnc_findSafePos"};
-                _position = [getMarkerPos "center",0,5500,100,0,20,0] call BIS_fnc_findSafePos;
+				diag_log format ["DEBUG MISSIONS: ROADLIST: %1", RoadList];
+                _mission_type = "Crash Site";	  
+                _position = RoadList call BIS_fnc_selectRandom;
+				diag_log format ["DEBUG MISSIONS: pos1: %1", _position];
+                _position = _position modelToWorld [0,0,0];
+				diag_log format ["DEBUG MISSIONS: pos2: %1", _position];
+                _position = [_position,0,200,20,0,2000,0] call BIS_fnc_findSafePos;
+				diag_log format ["DEBUG MISSIONS: pos3: %1", _position];
+                //_position = [getMarkerPos "center",0,5500,100,0,2000,0] call BIS_fnc_findSafePos;
             };
         };
-        
-        _isNearPlayer = [_position] call mission_nearbyPlayers;
-        _isNearBlackspot = [_position] call mission_nearbyBlackspot;
-        if ((!_isNearPlayer) && (!_isNearBlackspot)) then {
-            _x = 20;
-        } else {
-            _position = [];
-        };
+
+        diag_log format ["DEBUG POSITION: %1", _position];
+		if ((count _position) == 2) then {			
+			_isNearPlayer = [_position] call mission_nearbyPlayers;
+			_isNearBlackspot = [_position] call mission_nearbyBlackspot;
+			if ((!_isNearPlayer) && (!_isNearBlackspot)) then {
+				_x = 20;
+			} else {
+				_position = [];
+			};
+		} else {
+			_position = [];
+		};
+		_x = _x + 1;
+		sleep 1;
     };
     
     // only proceed if two params otherwise BIS_fnc_findSafePos failed and may spawn in air
