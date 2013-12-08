@@ -118,7 +118,6 @@ PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_object];
 	_object setvelocity [0,0,1];
 
 	_object call fnc_veh_ResetEH;
-	[_object, _class] call fnc_veh_Ammo;
 
 	// testing - should make sure everyone has eventhandlers for vehicles was unused...
 	PVDZE_veh_Init = _object;
