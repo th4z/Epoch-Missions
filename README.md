@@ -92,7 +92,7 @@ Change it to
 ```
 "filmic" setToneMappingParams [0.153, 0.357, 0.231, 0.1573, 0.011, 3.750, 6, 4]; setToneMapping "Filmic";
 
-dayz_spaceInterrupt = compile preprocessFileLineNumbers "fixes\actions\dayz_spaceInterrupt.sqf";
+dayz_spaceInterrupt =			compile preprocessFileLineNumbers "extras\debug_monitor\dayz_spaceInterrupt.sqf";
 ```
 =============
 <h6>Step 4</h6>
