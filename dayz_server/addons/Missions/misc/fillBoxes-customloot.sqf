@@ -60,6 +60,7 @@ crate_add_loot = {
 		};
 		case "cfglootweapon":
 		{
+			_amount = round(random 3);
 			_itemTypes = [] + ((getArray (missionConfigFile >> "cfgLoot" >> _iItem)) select 0);
 			_index = dayz_CLBase find _iItem;
 			_weights = dayz_CLChances select _index;
@@ -74,13 +75,13 @@ crate_add_loot = {
 			};
 
 			//Item is a weapon, add it and a random quantity of magazines
-			_crate addWeaponCargoGlobal [_iItem,1];
+			_crate addWeaponCargoGlobal [_iItem,_amount];
 			_mags = [] + getArray (configFile >> "cfgWeapons" >> _iItem >> "magazines");
 			if ((count _mags) > 0) then
 			{
 				if (_mags select 0 == "Quiver") then { _mags set [0, "WoodenArrow"] }; // Prevent spawning a Quiver
 				if (_mags select 0 == "20Rnd_556x45_Stanag") then { _mags set [0, "30Rnd_556x45_Stanag"] };
-				_crate addMagazineCargoGlobal [(_mags select 0), (round(random 2))];
+				_crate addMagazineCargoGlobal [(_mags select 0), (_amount*(round(random 5)))];
 			};
 			
 		};
