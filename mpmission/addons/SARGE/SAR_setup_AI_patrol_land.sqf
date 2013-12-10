@@ -151,7 +151,7 @@ _groupvehicles setVariable ["SAR_protect",true,true];
 	_objPosition = getPosATL _veh;
 	[_veh,[_dir,_objPosition],_x,false,"0"] call server_publishVeh;
     _veh setFuel 1;
-    _veh setVariable ["Sarge",1,true];
+	_veh setVariable ["Sarge",1,true];
     _veh engineon true; 
 
     _veh addEventHandler ["HandleDamage", {_this spawn SAR_AI_VEH_HIT;_this select 2;}];
@@ -226,7 +226,7 @@ _groupvehicles setVariable ["SAR_protect",true,true];
         
         [_this,_sniper_weapon_names,_sniper_items,_sniper_tools] call SAR_unit_loadout;
         
-        _this setVehicleInit "null = [this] spawn SAR_AI_trace_veh;this setIdentity 'id_SAR';";
+        _this setVehicleInit "null = [this] spawn SAR_AI_trace_veh;this setIdentity 'id_SAR';[this] spawn SAR_AI_reammo;";
         _this addMPEventHandler ["MPkilled", {Null = _this spawn SAR_AI_killed;}]; 
         _this addMPEventHandler ["MPHit", {Null = _this spawn SAR_AI_hit;}]; 
         
@@ -274,7 +274,7 @@ _groupvehicles setVariable ["SAR_protect",true,true];
         
         [_this,_soldier_weapon_names,_soldier_items,_soldier_tools] call SAR_unit_loadout;
         
-        _this setVehicleInit "null = [this] spawn SAR_AI_trace_veh;this setIdentity 'id_SAR_sold_man';";    
+        _this setVehicleInit "null = [this] spawn SAR_AI_trace_veh;this setIdentity 'id_SAR_sold_man';[this] spawn SAR_AI_reammo;";    
         _this addMPEventHandler ["MPkilled", {Null = _this spawn SAR_AI_killed;}]; 
         _this addMPEventHandler ["MPHit", {Null = _this spawn SAR_AI_hit;}];     
         [_this] joinSilent _groupvehicles;

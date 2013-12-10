@@ -18,7 +18,7 @@
 
 // Refuel and Reammo functions for AI infantry and AI in vehicles
 
-private ["_ai","_sleeptime","_veh_weapons","_vehicle","_weapons","_reloadmag","_magazintypes","_legit_weapon","_weap_obj"];
+private ["_ai","_sleeptime","_veh_weapons","_vehicle","_weapons","_reloadmag","_magazintypes","_legit_weapon","_weap_obj","_loop"];
 
 if (!isServer) exitWith {}; // only run this on the server
 
@@ -29,35 +29,54 @@ _reloadmag = false;
 _weapons = weapons _ai;
 
 _sleeptime = SAR_REAMMO_INTERVAL;
+_loop = 0;
     
 while {alive _ai} do {
     
     _vehicle = vehicle _ai;
 
     if(_vehicle != _ai) then { // NPC in vehicle, we are only reloading vehicle ammo and refueling the vehicle if needed
-    
-        // check if low on ammo & fuel
-        _veh_weapons = weapons _vehicle;
-        
-        _legit_weapon = false;
-        {
-            if (!([_x,"CarHorn"] call SAR_isKindOf_weapon)) then {
-                _legit_weapon = true;
-                _weap_obj = _x;
-            };                
-        } foreach _veh_weapons;
-        
-        if(_legit_weapon) then {
-        
-            if(_vehicle ammo _weap_obj < 11) then {
-                _vehicle setVehicleAmmo 1;
-            };
-            
-        };
-        
-        if(fuel _vehicle < 0.2) then {
-            _vehicle setFuel 1;
-        };
+		if (_loop == 0) then {
+			//diag_log (" ");
+			_veh_ai_role = (assignedVehicleRole _ai);
+			//diag_log format ["DEBUG: _veh_ai_role: %1", _veh_ai_role];
+			if ((count _veh_ai_role) > 1) then {
+				_turretPath = ((assignedVehicleRole _ai) select 1);
+				//diag_log format ["DEBUG: _turretPath: %1", _turretPath];
+				_weaponsTurret = _vehicle weaponsTurret (_turretPath);
+				//diag_log (" ");
+				if ((count _weaponsTurret) > 0) then {
+					//diag_log format ["DEBUG: _weaponsTurret: %1", _weaponsTurret];
+					{
+						_magazintypes = getArray (configFile >> "CfgWeapons" >> _x >> "magazines");
+						//diag_log format ["DEBUG: _magazintypes: %1", _magazintypes];
+						_ammo = _vehicle ammo _x;
+						//diag_log format ["DEBUG: _ammo: %1", _ammo];
+						_mags = _vehicle magazinesTurret _turretPath;
+						//diag_log format ["DEBUG: _mags: %1", _mags];
+						if (_ammo < 11) then {
+							//diag_log ("DEBUG: removing ammo + reloading");
+							if ((count _mags) > 0) then {
+								_vehicle removeMagazinesTurret [(_mags select 0), _turretPath];
+							};
+							_vehicle addMagazineTurret [(_magazintypes select 0), _turretPath];
+							reload _vehicle;
+						};
+					} forEach _weaponsTurret;
+				};		
+			};
+			
+			if(fuel _vehicle < 0.2) then {
+				_vehicle setFuel 1;
+			};
+			_loop = _loop + 1;
+		} else {
+			if (_loop > 2) then {
+				_loop = 0;
+			} else {
+				_loop = _loop + 1;
+			};
+		};
 
     } else { // NPC not in a vehicle
         

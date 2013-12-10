@@ -4,7 +4,7 @@
 /* ********************************************************************************* */
 
 // Mission System won't start a mission if server fps < mission_fps_check
-mission_fps_check = 10;
+mission_fps_check = 5;
 // Min Number of Players before mission will spawn
 mission_player_check = 1;
 // Mission Debug Monitor

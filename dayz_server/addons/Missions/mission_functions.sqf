@@ -139,7 +139,6 @@ mission_spawn_ai = {
     _ai_setting = (_this select 6) call BIS_fnc_selectRandom;
 	_group = objNull;
 
-	
     _marker = createMarker [_marker_name, _position];
     _marker setMarkerShape "RECTANGLE";
     _marker setMarkeralpha 0;
@@ -178,7 +177,7 @@ mission_spawn_crates = {
     clearWeaponCargoGlobal _crate;
     clearMagazineCargoGlobal _crate;
     [_crate, _loot_type] execVM "\z\addons\dayz_server\addons\missions\misc\fillBoxes.sqf";
-    _crate setVariable ["Sarge", 1, true];  // Stop Server Cleanup Killing Box
+    _crate setVariable ["permaLoot", 1, true];  // Stop Server Cleanup Killing Box
     _crate
 };
 
@@ -323,14 +322,10 @@ mission_spawn = {
             };
             case (_chance <= 100):
             {
-				diag_log format ["DEBUG MISSIONS: ROADLIST: %1", RoadList];
                 _mission_type = "Crash Site";	  
                 _position = RoadList call BIS_fnc_selectRandom;
-				diag_log format ["DEBUG MISSIONS: pos1: %1", _position];
                 _position = _position modelToWorld [0,0,0];
-				diag_log format ["DEBUG MISSIONS: pos2: %1", _position];
                 _position = [_position,0,200,20,0,2000,0] call BIS_fnc_findSafePos;
-				diag_log format ["DEBUG MISSIONS: pos3: %1", _position];
                 //_position = [getMarkerPos "center",0,5500,100,0,2000,0] call BIS_fnc_findSafePos;
             };
         };
