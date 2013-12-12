@@ -11,7 +11,7 @@
 				<Key ID="STR_custom_humanity">
 					<Original>Humanity</Original>
 					<English>Humanity</English>
-					<French>l'humanité</French>
+					<French>Humanité</French>
 					<German>Humanity</German>
 					<Russian>Человечность</Russian>
 				</Key>
@@ -26,35 +26,35 @@
 					<Original>Players Alive</Original>
 					<English>Players Alive</English>
 					<German>Spieler Lebend</German>
-					<French>Joueurs Vivant</French>
+					<French>Joueurs en vie</French>
 					<Russian>Выживших</Russian>
 				</Key>
 				<Key ID="STR_custom_f5toggle">
 					<Original>Press F5 for suicide!</Original>
 					<English>Press F5 for suicide!</English>
 					<German>Drücken Sie F5 für Selbstmord!</German>
-					<French>Appuyez sur F5 pour le suicide!</French>
+					<French>Appuyez sur F5 pour se suicider!</French>
 					<Russian>Нажмите F5 для самоубийства!</Russian>
 				</Key>
 				<Key ID="STR_custom_f10toggle">
 					<Original>Press F10 to toggle!</Original>
 					<English>Press F10 to toggle!</English>
 					<German>Drücken Sie F10, um umzuschalten!</German>
-					<French>Appuyez sur F10 pour passer!</French>
+					<French>Appuyez sur F10 pour masquer!</French>
 					<Russian>Нажмите F10 для переключения!</Russian>
 				</Key>
 				<Key ID="STR_custom_combatlogger">
 					<Original>Has combat logged</Original>
 					<English>Has combat logged</English>
 					<German>Hat Kampf eingeloggt</German>
-					<French>A combat connecté</French>
+					<French>Combats repérés</French>
 					<Russian>Вышел в бою</Russian>
 				</Key>
 				<Key ID="STR_custom_5minRestart">
 					<Original>Server Restart in 5 minutes</Original>
 					<English>Server Restart in 5 minutes</English>
 					<German>Server in nur 5 Minuten Neustart</German>
-					<French>Redémarrage du serveur en 5 minutes</French>
+					<French>Redémarrage du serveur dans 5 minutes</French>
 					<Russian>Перезапуска сервера через 5 минут</Russian>
 				</Key>
         </Package>
